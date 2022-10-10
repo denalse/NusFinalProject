@@ -1,0 +1,32 @@
+<form [formGroup]="form" (ngSubmit)="processForm()">
+    <table>
+        <tr>
+            <td>Email:</td>
+            <td>
+            <input type="text" size="30" formControlName="email">
+            </td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td>
+            <input type="email" size="30" formControlName="password">
+            </td>
+        </tr>
+        <tr>
+            <td>Confirm Password:</td>
+            <td>
+                <input type="email" size="30" formControlName="passwordCfm">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="display: flex; justify-content: end;">
+                <button type="submit" class="btn btn-primary btn-lg"
+                    [disabled]="form.invalid">
+                    Register Me
+                </button>
+            </div>
+            </td>
+        </tr>
+    </table>
+  </form>

@@ -1,0 +1,11 @@
+  // ngOnInit(): void {
+  //   console.info("clicked")
+  //     this.resultMessage = this.svc.getFrontends()
+  //       .then(result => {
+  //       console.log(result)
+  //     })
+  //     .catch(err => {
+  //       console.error(err)
+  //     })
+  //     console.info(this.resultMessage)
+  // }
