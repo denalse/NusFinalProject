@@ -1,9 +1,14 @@
 <mat-toolbar color="accent">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+  <!-- <mat-sidenav-container>
+  <mat-sidenav-content> -->
+  <button type="button" (click)="sideNav()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Login</span>
+  <!-- </mat-sidenav-content>
+</mat-sidenav-container> -->
+  <span>Hello, Welcome to Rentable!</span>
   <span class="example-spacer"></span>
+  <a [routerLink]="['/register']">Register</a>
   <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
     <mat-icon>favorite</mat-icon>
   </button>

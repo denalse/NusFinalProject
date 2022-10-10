@@ -1,6 +1,7 @@
 export interface Register {
     email: string;
     password: string;
+    passwordCfm: string;
 }
 
 export interface Response {

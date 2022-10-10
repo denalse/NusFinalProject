@@ -9,8 +9,6 @@ export class FrontendService {
 
     constructor(private http: HttpClient) { }
 
-    
-
     getFrontends(): Promise<any> { //test
 
         const params = new HttpParams()

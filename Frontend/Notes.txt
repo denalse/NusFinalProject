@@ -1,3 +1,11 @@
+PROBLEMS:
+    1. ngSubmit in register.html not working (needed to manually do (click) event)
+    2.
+
+
+
+  
+  
   // ngOnInit(): void {
   //   console.info("clicked")
   //     this.resultMessage = this.svc.getFrontends()
@@ -9,3 +17,136 @@
   //     })
   //     console.info(this.resultMessage)
   // }
+
+  ____________________IN REG HTML______________________
+
+  <form [formGroup]="form" (ngSubmit)="processForm()">
+    <table>
+        <tr>
+            <td>Email:</td>
+            <td>
+            <input type="text" size="30" formControlName="email">
+            </td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td>
+                <input type="email" size="30" formControlName="password" placeholder="Enter your password" 
+                [type]="hide ? 'password' : 'text'">
+                <mat-icon (click)="passwordEye()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </td>
+        </tr>
+        <tr>
+            <td>Confirm Password:</td>
+            <td>
+                <input type="email" size="30" formControlName="passwordCfm" placeholder="Enter your confirm password" 
+                [type]="hide ? 'password' : 'text'">
+                <mat-icon (click)="passwordEye2()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="display: flex; justify-content: end;">
+                <button type="submit" class="btn btn-primary btn-lg"
+                    [disabled]="form.invalid">
+                    Register Me
+                </button>
+            </div>
+            </td>
+        </tr>
+    </table>
+  </form>
+
+  _____________________________________________________________
+
+  <div ng-controller="AppCtrl" layout="column" style="height: 500px;" ng-cloak>
+  <section layout="row" flex>
+    <md-sidenav class="md-sidenav-left" md-component-id="left"
+                md-disable-backdrop md-whiteframe="4">
+      <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Disabled Backdrop</h1>
+      </md-toolbar>
+      <md-content layout-margin>
+        <p>
+          This sidenav is not showing any backdrop, where users can click on it, to close the sidenav.
+        </p>
+        <md-button ng-click="toggleLeft()" class="md-accent">
+          Close this Sidenav
+        </md-button>
+      </md-content>
+    </md-sidenav>
+    <md-content flex layout-padding>
+      <div layout="column" layout-align="top center">
+        <p>
+          Developers can also disable the backdrop of the sidenav.<br/>
+          This will disable the functionality to click outside to close the sidenav.
+        </p>
+        <div>
+          <md-button ng-click="toggleLeft()" class="md-raised">
+            Toggle Sidenav
+          </md-button>
+        </div>
+      </div>
+    </md-content>
+  </section>
+</div>
+
+_________________________________________________________________
+
+<mat-horizontal-stepper>
+  <mat-step [stepControl]="form1">
+  <form [formGroup]="form1" (ngSubmit)="processForm()">
+        <ng-template matStepLabel>Fill out your name</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Eg; fred@gmail.com" formControlName="email" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+  </form>
+    </mat-step>
+    <mat-step [stepControl]="form2" label="Fill out your password">
+      <form [formGroup]="form2" (ngSubmit)="processForm()">
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput formControlName="passwordCfm" required>
+          </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done. To proceed, click Confirm</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button type="submit">Confirm</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+
+    return this.form1 = this.fb.group({
+      email: this.fb.control<string>('', [ Validators.required, Validators.email ])
+    }),
+    this.form2 = this.fb.group({
+      password: this.fb.control<string>('', [ Validators.required, Validators.minLength(1) ]),
+      passwordCfm: this.fb.control<string>('', [ Validators.required, Validators.minLength(1) ]) //confirm pw
+    })
+
+      processForm() {
+    console.log("clicked")
+    const register: Register = this.form1.value; this.form2.value as Register
+    console.info(">>>>> Register Form: ", register)
+    
+    this.onNewRegister.next(register)
+    this.form1, this.form2 = this.createForm()
+  }
+
+  C:\Users\User\Desktop\Visa\Client Side Foundation\FinalProject\Frontend\src\assets\sakura.gif

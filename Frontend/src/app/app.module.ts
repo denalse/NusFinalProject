@@ -10,22 +10,23 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './components/register.component';
 import { FrontendService } from './services/frontend.service';
 import { TestComponent } from './components/test.component';
+import { WelcomeComponent } from './components/welcome.component';
 
 const appRoute: Routes = [
-  { path: '', component: RegisterComponent },
+  { path: '', component: WelcomeComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'test', component: TestComponent },
   { path: 'probe', component: TestComponent },
-  { path: 'register', component: RegisterComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full'}
 ]
 @NgModule({
   declarations: [
-    AppComponent, RegisterComponent, TestComponent,
+    AppComponent, RegisterComponent, TestComponent, WelcomeComponent,
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule,
     FormsModule, ReactiveFormsModule,
-    MaterialModule, RouterModule.forRoot(appRoute),
+    MaterialModule, RouterModule.forRoot(appRoute, {useHash: true}),
   ],
   providers: [ FrontendService ],
   bootstrap: [AppComponent]
