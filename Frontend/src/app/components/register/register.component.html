@@ -1,0 +1,42 @@
+<div class="box-it">
+  <button mat-raised-button (click)="isLinear = true" id="toggle-linear"></button>
+
+  <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+    <mat-step [stepControl]="form1">
+      <form [formGroup]="form1" (ngSubmit)="form1Submit()" #formone="ngForm">
+        <ng-template matStepLabel>Fill out your email</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Eg; fred@gmail.com" formControlName="email" required>
+        </mat-form-field>
+        <div>
+          <button type="button" mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="form2">
+      <form [formGroup]="form2" (ngSubmit)="form2Submit()" #formtwo="ngForm">
+        <ng-template matStepLabel>Fill out your password</ng-template>
+        <mat-form-field>
+          <mat-icon (click)="passwordEye()" matSuffix> {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          <input matInput placeholder="Password must be unique" formControlName="password"
+            [type]="hide ? 'password' : 'text'" required>
+        </mat-form-field>
+        <div>
+          <button type="button" mat-button matStepperPrevious>Back</button>
+          <button type="button" mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      You are now done. To proceed, click Submit.
+      <div>
+        <br>
+        <button mat-button color="primary" type="button" (click)="stepper.reset()">Reset</button>
+        <button mat-button type="submit" (click)="formone.ngSubmit.emit();formtwo.ngSubmit.emit()">
+          Submit
+        </button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

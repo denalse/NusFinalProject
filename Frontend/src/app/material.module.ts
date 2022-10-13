@@ -9,12 +9,15 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatStepperModule } from '@angular/material/stepper';
+import {MatCardModule} from '@angular/material/card';
+
+
 
 const material: any[] = [
     MatToolbarModule, MatButtonModule, MatIconModule,
     MatInputModule, MatFormFieldModule, MatSelectModule,
     MatSidenavModule, MatListModule, MatMenuModule,
-    MatStepperModule
+    MatStepperModule, MatCardModule
 ];
 
 @NgModule({

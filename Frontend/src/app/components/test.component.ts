@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FrontendService } from '../services/frontend.service';
+import { RegisterService } from '../services/register.service';
 
 @Component({
   selector: 'app-test',
@@ -10,7 +10,7 @@ import { FrontendService } from '../services/frontend.service';
 })
 export class TestComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private svc: FrontendService,
+  constructor(private fb: FormBuilder, private svc: RegisterService,
     private router: Router, private ar: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -30,5 +30,6 @@ export class TestComponent implements OnInit {
       }
       console.info(window.location.href)
   }
+  
 
 }

@@ -1,14 +1,29 @@
 <mat-toolbar color="accent">
-  <!-- <mat-sidenav-container>
-  <mat-sidenav-content> -->
-  <button type="button" (click)="sideNav()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+
+  <button type="button" (click)="sideNav()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" [matMenuTriggerFor]="menu">
     <mat-icon>menu</mat-icon>
   </button>
-  <!-- </mat-sidenav-content>
-</mat-sidenav-container> -->
+  <mat-menu #menu="matMenu">
+    <!-- <a href="home">Home</a> -->
+    <button mat-menu-item><a [routerLink]="['/']">Home</a></button>
+    <button mat-menu-item><a [routerLink]="['/about']">About</a></button>
+    <button mat-menu-item><a [routerLink]="['/search']">Search</a></button>
+    <button mat-menu-item><a [routerLink]="['/login']">Login</a></button>
+    <button mat-menu-item><a [routerLink]="['/register']">Sign Up</a></button>
+  </mat-menu>
+
   <span>Hello, Welcome to Rentable!</span>
   <span class="example-spacer"></span>
-  <a [routerLink]="['/register']">Register</a>
+  <span>{{ randomName }}</span>
+  <span class="example-spacer"></span>
+  <mat-form-field>
+    <input type="text" matInput placeholder="Search">
+    <mat-icon >search</mat-icon>
+  </mat-form-field>
+
+
+  <span class="example-spacer"></span>
+  <!-- <a [routerLink]="['/register']">Login/Sign Up</a> -->
   <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
     <mat-icon>favorite</mat-icon>
   </button>

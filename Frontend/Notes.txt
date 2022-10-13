@@ -1,6 +1,6 @@
 PROBLEMS:
     1. ngSubmit in register.html not working (needed to manually do (click) event)
-    2.
+    2. 3rd push done @ 3:06am 11 oct
 
 
 
@@ -93,44 +93,44 @@ PROBLEMS:
 
 _________________________________________________________________
 
-<mat-horizontal-stepper>
+<button mat-raised-button (click)="isLinear = true" id="toggle-linear"></button>
+
+<mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
   <mat-step [stepControl]="form1">
-  <form [formGroup]="form1" (ngSubmit)="processForm()">
-        <ng-template matStepLabel>Fill out your name</ng-template>
-        <mat-form-field appearance="fill">
-          <mat-label>Email</mat-label>
-          <input matInput placeholder="Eg; fred@gmail.com" formControlName="email" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-  </form>
-    </mat-step>
-    <mat-step [stepControl]="form2" label="Fill out your password">
-      <form [formGroup]="form2" (ngSubmit)="processForm()">
-        <mat-form-field appearance="fill">
-          <mat-label>Password</mat-label>
-          <input matInput formControlName="password" required>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Confirm Password</mat-label>
-            <input matInput formControlName="passwordCfm" required>
-          </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done. To proceed, click Confirm</p>
+    <form [formGroup]="form1" (ngSubmit)="form1Submit()" #formone="ngForm">
+      <ng-template matStepLabel>Fill out your email</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Eg; fred@gmail.com" formControlName="email" required>
+      </mat-form-field>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button type="submit">Confirm</button>
+        <button type="button" mat-button matStepperNext>Next</button>
       </div>
-    </mat-step>
-  </mat-horizontal-stepper>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="form2">
+    <form [formGroup]="form2" (ngSubmit)="form2Submit()" #formtwo="ngForm">
+      <ng-template matStepLabel>Fill out your password</ng-template>
+      <mat-form-field>
+        <mat-icon (click)="passwordEye()" matSuffix> {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <input matInput placeholder="Password must be unique" formControlName="password" [type]="hide ? 'password' : 'text'" required>
+      </mat-form-field>        
+      <div>
+        <button type="button" mat-button matStepperPrevious>Back</button>
+        <button type="button" mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+      <button mat-button type="button" (click)="stepper.reset()">Reset</button>
+      <button mat-button type="submit" (click)="formone.ngSubmit.emit();formtwo.ngSubmit.emit()">
+        submit
+        </button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
 
     return this.form1 = this.fb.group({
       email: this.fb.control<string>('', [ Validators.required, Validators.email ])
@@ -150,3 +150,144 @@ _________________________________________________________________
   }
 
   C:\Users\User\Desktop\Visa\Client Side Foundation\FinalProject\Frontend\src\assets\sakura.gif
+
+  _________________________________________________________________
+
+  <form [formGroup]="form" (ngSubmit)="processForm()">
+  <table>
+    <tr>
+      <td>Email:</td>
+      <td>
+        <input type="text" size="30" formControlName="email" placeholder="Enter your email">
+      </td>
+    </tr>
+    <tr>
+      <td>Password:</td>
+      <td>
+        <input type="email" size="30" formControlName="password" placeholder="Enter your password"
+          [type]="hide ? 'password' : 'text'">
+          <mat-icon (click)="passwordEye()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </td>
+    </tr>
+    <!-- <tr>
+          <td>Confirm Password:</td>
+          <td>
+              <input type="email" size="30" formControlName="passwordCfm" placeholder="Enter your confirm password" 
+              [type]="hide ? 'password' : 'text'">
+              <mat-icon (click)="passwordEye2()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </td>
+      </tr> -->
+    <tr>
+      <td>
+        <input type="checkbox" name="terms" value="terms" formControlName="terms"> I have read the terms and conditions.
+      </td>
+      <td>
+    </tr>
+    <tr>
+      <td>
+        <div style="display: flex; justify-content: end;">
+          <button type="submit" class="btn btn-primary btn-lg mt-3 ml-5" [disabled]="form.invalid">
+            Register Me
+          </button>
+        </div>
+      </td>
+    </tr>
+  </table>
+</form>
+
+_____________________________________________________________
+<mat-toolbar color="accent">
+  <mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+      <p>Auto-resizing sidenav</p>
+      <p *ngIf="sideNav">Lorem, ipsum dolor sit amet consectetur.</p>
+      <button (click)="sideNav()" mat-raised-button>
+        Toggle extra text
+      </button>
+    </mat-drawer>
+  
+    <div class="example-sidenav-content">
+      <button type="button" mat-button (click)="drawer.toggle()">
+        Toggle sidenav
+      </button>
+    </div>
+  </mat-drawer-container>
+
+_____________________________________________________________
+
+<div class="box-it">
+	<h2>Search Me</h2>
+	<form [formGroup]="form" (ngSubmit)="performSearch()">
+		<table>
+			<tr>
+				<td>Type:</td>
+				<td>
+					<input type="text" size="30" formControlName="type">
+
+					<!-- <select formControlName="type" aria-placeholder="Enter">
+						<option value="g">Gray</option>
+						<option value="p">P</option>
+						<option value="red">Red</option>
+						<option value="green">Green</option>
+						<option value="Blue">Blue</option>
+					</select> -->
+				</td>
+			</tr>
+			<tr>
+				<td>Width:</td>
+				<td>
+					<input type="number" size="30" formControlName="width">
+				</td>
+			</tr>
+			<tr>
+				<td>Height:</td>
+				<td>
+					<input type="number" size="30" formControlName="height">
+				</td>
+			</tr>
+			<tr>
+				<td>Looking for:</td>
+				<td>
+					<input type="text" size="30" formControlName="search">
+
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<button type="submit" [disabled]="form.invalid">
+						Search
+					</button>
+
+				</td>
+			</tr>
+			<mat-card-content>
+				<button type="submit" (click)="randomImage()">
+					Search Image
+				</button>
+
+				<img src="{{ images }}">
+			</mat-card-content>
+		</table>
+	</form>
+
+</div>
+_____________________________________________________________
+
+  reset() {
+    this.form = this.createSearch();
+    this._url = ""
+    // this.router.navigate(['/search']);
+  }
+
+    url: string = 'https://loremflickr.com/';
+  _url!: string;
+
+    this._url = this.url + criteria.type + '/' + criteria.width + '/' + criteria.height + '/' + criteria.search
+
+_____________________________________________________________
+
+function add(n1: number, n2: number, n3?: number ): number {
+    return n3? n1 + n2 + n3 : n1 + n2;
+  }
+    console.log(add(2, 3));
