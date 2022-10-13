@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SearchCriteria } from 'src/app/models';
 import { ImageService } from 'src/app/services/image.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { faker } from '@faker-js/faker';
 import { Subscription } from 'rxjs';
 
@@ -18,23 +18,18 @@ export class ImageComponent implements OnInit {
   image!: string
 
   url: string = 'https://loremflickr.com/';
-  _url!: string;
+  _url!: string
 
   show: boolean = false
   images = faker.image.sports()
 
-  result!: { type: string; width: number; height: number; search: string};
+  result!: {type: string; width: number; height: number; search: string};
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: FormBuilder, private svc: ImageService, 
     private ar: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.form = this.createSearch();
-  
-      // let type = this.ar.snapshot.params['type'];
-      // let width = this.ar.snapshot.params['width'];
-      // let height = this.ar.snapshot.params['height'];
-      // let search = this.ar.snapshot.params['search'];
 
     // if (window.location.href.split('/')){
     //   console.log("")
@@ -43,6 +38,7 @@ export class ImageComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+
   }
 
   createSearch() {
@@ -54,14 +50,18 @@ export class ImageComponent implements OnInit {
     });
   }
 
-  performSearch() {
+  performSearch() { 
     const criteria: SearchCriteria = this.form.value as SearchCriteria
     console.info('search criteria: ', criteria)
-    let type = this.ar.snapshot.params['type'];
-    let width = this.ar.snapshot.params['width'];
-    let height = this.ar.snapshot.params['height'];
-    let search = this.ar.snapshot.params['search'];
-    // const url = this.svc.search(criteria) //= 
+  
+      // let type = this.ar.snapshot.params['type']
+      // let width = this.ar.snapshot.params['width']
+      // let height = this.ar.snapshot.params['height']
+      // let search = this.ar.snapshot.params['search']
+    
+     this._url = this.url + criteria.type + "/" + criteria.width + "/" + criteria.height + "/" + criteria.search
+
+    // this.svc.search(criteria) //= 
     // // window.location.href.split('/')[0]
     //   .then(result => {
     //     console.log("\n\tRESULT", result);
@@ -70,14 +70,13 @@ export class ImageComponent implements OnInit {
     //   .catch(err => {
     //     console.log(err);
     //   })
-
-      this._url = this.url + type + '/' + width + '/' + height + '/' + search
-
-    this.router.navigate(['/search', criteria.type, criteria.width, criteria.height, criteria.search]);
+    // this.router.navigate(['/search', criteria.type, criteria.width, criteria.height, criteria.search]);
   }
 
   reset() {
-    this.router.navigate(['/search']);
+    this.form = this.createSearch();
+    this._url = ""
+    // this.router.navigate(['/search']);
   }
 
   randomImage() {

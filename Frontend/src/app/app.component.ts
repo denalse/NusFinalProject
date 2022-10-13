@@ -30,7 +30,7 @@ export class AppComponent {
 
   ngOnInit(): void { //, "width", "height", "search"
     // this.title = 'Spring Boot - Angular Application';
-    this.image = this.ar.snapshot.paramMap.get("type"); // Snapshot param
+    // this.image = this.ar.snapshot.paramMap.get("type"); // Snapshot param
 
   }
 
