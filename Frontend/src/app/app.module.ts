@@ -24,6 +24,7 @@ const appRoute: Routes = [
   { path: 'search', component: ImageComponent },
   { path: 'search/:type/:width/:height/:search', component: ImageComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'user', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'test', component: TestComponent },
   { path: 'probe', component: TestComponent },

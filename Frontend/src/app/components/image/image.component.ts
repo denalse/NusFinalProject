@@ -74,6 +74,7 @@ export class ImageComponent implements OnInit {
   }
 
   reset() {
+    console.log(">>> Reset Clicked")
     this.form = this.createSearch();
     this._url = ""
     // this.router.navigate(['/search']);

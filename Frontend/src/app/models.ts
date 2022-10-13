@@ -6,6 +6,12 @@ export interface Register {
     terms: boolean;
 }
 
+export interface Login {
+    id?: number;
+    email: string;
+    password: string;
+}
+
 export interface Response {
     code: number;
     message?: string;

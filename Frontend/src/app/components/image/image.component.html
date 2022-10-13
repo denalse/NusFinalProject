@@ -10,10 +10,10 @@
 
 					<select formControlName="type" aria-placeholder="Enter">
 						<option value="g">Gray</option>
-						<option value="p">P</option>
+						<option value="p">Pixel</option>
 						<option value="red">Red</option>
 						<option value="green">Green</option>
-						<option value="Blue">Blue</option>
+						<option value="blue">Blue</option>
 					</select>
 				</td>
 			</tr>
@@ -38,7 +38,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td >
+				<td>
 					<button class="example-spacer" type="button" (click)="reset()">
 						Reset
 					</button>
@@ -47,25 +47,21 @@
 						Search
 					</button>
 				</td>
-				<td>
-					
-				</td>
-				
-				<!-- <td>
-					<button type="submit" [disabled]="form.invalid">
-						Search
-					</button>
-				</td> -->
 			</tr>
 			<!-- <mat-card-content>
 				<button type="submit" (click)="randomImage()">
 					Search Image
 				</button>
-
+				
 				<img src="{{ images }}">
 			</mat-card-content> -->
 		</table>
-		<img [src]="_url">
+		
+		<span class="example-spacer"></span>
+
+		<div class="box-image">
+			<img [src]="_url">
+		</div>
 	</form>
 
 </div>

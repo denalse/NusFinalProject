@@ -24,8 +24,8 @@ export class RegisterComponent implements OnInit {
   @Output()
   onNewRegister = new Subject<Register>()
 
-  @Output()
-  registerListUpdated = new EventEmitter<any>();
+  // @Output()
+  // registerListUpdated = new EventEmitter<any>();
 
   constructor(private fb: FormBuilder, private svc: RegisterService,
     private router: Router, private ar: ActivatedRoute) { }
