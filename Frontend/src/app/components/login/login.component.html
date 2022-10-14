@@ -9,23 +9,20 @@
           <tr>
             <td>
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="Email" [(ngModel)]="email" name= "email" required>
+              <input matInput placeholder="Username" [(ngModel)]="username" name="username" required>
               </mat-form-field>
             </td>
           </tr>
           <tr>
-            <td>
-              <mat-form-field class="example-full-width">
-                <input matInput placeholder="Password" [(ngModel)]="password"  name="password" type="password"required>
-              </mat-form-field>
-            </td>
-          </tr>
-        </table>
+          <td><mat-form-field class="example-full-width">
+            <input matInput placeholder="Password" [(ngModel)]="password"type="password" name="password" required>
+          </mat-form-field></td>
+        </tr></table>
       </form>
-      <mat-spinner color="accent" [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
     </mat-card-content>
     <mat-card-actions>
-      <button (click)="login()" mat-raised-button color="accent">Login</button>
+      <button mat-raised-button (click)="login()" color="primary">Login</button>
     </mat-card-actions>
   </mat-card>
 </div>

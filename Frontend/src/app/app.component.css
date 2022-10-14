@@ -1,3 +1,6 @@
+/* not sure if this works */
+/* @import "../node_modules/angular-calendar/css/angular-calendar.css";  */
+
 .example-spacer {
     flex: 1 1 auto;
 }
@@ -14,3 +17,4 @@ a:hover {
     margin: 0%;
     padding: 0%;
 } */
+

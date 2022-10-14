@@ -10,8 +10,8 @@
 }
 
 .text {
-    height: 500px;
-    width: 850px;
+    /* height: 500px;
+    width: 850px; */
     background:url(src/assets/sakura.gif);
     background-size: 850px, 500px;
     text-align: center;

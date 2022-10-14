@@ -10,7 +10,7 @@ import { Login } from 'src/app/models';
 })
 export class LoginComponent implements OnInit {
 
-  email!: string;
+  username!: string;
   password!: string;
 
   showSpinner!: boolean
@@ -20,11 +20,11 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
-    this.form = this.createLogin();
+    // this.form = this.createLogin();
    }
 
   login() : void {
-    if(this.email == 'fred@gmail.com' && this.password == 'admin'){
+    if(this.username == 'admin' && this.password == 'admin'){
      this.router.navigate(["user"]);
     }else {
       alert("Invalid credentials");

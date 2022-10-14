@@ -5,6 +5,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
 
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -14,6 +17,7 @@ import { RegisterlistComponent } from './components/register/registerlist.compon
 import { AboutComponent } from './components/about/about.component';
 import { LoginComponent } from './components/login/login.component';
 import { ImageComponent } from './components/image/image.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 import { RegisterService } from './services/register.service';
 import { ImageService } from './services/image.service';
@@ -23,6 +27,7 @@ const appRoute: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'search', component: ImageComponent },
   { path: 'search/:type/:width/:height/:search', component: ImageComponent },
+  { path: 'plan', component: CalendarComponent },
   { path: 'login', component: LoginComponent },
   { path: 'user', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -33,13 +38,18 @@ const appRoute: Routes = [
 @NgModule({
   declarations: [
     AppComponent,TestComponent, 
-    WelcomeComponent, AboutComponent, ImageComponent,
-    RegisterComponent, RegisterlistComponent, LoginComponent,
+    WelcomeComponent, AboutComponent, 
+    ImageComponent, CalendarComponent,
+    RegisterComponent, RegisterlistComponent, LoginComponent, 
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule,
     FormsModule, ReactiveFormsModule,
     MaterialModule, RouterModule.forRoot(appRoute), //, {useHash: true}
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    })
   ],
   providers: [ RegisterService, ImageService ],
   bootstrap: [AppComponent]
