@@ -7,7 +7,7 @@ import { SearchCriteria } from '../models';
 @Injectable({
   providedIn: 'root'
 })
-export class ImageService {
+export class CalendarService {
 
 
   // url: string = 'https://loremflickr.com/'; 

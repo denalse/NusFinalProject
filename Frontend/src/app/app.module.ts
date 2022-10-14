@@ -5,9 +5,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
+import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
+
+
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-
 
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -20,7 +22,8 @@ import { ImageComponent } from './components/image/image.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 
 import { RegisterService } from './services/register.service';
-import { ImageService } from './services/image.service';
+import { CalendarService } from './services/calendar.service';
+
 
 const appRoute: Routes = [
   { path: '', component: WelcomeComponent },
@@ -35,6 +38,7 @@ const appRoute: Routes = [
   { path: 'probe', component: TestComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full'}
 ]
+
 @NgModule({
   declarations: [
     AppComponent,TestComponent, 
@@ -45,13 +49,14 @@ const appRoute: Routes = [
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule,
     FormsModule, ReactiveFormsModule,
-    MaterialModule, RouterModule.forRoot(appRoute), //, {useHash: true}
+    MaterialModule, MdbCarouselModule,
+    RouterModule.forRoot(appRoute), //, {useHash: true}
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
     })
   ],
-  providers: [ RegisterService, ImageService ],
+  providers: [ RegisterService, CalendarService ],
   bootstrap: [AppComponent]
 })
 

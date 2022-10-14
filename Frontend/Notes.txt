@@ -285,7 +285,10 @@ _____________________________________________________________
 
     this._url = this.url + criteria.type + '/' + criteria.width + '/' + criteria.height + '/' + criteria.search
 
-_____________________________________________________________
+
+________________________< about.html >_______________________
+
+__________________________________________
 
 function add(n1: number, n2: number, n3?: number ): number {
     return n3? n1 + n2 + n3 : n1 + n2;

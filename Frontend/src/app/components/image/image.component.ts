@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SearchCriteria } from 'src/app/models';
-import { ImageService } from 'src/app/services/image.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { faker } from '@faker-js/faker';
 import { Subscription } from 'rxjs';
@@ -25,7 +24,7 @@ export class ImageComponent implements OnInit {
 
   result!: {type: string; width: number; height: number; search: string};
 
-  constructor(private fb: FormBuilder, private svc: ImageService, 
+  constructor(private fb: FormBuilder, 
     private ar: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {

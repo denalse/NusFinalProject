@@ -14,8 +14,7 @@ export class CalendarComponent implements OnInit {
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
 
-
-  constructor( ) { }
+  constructor() { }
 
   setView(view: CalendarView) {
     this.view = view;
@@ -34,9 +33,9 @@ export class CalendarComponent implements OnInit {
     }
   ]
 
-
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     console.log(date);
+    console.log(events);
     //let x=this.adminService.dateFormat(date)
     //this.openAppointmentList(x)
   }
