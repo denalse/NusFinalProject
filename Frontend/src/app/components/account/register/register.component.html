@@ -4,9 +4,9 @@
   <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
     <mat-step [stepControl]="form1">
       <form [formGroup]="form1" (ngSubmit)="form1Submit()" #formone="ngForm">
-        <ng-template matStepLabel>Fill out your email</ng-template>
+        <ng-template matStepLabel>Fill out your username</ng-template>
         <mat-form-field>
-          <input matInput placeholder="Eg; fred@gmail.com" formControlName="email" required>
+          <input matInput placeholder="Eg; fred" formControlName="username" required>
         </mat-form-field>
         <div>
           <button type="button" mat-button matStepperNext>Next</button>

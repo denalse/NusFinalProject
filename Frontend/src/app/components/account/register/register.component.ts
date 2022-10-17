@@ -1,9 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { Register } from 'src/app/models';
-import { RegisterService } from 'src/app/services/register.service';
+import { User } from 'src/app/models';
+import { AccountService } from 'src/app/services/account.service';
 
 
 @Component({
@@ -21,13 +20,10 @@ export class RegisterComponent implements OnInit {
 
   formSubmitAttempt!: boolean;
 
-  @Output()
-  onNewRegister = new Subject<Register>()
-
   // @Output()
   // registerListUpdated = new EventEmitter<any>();
 
-  constructor(private fb: FormBuilder, private svc: RegisterService,
+  constructor(private fb: FormBuilder, private svc: AccountService,
     private router: Router, private ar: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -41,15 +37,15 @@ export class RegisterComponent implements OnInit {
 
   addform1() {
     return this.form1 = this.fb.group({
-      email: this.fb.control<string>('', [Validators.required, Validators.email]),
+      username: this.fb.control<string>('', [Validators.required]),
       // password: this.fb.control<string>('', [Validators.required, Validators.minLength(8)]),
 
     })
   }
 
   form1Submit() {
-    const register: Register = this.form1.value as Register
-    console.info(">>>>> Register Form (email): ", register)
+    const user: User = this.form1.value as User
+    console.info(">>>>> Register Form (username): ", user)
     console.info(">>>>", this.form.value)
   }
 
@@ -60,8 +56,8 @@ export class RegisterComponent implements OnInit {
   }
 
   form2Submit() {
-    const register: Register = this.form2.value as Register
-    console.info(">>>>> Register Form (password): ", register)
+    const user: User = this.form2.value as User
+    console.info(">>>>> Register Form (password): ", user)
     console.info(">>>>FORM2>>>", this.form.value)
 
   }

@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { RegisterService } from './services/register.service';
+import { AccountService } from './services/account.service';
 import { faker } from '@faker-js/faker';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -23,7 +23,7 @@ export class AppComponent {
   sidenav!: MatSidenav;
 
 
-  constructor(private svc: RegisterService, 
+  constructor(private svc: AccountService, 
     private router: Router, private ar: ActivatedRoute) {
     // this.title = 'Spring Boot - Angular Application';
   }

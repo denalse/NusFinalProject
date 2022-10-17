@@ -5,28 +5,28 @@
   </button>
   <mat-menu #menu="matMenu">
     <!-- <a href="home">Home</a> -->
-    <button mat-menu-item><a [routerLink]="['/']">Home</a></button>
-    <button mat-menu-item><a [routerLink]="['/about']">About</a></button>
-    <button mat-menu-item><a [routerLink]="['/search']">Search</a></button>
-    <button mat-menu-item><a [routerLink]="['/plan']">Planner</a></button>
-    <button mat-menu-item><a [routerLink]="['/login']">Login</a></button>
-    <!-- <div *ngIf=""> -->
-      <button mat-menu-item><a [routerLink]="['/register']">Register</a></button>
-    <!-- </div> -->
+    <button mat-menu-item><h6 [routerLink]="['/']">Home</h6></button>
+    <button mat-menu-item><h6 [routerLink]="['/about']">About</h6></button>
+    <button mat-menu-item><h6 [routerLink]="['/search']">Inspiration</h6></button>
+    <button mat-menu-item><h6 [routerLink]="['/plan']">Planner</h6></button>
   </mat-menu>
-
-  <span>Hello, Welcome to JioMeLah!</span>
+  
+  <span>Hello, Welcome to PlanMyDate!</span>
   <span class="example-spacer"></span>
-  <span>{{ randomName }}</span>
-  <span class="example-spacer"></span>
+  <!-- <span>{{ randomName }}</span> -->
   <mat-form-field>
     <input type="text" matInput placeholder="Search">
     <mat-icon >search</mat-icon>
   </mat-form-field>
-
-
+  
+  
   <span class="example-spacer"></span>
-  <!-- <a [routerLink]="['/register']">Login/Sign Up</a> -->
+  <button mat-icon-button class><h6 [routerLink]="['/login']">Login</h6></button>
+  <span class="example-spacer"></span>
+  <!-- <div *ngIf=""> -->
+    <button mat-icon-button class><h6 [routerLink]="['/register']">Register</h6></button>
+  <!-- </div> -->
+  <span class="example-spacer"></span>
   <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
     <mat-icon>favorite</mat-icon>
   </button>

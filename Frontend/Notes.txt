@@ -4,154 +4,25 @@ PROBLEMS:
 
 
 
-  
-  
-  // ngOnInit(): void {
-  //   console.info("clicked")
-  //     this.resultMessage = this.svc.getFrontends()
-  //       .then(result => {
-  //       console.log(result)
-  //     })
-  //     .catch(err => {
-  //       console.error(err)
-  //     })
-  //     console.info(this.resultMessage)
-  // }
+  ____________________account.svc.ts___________________________
 
-  ____________________IN REG HTML______________________
+      test!: string;
 
-  <form [formGroup]="form" (ngSubmit)="processForm()">
-    <table>
-        <tr>
-            <td>Email:</td>
-            <td>
-            <input type="text" size="30" formControlName="email">
-            </td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td>
-                <input type="email" size="30" formControlName="password" placeholder="Enter your password" 
-                [type]="hide ? 'password' : 'text'">
-                <mat-icon (click)="passwordEye()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </td>
-        </tr>
-        <tr>
-            <td>Confirm Password:</td>
-            <td>
-                <input type="email" size="30" formControlName="passwordCfm" placeholder="Enter your confirm password" 
-                [type]="hide ? 'password' : 'text'">
-                <mat-icon (click)="passwordEye2()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div style="display: flex; justify-content: end;">
-                <button type="submit" class="btn btn-primary btn-lg"
-                    [disabled]="form.invalid">
-                    Register Me
-                </button>
-            </div>
-            </td>
-        </tr>
-    </table>
-  </form>
+    newRegister = new Subject<Register[]>();
 
-  _____________________________________________________________
+    onNewRegister(register: Register): Promise<any> {
+        console.log("Service Hit");
 
-  <div ng-controller="AppCtrl" layout="column" style="height: 500px;" ng-cloak>
-  <section layout="row" flex>
-    <md-sidenav class="md-sidenav-left" md-component-id="left"
-                md-disable-backdrop md-whiteframe="4">
-      <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">Disabled Backdrop</h1>
-      </md-toolbar>
-      <md-content layout-margin>
-        <p>
-          This sidenav is not showing any backdrop, where users can click on it, to close the sidenav.
-        </p>
-        <md-button ng-click="toggleLeft()" class="md-accent">
-          Close this Sidenav
-        </md-button>
-      </md-content>
-    </md-sidenav>
-    <md-content flex layout-padding>
-      <div layout="column" layout-align="top center">
-        <p>
-          Developers can also disable the backdrop of the sidenav.<br/>
-          This will disable the functionality to click outside to close the sidenav.
-        </p>
-        <div>
-          <md-button ng-click="toggleLeft()" class="md-raised">
-            Toggle Sidenav
-          </md-button>
-        </div>
-      </div>
-    </md-content>
-  </section>
-</div>
+        const headers = new HttpHeaders()
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
 
-_________________________________________________________________
+        return firstValueFrom(
+            this.http.post<any>('/register', register, { headers })
+        )
+    }
 
-<button mat-raised-button (click)="isLinear = true" id="toggle-linear"></button>
-
-<mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
-  <mat-step [stepControl]="form1">
-    <form [formGroup]="form1" (ngSubmit)="form1Submit()" #formone="ngForm">
-      <ng-template matStepLabel>Fill out your email</ng-template>
-      <mat-form-field>
-        <input matInput placeholder="Eg; fred@gmail.com" formControlName="email" required>
-      </mat-form-field>
-      <div>
-        <button type="button" mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="form2">
-    <form [formGroup]="form2" (ngSubmit)="form2Submit()" #formtwo="ngForm">
-      <ng-template matStepLabel>Fill out your password</ng-template>
-      <mat-form-field>
-        <mat-icon (click)="passwordEye()" matSuffix> {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        <input matInput placeholder="Password must be unique" formControlName="password" [type]="hide ? 'password' : 'text'" required>
-      </mat-form-field>        
-      <div>
-        <button type="button" mat-button matStepperPrevious>Back</button>
-        <button type="button" mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    You are now done.
-    <div>
-      <button mat-button type="button" (click)="stepper.reset()">Reset</button>
-      <button mat-button type="submit" (click)="formone.ngSubmit.emit();formtwo.ngSubmit.emit()">
-        submit
-        </button>
-    </div>
-  </mat-step>
-</mat-horizontal-stepper>
-
-    return this.form1 = this.fb.group({
-      email: this.fb.control<string>('', [ Validators.required, Validators.email ])
-    }),
-    this.form2 = this.fb.group({
-      password: this.fb.control<string>('', [ Validators.required, Validators.minLength(1) ]),
-      passwordCfm: this.fb.control<string>('', [ Validators.required, Validators.minLength(1) ]) //confirm pw
-    })
-
-      processForm() {
-    console.log("clicked")
-    const register: Register = this.form1.value; this.form2.value as Register
-    console.info(">>>>> Register Form: ", register)
-    
-    this.onNewRegister.next(register)
-    this.form1, this.form2 = this.createForm()
-  }
-
-  C:\Users\User\Desktop\Visa\Client Side Foundation\FinalProject\Frontend\src\assets\sakura.gif
-
-  _________________________________________________________________
+  ____________________IN REG HTML_________________________________
 
   <form [formGroup]="form" (ngSubmit)="processForm()">
   <table>
@@ -195,25 +66,7 @@ _________________________________________________________________
   </table>
 </form>
 
-_____________________________________________________________
-<mat-toolbar color="accent">
-  <mat-drawer-container class="example-container" autosize>
-    <mat-drawer #drawer class="example-sidenav" mode="side">
-      <p>Auto-resizing sidenav</p>
-      <p *ngIf="sideNav">Lorem, ipsum dolor sit amet consectetur.</p>
-      <button (click)="sideNav()" mat-raised-button>
-        Toggle extra text
-      </button>
-    </mat-drawer>
-  
-    <div class="example-sidenav-content">
-      <button type="button" mat-button (click)="drawer.toggle()">
-        Toggle sidenav
-      </button>
-    </div>
-  </mat-drawer-container>
-
-_____________________________________________________________
+____________________Image.html___________________________
 
 <div class="box-it">
 	<h2>Search Me</h2>
@@ -272,25 +125,17 @@ _____________________________________________________________
 	</form>
 
 </div>
+_____________________ts.config file___________________________
+"compilerOptions": {
+// ...
+  "noPropertyAccessFromIndexSignature": false,
+// ...
+}
+
+* change this due to index error in login.ts file
 _____________________________________________________________
-
-  reset() {
-    this.form = this.createSearch();
-    this._url = ""
-    // this.router.navigate(['/search']);
-  }
-
-    url: string = 'https://loremflickr.com/';
-  _url!: string;
-
-    this._url = this.url + criteria.type + '/' + criteria.width + '/' + criteria.height + '/' + criteria.search
-
-
-________________________< about.html >_______________________
-
-__________________________________________
 
 function add(n1: number, n2: number, n3?: number ): number {
     return n3? n1 + n2 + n3 : n1 + n2;
   }
-    console.log(add(2, 3));
+    console.log(add(2, 3)); 
