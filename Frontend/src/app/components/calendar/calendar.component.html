@@ -45,7 +45,8 @@
 
             <mwl-calendar-month-view (dayClicked)="dayClicked($event.day)" *ngSwitchCase="CalendarView.Month"
                 [viewDate]="viewDate" [events]="events" 
-                [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
+                [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)"
+                >
             </mwl-calendar-month-view>
 
             <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
@@ -58,18 +59,23 @@
 
         </div>
     </div>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
 
     <!-- <mwl-calendar [events]="events" (eventAdded)="onEventAdd($event)"></mwl-calendar> -->
-
+    <!-- <textarea #input  > </textarea>
+    
+    <emoji-mart
+       title="Pick your emoji…"
+       (emojiSelect)="addEmoji($event)"
+       [hideObsolete]="true"
+       [isNative]="true">
+    </emoji-mart> -->
 
 </body>
 
-<!-- Render Monthly Calendar -->
-<!-- <mwl-calendar-month-view [viewDate]="viewDate"></mwl-calendar-month-view> -->
+<input placeholder="Type a message. Hit Enter to send" type="text" (blur)="onBlur()" (focus)="onFocus()"
+                name="message" [(ngModel)]="message"> <button (click) ="toggleEmojiPicker()"> 😀</button><br>
+    <emoji-mart class="emoji-mart"  *ngIf="showEmojiPicker" (emojiSelect)="addEmoji($event)" title="Pick your emoji…"></emoji-mart>
 
-<!-- Render Weekly Calendar -->
-<!-- <mwl-calendar-week-view [viewDate]="viewDate"></mwl-calendar-week-view> -->
+            
 
-<!-- Render Day Calendar -->
-
-<!-- <mwl-calendar-day-view [viewDate]="viewDate"></mwl-calendar-day-view> -->

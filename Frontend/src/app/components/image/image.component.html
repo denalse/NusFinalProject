@@ -1,5 +1,8 @@
 <div class="box-it">
 	<h2>Search Me</h2>
+	<span class="example-spacer1"></span>
+	<h2>Make Me Happy</h2>
+
 
 	<form [formGroup]="form" (ngSubmit)="performSearch()">
 		<table>
@@ -15,18 +18,37 @@
 						<option value="green">Green</option>
 						<option value="blue">Blue</option>
 					</select>
+
+					<!-- <button type="button" (click)="randomQuote()" style="float: right;">
+							Search Quote
+						</button> -->
+
 				</td>
 			</tr>
+
 			<tr>
 				<td>Width:</td>
 				<td>
 					<input type="number" size="30" formControlName="width">
+
+					<span class="example-spacer2"></span>
+
+					<button type="button" (click)="getQuote()">
+						Click me
+					</button>
+					<mat-icon class="icon" matSuffix>sentiment_very_satisfied</mat-icon>
+
 				</td>
 			</tr>
 			<tr>
 				<td>Height:</td>
 				<td>
 					<input type="number" size="30" formControlName="height">
+
+					<div *ngFor="let quote of randomData" style="text-align:center">
+						<h6>{{ quote.author }}</h6>
+						<p>{{ quote.text }}</p>
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -56,8 +78,9 @@
 				<img src="{{ images }}">
 			</mat-card-content> -->
 		</table>
-		
-		<div class="box-image"> <!--*ngIf="criteria.width">> -->
+
+		<div class="box-image">
+			<!--*ngIf="criteria.width">> -->
 			<img [src]="_url">
 		</div>
 	</form>

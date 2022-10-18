@@ -4,6 +4,26 @@
     padding-right: 0.5em;
 }
 
+.example-spacer1 {
+    flex: 1 1 auto;
+    margin-top: 1em;
+    padding-right: 20em;
+}
+
+.example-spacer2 {
+    flex: 1 1 auto;
+    margin-top: 1em;
+    padding-right: 15em;
+}
+
+.icon {
+    
+}
+
+h2 {
+    display: inline-block;
+}
+
 .box-it {
     margin: 10px 80px;
     padding: 20px;

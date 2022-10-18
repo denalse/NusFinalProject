@@ -1,6 +1,7 @@
 PROBLEMS:
     1. ngSubmit in register.html not working (needed to manually do (click) event)
     2. 3rd push done @ 3:06am 11 oct
+    3. image.ts for quotes error in console log
 
 
 
@@ -133,8 +134,23 @@ _____________________ts.config file___________________________
 }
 
 * change this due to index error in login.ts file
-_____________________________________________________________
+___________________calendaer.html__________________________
 
+                <div class="main-icon">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Emoji Picker</mat-label>
+                      <input matInput [(ngModel)]="emojiInput">
+                      <mat-icon matSuffix [matMenuTriggerFor]="emojiIcon">sentiment_very_satisfied</mat-icon>
+                    </mat-form-field>
+                    <mat-menu #emojiIcon="matMenu" class="emoji-menu">
+                      <!-- <emoji-mart class="light" (emoji-click)="addEmoji($event)" (click)="emojiPreventClose($event);"></emoji-mart> -->
+                      <!-- <emoji-mart title="Pick your emoji…" emoji="point_up"></emoji-mart>   -->
+                    </mat-menu>
+                  </div>
+
+
+
+_____________________________________________________________
 function add(n1: number, n2: number, n3?: number ): number {
     return n3? n1 + n2 + n3 : n1 + n2;
   }

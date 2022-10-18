@@ -12,6 +12,8 @@ body {
     
 }
 
+@import '~@ctrl/ngx-emoji-mart/picker';
+
 /* .text {
     height: 500px;
     width: 850px;

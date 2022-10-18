@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SearchCriteria } from 'src/app/models';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faker } from '@faker-js/faker';
 import { Subscription } from 'rxjs';
+import { SearchCriteria } from 'src/app/models';
+import { DoService } from 'src/app/services/do.service';
 
 
 @Component({
@@ -11,7 +13,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './image.component.html',
   styleUrls: ['./image.component.css']
 })
-export class ImageComponent implements OnInit {
+export class ImageComponent implements OnInit, OnDestroy  {
 
   form!: FormGroup
   image!: string
@@ -19,22 +21,22 @@ export class ImageComponent implements OnInit {
   url: string = 'https://loremflickr.com/';
   _url!: string
 
+  data:any = []
+  randomData: any = []
+  sub$!: Subscription
+
+
   show: boolean = false
   images = faker.image.sports()
 
-  result!: {type: string; width: number; height: number; search: string};
 
-  constructor(private fb: FormBuilder, 
+  constructor(private fb: FormBuilder, private http: HttpClient, private svc: DoService, 
     private ar: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.form = this.createSearch();
 
-    // if (window.location.href.split('/')){
-    //   console.log("")
-    // }
-
-  }
+    }
 
   ngAfterViewInit(): void {
 
@@ -52,24 +54,9 @@ export class ImageComponent implements OnInit {
   performSearch() { 
     const criteria: SearchCriteria = this.form.value as SearchCriteria
     console.info('search criteria: ', criteria)
-  
-      // let type = this.ar.snapshot.params['type']
-      // let width = this.ar.snapshot.params['width']
-      // let height = this.ar.snapshot.params['height']
-      // let search = this.ar.snapshot.params['search']
     
      this._url = this.url + criteria.type + "/" + criteria.width + "/" + criteria.height + "/" + criteria.search
 
-    // this.svc.search(criteria) //= 
-    // // window.location.href.split('/')[0]
-    //   .then(result => {
-    //     console.log("\n\tRESULT", result);
-    //     this.form = this.createSearch();
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   })
-    // this.router.navigate(['/search', criteria.type, criteria.width, criteria.height, criteria.search]);
   }
 
   reset() {
@@ -83,5 +70,20 @@ export class ImageComponent implements OnInit {
     console.log("Random image")
     return this.images
   }
+
+  getQuote() {
+      const url ='https://type.fit/api/quotes'
+      // const i = Math.floor(Math.random() * 2000)
+      this.http.get(url).subscribe((res)=>{
+        this.data = res
+        console.log(this.data)
+      })
+      let random = Math.floor(Math.random() * this.data.length)
+      this.randomData = [this.data[random]];
+    }
+
+    ngOnDestroy(): void {
+      this.sub$.unsubscribe()
+    }
 
 }

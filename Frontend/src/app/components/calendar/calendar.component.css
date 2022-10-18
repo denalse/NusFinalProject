@@ -19,3 +19,5 @@ body {
 .cal-events {
     display: none !important;
 }
+
+@import '~@ctrl/ngx-emoji-mart/picker';

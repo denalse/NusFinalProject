@@ -15,6 +15,21 @@ export class CalendarComponent implements OnInit {
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
 
+  //emoji
+  // picker = new Picker();
+  message = '';
+  showEmojiPicker = false;
+  sets = [
+    'native',
+    'google',
+    'twitter',
+    'facebook',
+    'emojione',
+    'apple',
+    'messenger'
+  ];
+ set = <const> 'twitter';
+
   constructor() { }
 
   setView(view: CalendarView) {
@@ -56,6 +71,7 @@ export class CalendarComponent implements OnInit {
     //this.openAppointmentList(x)
   }
 
+  // drag events
   refresh = new Subject<void>();
 
   eventTimesChanged({ event, newStart, newEnd }: CalendarEventTimesChangedEvent): void {
@@ -63,5 +79,47 @@ export class CalendarComponent implements OnInit {
     event.end = newEnd;
     this.refresh.next();
   }
+
+  // edit events
+  // onEventEdit({ date, events }: { date: Date; events: CalendarEvent[] }) {
+
+  //   // const oldEvent = this.events.findIndex( old => old.id === event.id);
+  //   // this.events[oldEvent] = event;
+  //   // this.events = [...this.events];
+  // }
+
+  // delete events
+  // eventDelete({ event }: { event: CalendarEvent }): void => {
+  //   this.event = this.event.filter(e => e!== event);
+    
+
+  //   }
+
+  //emoji
+  
+  toggleEmojiPicker() {
+    console.log(this.showEmojiPicker);
+        this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
+  addEmoji(event: any) {
+    console.log(this.message)
+    const { message } = this;
+    console.log(message);
+    console.log(`${event.emoji.native}`)
+    const text = `${message}${event.emoji.native}`;
+
+    this.message = text;
+    // this.showEmojiPicker = false;
+  }
+
+  onFocus() {
+    console.log('focus');
+    this.showEmojiPicker = false;
+  }
+  onBlur() {
+    console.log('onblur')
+  }
+
 
 }

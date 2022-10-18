@@ -4,6 +4,11 @@ export interface SearchCriteria {
     height: number;
     search: string;
 }
+
+export interface SearchQuotes {
+    text: string;
+    author: string;
+}
 // export interface Register {
 //     id?: number;
 //     username: string;

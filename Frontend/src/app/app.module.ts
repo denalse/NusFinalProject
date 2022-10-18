@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -6,6 +6,8 @@ import { MaterialModule } from './material.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
+import { PickerModule } from '@ctrl/ngx-emoji-mart'
+
 
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -19,17 +21,20 @@ import { ImageComponent } from './components/image/image.component';
 
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { AlertComponent } from './components/alert/alert.component';
-
+// import { Emoji } from 'emoji-picker-element/shared';
+ 
 import { AccountService } from './services/account.service';
-import { CalendarService } from './services/calendar.service';
+import { DoService } from './services/do.service';
 import { AlertService } from './services/alert.service';
 import { JwtInterceptor } from './components/helpers/jwt.interceptor';
 import { ErrorInterceptor } from './components/helpers/error.interceptor';
 import { fakeBackendProvider } from './components/helpers/fakeBackend';
+import { AccountComponent } from './components/account/account.component';
 
 const appRoute: Routes = [
   { path: '', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'account/:username', component: AccountComponent },
   { path: 'register', component: RegisterComponent },
 
   { path: 'about', component: AboutComponent },
@@ -45,12 +50,12 @@ const appRoute: Routes = [
     AppComponent,
     WelcomeComponent, AboutComponent,
     ImageComponent, CalendarComponent,
-    LoginComponent, RegisterComponent, AlertComponent
+    LoginComponent, RegisterComponent, AlertComponent, AccountComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule,
     FormsModule, ReactiveFormsModule,
-    MaterialModule, MdbCarouselModule,
+    MaterialModule, MdbCarouselModule, PickerModule,
     RouterModule.forChild(appRoute),
     RouterModule.forRoot(appRoute), //, {useHash: true}
 
@@ -61,7 +66,7 @@ const appRoute: Routes = [
   ],
   exports: [RouterModule],
 
-  providers: [AccountService, AlertService, CalendarService,
+  providers: [AccountService, AlertService, DoService,
 
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
