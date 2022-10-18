@@ -1,91 +1,110 @@
 <div class="box-it">
-	<h2>Search Me</h2>
-	<span class="example-spacer1"></span>
-	<h2>Make Me Happy</h2>
-
-
 	<form [formGroup]="form" (ngSubmit)="performSearch()">
-		<table>
-			<tr>
-				<td>Type:</td>
-				<td>
-					<!-- <input type="text" size="20" formControlName="type" placeholder="Eg; g, p, red, green, blue"> -->
 
-					<select formControlName="type" aria-placeholder="Enter">
-						<option value="g">Gray</option>
-						<option value="p">Pixel</option>
-						<option value="red">Red</option>
-						<option value="green">Green</option>
-						<option value="blue">Blue</option>
-					</select>
+		<div class="row">
+			<div class="column">
+				<table>
+					<tr>
+						<th></th>
+						<th>
+							<h2>Search Me</h2>
+						</th>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td>
+							<select formControlName="type" aria-placeholder="Enter">
+								<option value="g">Gray</option>
+								<option value="p">Pixel</option>
+								<option value="red">Red</option>
+								<option value="green">Green</option>
+								<option value="blue">Blue</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Width:</td>
+						<td>
+							<input type="number" size="20" formControlName="width">
+						</td>
+					</tr>
+					<tr>
+						<td>Height:</td>
+						<td>
+							<input type="number" size="20" formControlName="height">
+						</td>
+					</tr>
+					<tr>
+						<td>Looking for:</td>
+						<td>
+							<input type="text" size="20" formControlName="search">
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<button class="example-spacer" type="button" (click)="reset()">
+								Reset
+							</button>
+							<span class="example-spacer"></span>
+							<button class="example-spacer" type="submit" [disabled]="form.invalid">
+								Search
+							</button>
+						</td>
+					</tr>
+				</table>
 
-					<!-- <button type="button" (click)="randomQuote()" style="float: right;">
-							Search Quote
-						</button> -->
+				<div class="box-image">
+					<!--*ngIf="criteria.width">> -->
+					<img [src]="_url">
+				</div>
 
-				</td>
-			</tr>
+			</div>
+			
+			<div class="column">
+				<table>
+					<tr>
+						<th></th>
+						<th>
+							<h2>Make me happy</h2>
+						</th>
+					</tr>
+					<tr>
+						<td></td>
+						<td><em>Need a motivation? I got you</em></td>
 
-			<tr>
-				<td>Width:</td>
-				<td>
-					<input type="number" size="30" formControlName="width">
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<button type="button" (click)="getQuote()">
+								Click me
+							</button>
+							<mat-icon class="icon" matSuffix>sentiment_very_satisfied</mat-icon>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<div *ngFor="let quote of randomData" style="text-align:center">
+								<h6>Author: {{ quote.author }}</h6>
+								<p>{{ quote.text }}</p>
+							</div>
+						</td>
 
-					<span class="example-spacer2"></span>
-
-					<button type="button" (click)="getQuote()">
-						Click me
-					</button>
-					<mat-icon class="icon" matSuffix>sentiment_very_satisfied</mat-icon>
-
-				</td>
-			</tr>
-			<tr>
-				<td>Height:</td>
-				<td>
-					<input type="number" size="30" formControlName="height">
-
-					<div *ngFor="let quote of randomData" style="text-align:center">
-						<h6>{{ quote.author }}</h6>
-						<p>{{ quote.text }}</p>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>Looking for:</td>
-				<td>
-					<input type="text" size="20" formControlName="search">
-
-				</td>
-			</tr>
-			<tr>
-				<td></td>
-				<td>
-					<button class="example-spacer" type="button" (click)="reset()">
-						Reset
-					</button>
-					<span class="example-spacer"></span>
-					<button class="example-spacer" type="submit" [disabled]="form.invalid">
-						Search
-					</button>
-				</td>
-			</tr>
-			<!-- <mat-card-content>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- <mat-card-content>
 				<button type="submit" (click)="randomImage()">
 					Search Image
 				</button>
 				
 				<img src="{{ images }}">
 			</mat-card-content> -->
-		</table>
-
-		<div class="box-image">
-			<!--*ngIf="criteria.width">> -->
-			<img [src]="_url">
-		</div>
-	</form>
-
-</div>
 
 <!-- <mat-card-content>
 	<button type="submit" (click)="show = !show">
@@ -93,5 +112,5 @@
 	</button>
 
 	<img *ngIf="show" src="{{ images }}">
-
+	
 </mat-card-content> -->
