@@ -46,11 +46,18 @@
             <mwl-calendar-month-view (dayClicked)="dayClicked($event.day)" *ngSwitchCase="CalendarView.Month"
                 [viewDate]="viewDate" [events]="events" 
                 [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)"
-                >
+                aria-placeholder="😀">
+            <select>
+                <option value="sad"><p>&#x1F608;</p>1</option>
+                <option value="happy"><p>&#x1F605;</p>2</option>
+                <option value="idk"><p>&#x1F60A;</p>3</option>
+            </select>
+            <h6>😀</h6>
+
             </mwl-calendar-month-view>
 
             <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
-            [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
+            [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">😀
             </mwl-calendar-week-view>
 
             <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
@@ -72,6 +79,12 @@
     </emoji-mart> -->
 
 </body>
+
+<!-- <select>
+    <option value="sad"><p>&#x1F608;</p>1</option>
+    <option value="happy"><p>&#x1F605;</p>2</option>
+    <option value="idk"><p>&#x1F60A;</p>3</option>
+</select> -->
 
 <input placeholder="Type a message. Hit Enter to send" type="text" (blur)="onBlur()" (focus)="onFocus()"
                 name="message" [(ngModel)]="message"> <button (click) ="toggleEmojiPicker()"> 😀</button><br>

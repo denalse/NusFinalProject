@@ -1,9 +1,18 @@
+MY MOOD PLANNER
+
 PROBLEMS:
     1. ngSubmit in register.html not working (needed to manually do (click) event)
     2. 3rd push done @ 3:06am 11 oct
     3. image.ts for quotes error in console log
+    4. integration of npl into calendar?
+      - because to be a mood tracker, need to be more cuourteous with your "reflection"
+      - to edit "event" with "personal diary" and emoji?
 
 
+DONE:
+    1. Home page
+    2. Search page
+    
 
   ____________________account.svc.ts___________________________
 

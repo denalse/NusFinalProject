@@ -3,18 +3,19 @@
 
   <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
     <mat-step [stepControl]="form1">
-      <form [formGroup]="form1" (ngSubmit)="form1Submit()" #formone="ngForm">
+      <!-- <form [formGroup]="form1" (ngSubmit)="form1Submit()" #formone="ngForm"> -->
+      <form [formGroup]="form1" #formone="ngForm">
         <ng-template matStepLabel>Fill out your username</ng-template>
         <mat-form-field>
           <input matInput placeholder="Eg; fred" formControlName="username" required>
         </mat-form-field>
         <div>
-          <button type="button" mat-button matStepperNext>Next</button>
+          <button type="button" (click)="form1Submit()" mat-button matStepperNext>Next</button>
         </div>
       </form>
     </mat-step>
     <mat-step [stepControl]="form2">
-      <form [formGroup]="form2" (ngSubmit)="form2Submit()" #formtwo="ngForm">
+      <form [formGroup]="form2" #formtwo="ngForm">
         <ng-template matStepLabel>Fill out your password</ng-template>
         <mat-form-field>
           <mat-icon (click)="passwordEye()" matSuffix> {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -23,7 +24,7 @@
         </mat-form-field>
         <div>
           <button type="button" mat-button matStepperPrevious>Back</button>
-          <button type="button" mat-button matStepperNext>Next</button>
+          <button type="button" (click)="form2Submit()" mat-button matStepperNext>Next</button>
         </div>
       </form>
     </mat-step>
@@ -33,9 +34,12 @@
       <div>
         <br>
         <button mat-button color="primary" type="button" (click)="stepper.reset()">Reset</button>
+        <button mat-button type="submit" (click)="form3()">Submit</button>
+        <!--
         <button mat-button type="submit" (click)="formone.ngSubmit.emit();formtwo.ngSubmit.emit()">
           Submit
         </button>
+      -->
       </div>
     </mat-step>
   </mat-horizontal-stepper>

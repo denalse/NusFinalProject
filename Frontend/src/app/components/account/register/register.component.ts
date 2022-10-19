@@ -18,6 +18,9 @@ export class RegisterComponent implements OnInit {
   form2!: FormGroup
   hide: boolean = true
 
+  username = ""
+  password = ""
+
   formSubmitAttempt!: boolean;
 
   // @Output()
@@ -31,8 +34,6 @@ export class RegisterComponent implements OnInit {
     this.form1 = this.addform1();
     this.form2 = this.addform2();
 
-    this.form = this.form1 && this.form2;
-
   }
 
   addform1() {
@@ -44,9 +45,11 @@ export class RegisterComponent implements OnInit {
   }
 
   form1Submit() {
-    const user: User = this.form1.value as User
-    console.info(">>>>> Register Form (username): ", user)
-    console.info(">>>>", this.form.value)
+    // const user: User = this.form1.value as User
+    // console.info(">>>>> Register Form (username): ", user)
+    this.username = this.form1.value.username
+    console.info(">>>>> Register Form (username): ", this.username)
+
   }
 
   addform2() {
@@ -55,21 +58,15 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  
   form2Submit() {
-    const user: User = this.form2.value as User
-    console.info(">>>>> Register Form (password): ", user)
-    console.info(">>>>FORM2>>>", this.form.value)
-
+    this.password = this.form2.value.password
+    console.info(">>>>> Register Form (password): ", this.password)
   }
-
-  // createForm(): FormGroup {
-  //   return this.form = this.fb.group({
-  //     email: this.fb.control<string>('', [ Validators.required, Validators.email ]),
-  //     password: this.fb.control<string>('', [ Validators.required, Validators.minLength(8) ]),
-  //     // passwordCfm: this.fb.control<string>('', [ Validators.required, Validators.minLength(1) ]) //confirm pw
-  //     terms: this.fb.control<boolean>(false, [ Validators.required ])
-  //   })
-  // }
+  
+  form3() {
+    console.info(`>>>> username: ${this.username}, password: ${this.password}`)
+  }
 
   // submitForm() {
   //   console.log("clicked")
@@ -89,10 +86,5 @@ export class RegisterComponent implements OnInit {
   passwordEye() {
     this.hide = !this.hide;
   }
-  // passwordEye2() {
-  //   this.hide = !this.hide;
-  // }
-
-
 
 }
