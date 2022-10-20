@@ -6,7 +6,9 @@ import { MaterialModule } from './material.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
-import { PickerModule } from '@ctrl/ngx-emoji-mart'
+
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { FlatpickrModule } from 'angularx-flatpickr';
 
 
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -55,8 +57,9 @@ const appRoute: Routes = [
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule,
     FormsModule, ReactiveFormsModule,
-    MaterialModule, MdbCarouselModule, PickerModule,
-    RouterModule.forChild(appRoute),
+    MaterialModule, MdbCarouselModule, 
+    NgbModalModule, FlatpickrModule.forRoot(),
+    // RouterModule.forChild(appRoute),
     RouterModule.forRoot(appRoute), //, {useHash: true}
 
     CalendarModule.forRoot({

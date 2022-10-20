@@ -1,10 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { startOfDay } from 'date-fns';
-import { CalendarView, CalendarEvent, CalendarEventTimesChangedEvent } from 'angular-calendar';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
+import { CalendarView, CalendarEvent, CalendarEventTimesChangedEvent, CalendarEventAction } from 'angular-calendar';
+
 import { Subject } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { colors } from 'src/app/models';
+
+// const colors: any = {
+//   red: {
+//     primary: '#ad2121',
+//     secondary: '#FAE3E3'
+//   },
+//   blue: {
+//     primary: '#1e90ff',
+//     secondary: '#D1E8FF'
+//   },
+//   yellow: {
+//     primary: '#e3bc08',
+//     secondary: '#FDF1BA'
+//   }
+// };
 
 @Component({
   selector: 'app-calendar',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css'],
 
@@ -14,9 +33,32 @@ export class CalendarComponent implements OnInit {
   viewDate: Date = new Date();
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
+  activeDayIsOpen: boolean = true;
+
+  @ViewChild('modalContent')
+  modalContent!: TemplateRef<any>;
+
+  refresh = new Subject<void>();
+
+  // @Input() view: string;
+
+  // @Input() viewDate: Date;
+
+  @Input() 
+  locale: string = 'en';
+
+  @Output() 
+  viewChange: EventEmitter<string> = new EventEmitter();
+
+  @Output() 
+  viewDateChange: EventEmitter<Date> = new EventEmitter();
+
+  modalData!: {
+    action: string;
+    event: CalendarEvent;
+  }
 
   //emoji
-  // picker = new Picker();
   message = '';
   showEmojiPicker = false;
   sets = [
@@ -28,9 +70,25 @@ export class CalendarComponent implements OnInit {
     'apple',
     'messenger'
   ];
- set = <const> 'twitter';
+  set = <const>'twitter';
 
-  constructor() { }
+  actions: CalendarEventAction[] = [
+    {
+      label: '<i class="fa fa-fw fa-pencil"></i>',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.handleEvent('Edited', event);
+      }
+    },
+    {
+      label: '<i class="fa fa-fw fa-times"></i>',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.events = this.events.filter(iEvent => iEvent !== event);
+        this.handleEvent('Deleted', event);
+      }
+    }
+  ];
+
+  constructor(private modal: NgbModal) { }
 
   setView(view: CalendarView) {
     this.view = view;
@@ -40,86 +98,83 @@ export class CalendarComponent implements OnInit {
 
   events: CalendarEvent[] = [
     {
-      id: "event-1",
-      start: startOfDay(new Date()),
-      title: 'First event',
-      draggable: true,
+      start: subDays(startOfDay(new Date()), 1),
+      end: addDays(new Date(), 1),
+      title: 'A 3 day event',
+      color: colors.red,
+      actions: this.actions
     },
+    // {
+    //   start: startOfDay(new Date()),
+    //   title: 'An event with no end date',
+    //   color: colors.yellow,
+    //   actions: this.actions
+    // },
+    // {
+    //   start: subDays(endOfMonth(new Date()), 3),
+    //   end: addDays(endOfMonth(new Date()), 3),
+    //   title: 'A long event that spans 2 months',
+    //   color: colors.blue
+    // },
     {
-      id: "event-2",
-      start: startOfDay(new Date()),
-      title: 'Second event',
-      draggable: true,
+      start: addHours(startOfDay(new Date()), 2),
+      end: new Date(),
+      title: 'A draggable and resizable event',
+      color: colors.yellow,
+      actions: this.actions,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
+      },
+      draggable: true
     }
-  ]
-
-  generateUid() {
-    const uid = Math.random().toString(36).substr(2, 9);
-    return `mdb-calendar-event-${uid}`;
-  }
-
-  onEventAdd(event: CalendarEvent) {
-    event.id = this.generateUid();
-    this.events = [...this.events, event];
-  }
-
+  ];
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    console.log(date);
-    console.log(events);
-    //let x=this.adminService.dateFormat(date)
-    //this.openAppointmentList(x)
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+        this.viewDate = date;
+      }
+    }
   }
 
   // drag events
-  refresh = new Subject<void>();
 
   eventTimesChanged({ event, newStart, newEnd }: CalendarEventTimesChangedEvent): void {
     event.start = newStart;
     event.end = newEnd;
+    this.handleEvent('Dropped or resized', event);
     this.refresh.next();
   }
 
+  handleEvent(action: string, event: CalendarEvent): void {
+    this.modalData = { event, action };
+    this.modal.open(this.modalContent, { size: 'lg' });
+  }
   // edit events
-  // onEventEdit({ date, events }: { date: Date; events: CalendarEvent[] }) {
-
-  //   // const oldEvent = this.events.findIndex( old => old.id === event.id);
-  //   // this.events[oldEvent] = event;
-  //   // this.events = [...this.events];
-  // }
-
-  // delete events
-  // eventDelete({ event }: { event: CalendarEvent }): void => {
-  //   this.event = this.event.filter(e => e!== event);
-    
-
-  //   }
-
-  //emoji
-  
-  toggleEmojiPicker() {
-    console.log(this.showEmojiPicker);
-        this.showEmojiPicker = !this.showEmojiPicker;
+  addEvent(): void {
+    this.events.push({
+      title: 'New event',
+      start: startOfDay(new Date()),
+      end: endOfDay(new Date()),
+      color: colors.red,
+      draggable: true,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
+      }
+    });
+    this.refresh.next();
   }
 
-  addEmoji(event: any) {
-    console.log(this.message)
-    const { message } = this;
-    console.log(message);
-    console.log(`${event.emoji.native}`)
-    const text = `${message}${event.emoji.native}`;
-
-    this.message = text;
-    // this.showEmojiPicker = false;
-  }
-
-  onFocus() {
-    console.log('focus');
-    this.showEmojiPicker = false;
-  }
   onBlur() {
     console.log('onblur')
   }
-
 
 }

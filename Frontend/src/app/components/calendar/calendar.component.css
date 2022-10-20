@@ -20,4 +20,11 @@ body {
     display: none !important;
 }
 
+h3 {
+    margin: 0 0 10px;
+}
+.btn-success {
+    background-color: pink !important;
+}
+
 @import '~@ctrl/ngx-emoji-mart/picker';

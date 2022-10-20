@@ -37,58 +37,112 @@
             </div>
         </div>
 
+        <!-- <span class="example-spacer"></span> -->
+        <br><br><br>
+        <h3>
+            Edit events
+            <button class="btn btn-success pull-right" (click)="addEvent()">
+                Add new
+            </button>
+            <div class="clearfix"></div>
+        </h3>
 
+        <table class="table table-bordered">
+
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Primary color</th>
+                <th>Secondary color</th>
+                <th>Starts at</th>
+                <th>Ends at</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+          
+            <tbody>
+              <tr *ngFor="let event of events; let index = index">
+                <td>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="event.title"
+                    (keyup)="refresh.next()">
+                </td>
+                <!-- <td>
+                  <input
+                    type="color"
+                    [(ngModel)]="event.color.primary"
+                    (change)="refresh.next()">
+                </td>
+                <td>
+                  <input
+                    type="color"
+                    [(ngModel)]="event.color.secondary"
+                    (change)="refresh.next()">
+                </td> -->
+                <td>
+                  <!-- <input
+                    class="form-control"
+                    type="text"
+                    mwlFlatpickr
+                    [(ngModel)]="event.start"
+                    (ngModelChange)="refresh.next()"
+                    [altInput]="true"
+                    [convertModelValue]="true"
+                    [enableTime]="true"
+                    dateFormat="Y-m-dTH:i"
+                    altFormat="F j, Y H:i"
+                    placeholder="Not set"> -->
+                </td>
+                <td>
+                  <!-- <input
+                    class="form-control"
+                    type="text"
+                    mwlFlatpickr
+                    [(ngModel)]="event.end"
+                    (ngModelChange)="refresh.next()"
+                    [altInput]="true"
+                    [convertModelValue]="true"
+                    [enableTime]="true"
+                    dateFormat="Y-m-dTH:i"
+                    altFormat="F j, Y H:i"
+                    placeholder="Not set"> -->
+                </td>
+                <td>
+                  <button
+                    class="btn btn-danger"
+                    (click)="events.splice(index, 1); refresh.next()">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          
+          </table>
     </div>
+    
     <!-- <span class="example-spacer"></span> -->
     <div class="example-spacer">
         <div [ngSwitch]="view">
 
             <mwl-calendar-month-view (dayClicked)="dayClicked($event.day)" *ngSwitchCase="CalendarView.Month"
-                [viewDate]="viewDate" [events]="events" 
-                [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)"
-                aria-placeholder="😀">
-            <select>
-                <option value="sad"><p>&#x1F608;</p>1</option>
-                <option value="happy"><p>&#x1F605;</p>2</option>
-                <option value="idk"><p>&#x1F60A;</p>3</option>
-            </select>
-            <h6>😀</h6>
+                [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+                (eventTimesChanged)="eventTimesChanged($event)" aria-placeholder="😀">
 
             </mwl-calendar-month-view>
 
             <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
-            [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">😀
+                [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">😀
             </mwl-calendar-week-view>
 
             <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
-            [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
+                [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
             </mwl-calendar-day-view>
 
         </div>
     </div>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
-
-    <!-- <mwl-calendar [events]="events" (eventAdded)="onEventAdd($event)"></mwl-calendar> -->
-    <!-- <textarea #input  > </textarea>
-    
-    <emoji-mart
-       title="Pick your emoji…"
-       (emojiSelect)="addEmoji($event)"
-       [hideObsolete]="true"
-       [isNative]="true">
-    </emoji-mart> -->
 
 </body>
 
-<!-- <select>
-    <option value="sad"><p>&#x1F608;</p>1</option>
-    <option value="happy"><p>&#x1F605;</p>2</option>
-    <option value="idk"><p>&#x1F60A;</p>3</option>
-</select> -->
-
-<input placeholder="Type a message. Hit Enter to send" type="text" (blur)="onBlur()" (focus)="onFocus()"
-                name="message" [(ngModel)]="message"> <button (click) ="toggleEmojiPicker()"> 😀</button><br>
-    <emoji-mart class="emoji-mart"  *ngIf="showEmojiPicker" (emojiSelect)="addEmoji($event)" title="Pick your emoji…"></emoji-mart>
-
-            
 

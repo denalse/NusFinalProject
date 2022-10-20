@@ -66,6 +66,9 @@ export class RegisterComponent implements OnInit {
   
   form3() {
     console.info(`>>>> username: ${this.username}, password: ${this.password}`)
+    const getForm = "username: " + this.username + "\npassword: " + this.password
+    console.info(`>>>> Form: ${getForm}`)
+    return getForm
   }
 
   // submitForm() {
