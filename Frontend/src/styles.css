@@ -12,8 +12,7 @@ body {
     
 }
 
-@import '~@ctrl/ngx-emoji-mart/picker';
-
+/* @import '../node_modules/flatpickr/dist/flatpickr.min.css'; */
 /* .text {
     height: 500px;
     width: 850px;

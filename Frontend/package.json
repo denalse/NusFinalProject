@@ -27,7 +27,6 @@
     "angularx-flatpickr": "^7.0.0",
     "bootstrap": "^5.2.2",
     "date-fns": "^2.29.3",
-    "emoji-picker-element": "^1.13.0",
     "flatpickr": "^4.6.13",
     "mdb-angular-ui-kit": "^3.0.0",
     "rxjs": "~7.5.0",

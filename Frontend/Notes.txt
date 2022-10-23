@@ -12,6 +12,8 @@ PROBLEMS:
 DONE:
     1. Home page
     2. Search page
+    3. @imports line 25 of angular.json 
+      * add import (for calendar and flatpickr css styling)
     
 
   ____________________account.svc.ts___________________________

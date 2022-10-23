@@ -6,21 +6,6 @@ import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { colors } from 'src/app/models';
 
-// const colors: any = {
-//   red: {
-//     primary: '#ad2121',
-//     secondary: '#FAE3E3'
-//   },
-//   blue: {
-//     primary: '#1e90ff',
-//     secondary: '#D1E8FF'
-//   },
-//   yellow: {
-//     primary: '#e3bc08',
-//     secondary: '#FDF1BA'
-//   }
-// };
-
 @Component({
   selector: 'app-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,17 +25,13 @@ export class CalendarComponent implements OnInit {
 
   refresh = new Subject<void>();
 
-  // @Input() view: string;
-
-  // @Input() viewDate: Date;
-
-  @Input() 
+  @Input()
   locale: string = 'en';
 
-  @Output() 
+  @Output()
   viewChange: EventEmitter<string> = new EventEmitter();
 
-  @Output() 
+  @Output()
   viewDateChange: EventEmitter<Date> = new EventEmitter();
 
   modalData!: {
@@ -98,11 +79,15 @@ export class CalendarComponent implements OnInit {
 
   events: CalendarEvent[] = [
     {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions
+      start: startOfDay(new Date()),
+      end: new Date(),
+      title: '',
+      actions: this.actions,
+      // resizable: {
+      //   beforeStart: true,
+      //   afterEnd: true
+      // },
+      draggable: true
     },
     // {
     //   start: startOfDay(new Date()),
@@ -116,18 +101,18 @@ export class CalendarComponent implements OnInit {
     //   title: 'A long event that spans 2 months',
     //   color: colors.blue
     // },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: new Date(),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    }
+    // {
+    //   start: addHours(startOfDay(new Date()), 2),
+    //   end: new Date(),
+    //   title: 'A draggable and resizable event',
+    //   color: colors.yellow,
+    //   actions: this.actions,
+    //   resizable: {
+    //     beforeStart: true,
+    //     afterEnd: true
+    //   },
+    //   draggable: true
+    // }
   ];
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -160,8 +145,8 @@ export class CalendarComponent implements OnInit {
   // edit events
   addEvent(): void {
     this.events.push({
-      title: 'New event',
-      start: startOfDay(new Date()),
+      title: '',
+      start: endOfDay(new Date()),
       end: endOfDay(new Date()),
       color: colors.red,
       draggable: true,

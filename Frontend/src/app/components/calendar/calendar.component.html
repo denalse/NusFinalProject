@@ -40,7 +40,7 @@
         <!-- <span class="example-spacer"></span> -->
         <br><br><br>
         <h3>
-            Edit events
+            My thoughts
             <button class="btn btn-success pull-right" (click)="addEvent()">
                 Add new
             </button>
@@ -51,9 +51,7 @@
 
             <thead>
               <tr>
-                <th>Title</th>
-                <th>Primary color</th>
-                <th>Secondary color</th>
+                <th>Description</th>
                 <th>Starts at</th>
                 <th>Ends at</th>
                 <th>Remove</th>
@@ -67,36 +65,11 @@
                     type="text"
                     class="form-control"
                     [(ngModel)]="event.title"
-                    (keyup)="refresh.next()">
-                </td>
-                <!-- <td>
-                  <input
-                    type="color"
-                    [(ngModel)]="event.color.primary"
-                    (change)="refresh.next()">
+                    (keyup)="refresh.next()"
+                    placeholder="How are you feeling?">
                 </td>
                 <td>
                   <input
-                    type="color"
-                    [(ngModel)]="event.color.secondary"
-                    (change)="refresh.next()">
-                </td> -->
-                <td>
-                  <!-- <input
-                    class="form-control"
-                    type="text"
-                    mwlFlatpickr
-                    [(ngModel)]="event.start"
-                    (ngModelChange)="refresh.next()"
-                    [altInput]="true"
-                    [convertModelValue]="true"
-                    [enableTime]="true"
-                    dateFormat="Y-m-dTH:i"
-                    altFormat="F j, Y H:i"
-                    placeholder="Not set"> -->
-                </td>
-                <td>
-                  <!-- <input
                     class="form-control"
                     type="text"
                     mwlFlatpickr
@@ -107,7 +80,21 @@
                     [enableTime]="true"
                     dateFormat="Y-m-dTH:i"
                     altFormat="F j, Y H:i"
-                    placeholder="Not set"> -->
+                    placeholder="Not set">
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    mwlFlatpickr
+                    [(ngModel)]="event.end"
+                    (ngModelChange)="refresh.next()"
+                    [altInput]="true"
+                    [convertModelValue]="true"
+                    [enableTime]="true"
+                    dateFormat="Y-m-dTH:i"
+                    altFormat="F j, Y H:i"
+                    placeholder="Not set">
                 </td>
                 <td>
                   <button

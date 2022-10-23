@@ -1,37 +1,37 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
+import { MaterialModule } from './material.module';
 
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FlatpickrModule } from 'angularx-flatpickr';
+// import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 
 
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { AppComponent } from './app.component';
-import { RegisterComponent } from './components/account/register/register.component';
 import { AboutComponent } from './components/about/about.component';
-import { WelcomeComponent } from './components/welcome.component';
 import { LoginComponent } from './components/account/login/login.component';
+import { RegisterComponent } from './components/account/register/register.component';
 import { ImageComponent } from './components/image/image.component';
+import { WelcomeComponent } from './components/welcome.component';
 
-import { CalendarComponent } from './components/calendar/calendar.component';
 import { AlertComponent } from './components/alert/alert.component';
-// import { Emoji } from 'emoji-picker-element/shared';
+import { CalendarComponent } from './components/calendar/calendar.component';
  
-import { AccountService } from './services/account.service';
-import { DoService } from './services/do.service';
-import { AlertService } from './services/alert.service';
-import { JwtInterceptor } from './components/helpers/jwt.interceptor';
+import { AccountComponent } from './components/account/account.component';
 import { ErrorInterceptor } from './components/helpers/error.interceptor';
 import { fakeBackendProvider } from './components/helpers/fakeBackend';
-import { AccountComponent } from './components/account/account.component';
+import { JwtInterceptor } from './components/helpers/jwt.interceptor';
+import { AccountService } from './services/account.service';
+import { AlertService } from './services/alert.service';
+import { DoService } from './services/do.service';
 
 const appRoute: Routes = [
   { path: '', component: WelcomeComponent },
@@ -58,7 +58,8 @@ const appRoute: Routes = [
     BrowserModule, BrowserAnimationsModule, HttpClientModule,
     FormsModule, ReactiveFormsModule,
     MaterialModule, MdbCarouselModule, 
-    NgbModalModule, FlatpickrModule.forRoot(),
+    NgbModalModule, FlatpickrModule.forRoot(), 
+
     // RouterModule.forChild(appRoute),
     RouterModule.forRoot(appRoute), //, {useHash: true}
 

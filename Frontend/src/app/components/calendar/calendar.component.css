@@ -20,6 +20,11 @@ body {
     display: none !important;
 }
 
+table {
+    border-collapse: separate;
+    border-spacing: 20px;
+}
+
 h3 {
     margin: 0 0 10px;
 }
@@ -27,4 +32,4 @@ h3 {
     background-color: pink !important;
 }
 
-@import '~@ctrl/ngx-emoji-mart/picker';
+/* @import './flatpickr/dist/flatpickr.css'; */
