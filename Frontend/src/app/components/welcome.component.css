@@ -1,6 +1,6 @@
 #gif1 {
     /* margin: 150px 50px 50px 150px; */
-    padding-top: 8%;
+    padding-top: 10px;
     background-color: transparent;
     height: 100%;
     width: 100%;
@@ -20,4 +20,17 @@
     -webkit-text-fill-color:transparent;
     -webkit-background-clip: text;
     background-repeat: no-repeat;
+}
+
+.box-it {
+    /* margin: 50px 100px; */
+    border: none;
+    width: 500px;
+    padding: 30px;
+    position: relative;
+    top: 120px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgb(219, 65, 186);
+    background: linear-gradient(90deg, rgb(227, 164, 243) 0%, rgb(243, 151, 215) 100%);
 }

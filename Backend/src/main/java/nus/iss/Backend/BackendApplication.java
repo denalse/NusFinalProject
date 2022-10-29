@@ -1,4 +1,4 @@
-package nus.iss.Backend.Backend;
+package nus.iss.Backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -54,6 +54,7 @@
                 <th>Description</th>
                 <th>Starts at</th>
                 <th>Ends at</th>
+                <th>Save</th>
                 <th>Remove</th>
               </tr>
             </thead>
@@ -96,6 +97,13 @@
                     altFormat="F j, Y H:i"
                     placeholder="Not set">
                 </td>
+                <td>
+                    <button
+                      class="btn btn-secondary"
+                      (click)="events.splice(index, 0); refresh.next()">
+                      Save
+                    </button>
+                  </td>
                 <td>
                   <button
                     class="btn btn-danger"

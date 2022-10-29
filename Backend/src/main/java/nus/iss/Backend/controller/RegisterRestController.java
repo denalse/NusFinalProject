@@ -1,4 +1,4 @@
-package nus.iss.Backend.Backend.controller;
+package nus.iss.Backend.controller;
 
 import java.util.Optional;
 
@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import nus.iss.Backend.Backend.model.Register;
-import nus.iss.Backend.Backend.model.Response;
-import nus.iss.Backend.Backend.repository.RegisterRepository;
-import nus.iss.Backend.Backend.service.RegisterService;
+import nus.iss.Backend.model.Response;
+import nus.iss.Backend.model.User;
+import nus.iss.Backend.repository.UserRepository;
+import nus.iss.Backend.security.service.UserService;
 
 @RestController
 @RequestMapping(path="/register")
 public class RegisterRestController {
 
     @Autowired
-    private RegisterRepository regRepo;
+    private UserRepository regRepo;
 
     // @Autowired
     // private RegisterService regSvc;
@@ -31,15 +31,15 @@ public class RegisterRestController {
 
 
     @PostMapping(path="/addRegister", consumes = MediaType.APPLICATION_JSON_VALUE )
-    public Optional<Register> createRegister(@RequestBody String payload) {
+    public Optional<User> createRegister(@RequestBody String payload) {
 
-        Register reg;
+        User reg;
         Response resp;
 
         logger.info("Payload: %s".formatted(payload));
 
         try {
-            reg = Register.create(payload);
+            reg = User.create(payload);
             // regRepo.insertContact(reg);
 
             resp = new Response();

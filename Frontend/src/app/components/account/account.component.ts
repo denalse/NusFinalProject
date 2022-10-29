@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { first, Subscription } from 'rxjs';
+import { User } from 'src/app/models';
 
 @Component({
   selector: 'app-account',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
-  constructor() { }
+  // currentUser!: User;
+  // currentUserSubscription: Subscription;
+  // users: User[] = [];
 
-  ngOnInit(): void {
+  constructor() {
+
   }
-
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
 }
+
+
+

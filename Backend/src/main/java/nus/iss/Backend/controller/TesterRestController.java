@@ -1,4 +1,4 @@
-package nus.iss.Backend.Backend.controller;
+package nus.iss.Backend.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

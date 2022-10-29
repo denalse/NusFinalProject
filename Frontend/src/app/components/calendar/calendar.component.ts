@@ -19,6 +19,7 @@ export class CalendarComponent implements OnInit {
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   activeDayIsOpen: boolean = true;
+  saveDisabled = true;
 
   @ViewChild('modalContent')
   modalContent!: TemplateRef<any>;
@@ -60,6 +61,13 @@ export class CalendarComponent implements OnInit {
         this.handleEvent('Edited', event);
       }
     },
+    // {
+    //   label: '<i class="fa fa-fw fa-pencil"></i>',
+    //   onClick: ({ event }: { event: CalendarEvent }): void => {
+    //     this.events = this.events.entries(push);
+    //     this.handleEvent('Saved', event);
+    //   }
+    // },
     {
       label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
@@ -83,6 +91,7 @@ export class CalendarComponent implements OnInit {
       end: new Date(),
       title: '',
       actions: this.actions,
+      
       // resizable: {
       //   beforeStart: true,
       //   afterEnd: true
@@ -127,6 +136,7 @@ export class CalendarComponent implements OnInit {
         this.viewDate = date;
       }
     }
+    console.log(this.viewDate)
   }
 
   // drag events
@@ -136,11 +146,13 @@ export class CalendarComponent implements OnInit {
     event.end = newEnd;
     this.handleEvent('Dropped or resized', event);
     this.refresh.next();
+    this.openPopup()
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
+    this.openPopup()
   }
   // edit events
   addEvent(): void {
@@ -155,7 +167,20 @@ export class CalendarComponent implements OnInit {
         afterEnd: true
       }
     });
-    this.refresh.next();
+    // this.refresh.next();
+  }
+  saveEvent(): void {
+    title: ''
+
+  }
+
+  displayStyle = "none";
+
+  openPopup() {
+    this.displayStyle = "block";
+  }
+  closePopup() {
+    this.displayStyle = "none";
   }
 
   onBlur() {

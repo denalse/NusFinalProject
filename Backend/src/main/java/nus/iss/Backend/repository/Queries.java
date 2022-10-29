@@ -1,4 +1,4 @@
-package nus.iss.Backend.Backend.repository;
+package nus.iss.Backend.repository;
 
 public interface Queries {
     public static final String SQL_INSERT_CONTACT =

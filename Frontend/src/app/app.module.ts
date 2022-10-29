@@ -1,4 +1,4 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,7 +10,6 @@ import { MaterialModule } from './material.module';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FlatpickrModule } from 'angularx-flatpickr';
 // import { Ng2FlatpickrModule } from 'ng2-flatpickr';
-
 
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -26,15 +25,15 @@ import { AlertComponent } from './components/alert/alert.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
  
 import { AccountComponent } from './components/account/account.component';
-import { ErrorInterceptor } from './components/helpers/error.interceptor';
 import { fakeBackendProvider } from './components/helpers/fakeBackend';
-import { JwtInterceptor } from './components/helpers/jwt.interceptor';
-import { AccountService } from './services/account.service';
 import { AlertService } from './services/alert.service';
-import { DoService } from './services/do.service';
+import { AuthService } from './services/auth.service';
+import { StorageService } from './services/storage.service';
+import { UserService } from './services/user.service';
 
 const appRoute: Routes = [
   { path: '', component: WelcomeComponent },
+  
   { path: 'login', component: LoginComponent },
   { path: 'account/:username', component: AccountComponent },
   { path: 'register', component: RegisterComponent },
@@ -42,7 +41,7 @@ const appRoute: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'search', component: ImageComponent },
   // { path: 'search/:type/:width/:height/:search', component: ImageComponent },
-  { path: 'plan', component: CalendarComponent },
+  { path: 'mood', component: CalendarComponent },
 
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ]
@@ -70,10 +69,7 @@ const appRoute: Routes = [
   ],
   exports: [RouterModule],
 
-  providers: [AccountService, AlertService, DoService,
-
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  providers: [AlertService, UserService, AuthService, StorageService,
 
     // provider used to create fake backend
     fakeBackendProvider

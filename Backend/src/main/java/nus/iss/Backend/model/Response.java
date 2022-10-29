@@ -1,4 +1,4 @@
-package nus.iss.Backend.Backend.model;
+package nus.iss.Backend.model;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;

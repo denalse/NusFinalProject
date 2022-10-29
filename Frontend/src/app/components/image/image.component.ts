@@ -5,8 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faker } from '@faker-js/faker';
 import { Subscription } from 'rxjs';
 import { SearchCriteria } from 'src/app/models';
-import { DoService } from 'src/app/services/do.service';
-
 
 @Component({
   selector: 'app-image',
@@ -30,7 +28,7 @@ export class ImageComponent implements OnInit, OnDestroy  {
   images = faker.image.sports()
 
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private svc: DoService, 
+  constructor(private fb: FormBuilder, private http: HttpClient,
     private ar: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {

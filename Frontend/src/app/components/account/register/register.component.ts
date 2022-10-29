@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models';
-import { AccountService } from 'src/app/services/account.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -23,11 +23,11 @@ export class RegisterComponent implements OnInit {
 
   formSubmitAttempt!: boolean;
 
-  // @Output()
-  // registerListUpdated = new EventEmitter<any>();
+  isSuccessful = false;
+  isSignUpFailed = false;
+  errorMessage = '';
 
-  constructor(private fb: FormBuilder, private svc: AccountService,
-    private router: Router, private ar: ActivatedRoute) { }
+  constructor(private fb: FormBuilder, private authService: AuthService) { }
 
   ngOnInit(): void {
     // this.form = this.createForm();
@@ -45,8 +45,6 @@ export class RegisterComponent implements OnInit {
   }
 
   form1Submit() {
-    // const user: User = this.form1.value as User
-    // console.info(">>>>> Register Form (username): ", user)
     this.username = this.form1.value.username
     console.info(">>>>> Register Form (username): ", this.username)
 
@@ -66,19 +64,29 @@ export class RegisterComponent implements OnInit {
   
   form3() {
     console.info(`>>>> username: ${this.username}, password: ${this.password}`)
+    // const getForm: User = this.form.value as User
+    this.form = this.addform1(), this.addform2();
+    console.info(this.form)
     const getForm = "username: " + this.username + "\npassword: " + this.password
     console.info(`>>>> Form: ${getForm}`)
     return getForm
   }
 
-  // submitForm() {
-  //   console.log("clicked")
-  //   const register: Register = this.form.value as Register
-  //   console.info(">>>>> Register Form: ", register)
-  //   this.form = this.createForm()
-  //   this.onNewRegister.next(register)
-  //   this.registerListUpdated.emit(true);
+  // onSubmit(): void {
 
+  //   this.form = this.addform1(), this.addform2();
+    
+  //   this.authService.register(this.username, this.password).subscribe({
+  //     next: data => {
+  //       console.log(data);
+  //       this.isSuccessful = true;
+  //       this.isSignUpFailed = false;
+  //     },
+  //     error: err => {
+  //       this.errorMessage = err.error.message;
+  //       this.isSignUpFailed = true;
+  //     }
+  //   });
   // }
 
   reset() {
