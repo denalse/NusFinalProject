@@ -4,16 +4,12 @@ import java.io.StringReader;
 
 import javax.persistence.*;
 
-import org.springframework.jdbc.support.rowset.SqlRowSet;
-
-import jakarta.json.Json;
-import jakarta.json.JsonObject;
-import jakarta.json.JsonReader;
 import lombok.*;
 
 @Getter
 @Setter
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "user")
 

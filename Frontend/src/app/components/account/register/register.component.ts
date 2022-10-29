@@ -26,6 +26,9 @@ export class RegisterComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
+  isSubmitted = false;
+
+  userForm!: User;
 
   constructor(private fb: FormBuilder, private authService: AuthService) { }
 
@@ -62,36 +65,34 @@ export class RegisterComponent implements OnInit {
     console.info(">>>>> Register Form (password): ", this.password)
   }
   
-  form3() {
+  submit() {
+    this.isSubmitted = true;
     console.info(`>>>> username: ${this.username}, password: ${this.password}`)
-    // const getForm: User = this.form.value as User
+    this.userForm = {username: this.username, password: this.password}
     this.form = this.addform1(), this.addform2();
     console.info(this.form)
-    const getForm = "username: " + this.username + "\npassword: " + this.password
-    console.info(`>>>> Form: ${getForm}`)
-    return getForm
+    // const getForm = "username: " + this.username + "\npassword: " + this.password
+    console.info(`>>>> Form: ${this.userForm}`)
+    this.authService.register(this.userForm).subscribe({ 
+      next: data => {
+        console.log(data);
+        this.isSuccessful = true;
+        this.isSignUpFailed = false;
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isSignUpFailed = true;
+      }
+    });
   }
 
-  // onSubmit(): void {
-
-  //   this.form = this.addform1(), this.addform2();
-    
-  //   this.authService.register(this.username, this.password).subscribe({
-  //     next: data => {
-  //       console.log(data);
-  //       this.isSuccessful = true;
-  //       this.isSignUpFailed = false;
-  //     },
-  //     error: err => {
-  //       this.errorMessage = err.error.message;
-  //       this.isSignUpFailed = true;
-  //     }
-  //   });
-  // }
-
   reset() {
-    this.form.reset();
-    this.formSubmitAttempt = false;
+    this.form1.reset();
+    this.form2.reset();
+    this.isSubmitted = false;
+    this.isSuccessful = false;
+    this.isSignUpFailed = false;
+    console.log("RESET FORM")
   }
 
   passwordEye() {

@@ -29,7 +29,6 @@ export interface User {
     id?: string;
     username: string;
     password: string;
-    token?: string;
 }
 
 export class Alert {
@@ -53,7 +52,5 @@ export enum AlertType {
 }
 
 export interface Response {
-    code: number;
     message?: string;
-    data?: any;
 }
