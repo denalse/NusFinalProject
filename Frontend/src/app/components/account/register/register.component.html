@@ -31,7 +31,7 @@
     <mat-step>
       <ng-template matStepLabel>Submit</ng-template>
       <span *ngIf="!isSubmitted">You have completed the form. To proceed, click Submit.</span>
-      <span class="successMessage" *ngIf="isSubmitted && isSuccessful ">Account has been Registered!</span>
+      <span class="successMessage" *ngIf="isSubmitted && isSuccessful ">Account has been Registered! Please wait..</span>
       <span class="errorMessage" *ngIf="isSignUpFailed">{{ errorMessage }} <br> Please click reset and try again :(</span>
       <div>
         <br>

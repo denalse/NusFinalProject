@@ -22,44 +22,44 @@ export class LoginComponent implements OnInit {
   userForm!: User;
 
 
-  constructor(private authService: AuthService, private storageService: StorageService, private fb: FormBuilder) {  }
+  constructor(private authService: AuthService, private storageService: StorageService, private fb: FormBuilder) { }
 
-     ngOnInit(): void {
-      if (this.storageService.isLoggedIn()) {
+  ngOnInit(): void {
+    if (this.storageService.isLoggedIn()) {
+      this.isLoggedIn = true;
+    }
+    this.initForm();
+  }
+
+  initForm() {
+    return this.form = this.fb.group({
+      username: this.fb.control<string>('', [Validators.required]),
+      password: this.fb.control<string>('', [Validators.required])
+    })
+  }
+
+  submit(): void {
+    console.log("FORM SUBMIT")
+    // this.userForm = {username: this.form.controls.username.value , password: this.form.controls.password.value};
+    const { username, password } = this.form.value;
+    this.authService.login(username, password).subscribe({
+      next: data => {
+        this.storageService.saveUser(data);
+
+        this.isLoginFailed = false;
         this.isLoggedIn = true;
+        this.reloadPage();
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
       }
-      this.initForm();
-    }
+    });
+  }
 
-    initForm() {
-      return this.form = this.fb.group({
-        username: this.fb.control<string>('', [Validators.required]),
-        password: this.fb.control<string>('', [Validators.required])
-      })
-    }
-  
-    submit() {
-      console.log("FORM SUBMIT")
-      // this.userForm = {username: this.form.controls.username.value , password: this.form.controls.password.value};
-      const { username, password } = this.form.value;
-      this.authService.login(username, password).subscribe({
-        next: data => {
-          this.storageService.saveUser(data);
-  
-          this.isLoginFailed = false;
-          this.isLoggedIn = true;
-          this.reloadPage();
-        },
-        error: err => {
-          this.errorMessage = err.error.message;
-          this.isLoginFailed = true;
-        }
-      });
-    }
-  
-    reloadPage(): void {
-      window.location.reload();
-    }
+  reloadPage(): void {
+    window.location.reload();
+  }
   // const user: User = this.form.value as User
   // console.info(">>>>> Login Form: ", user)
   // console.info(">>>>", this.form.value)

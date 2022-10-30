@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs';
-import { AlertService } from '../services/alert.service';
+import { AuthService } from '../services/auth.service';
+import { StorageService } from '../services/storage.service';
+import { User } from '../models';
 
 @Component({
   selector: 'app-welcome',
@@ -14,31 +14,61 @@ export class WelcomeComponent implements OnInit {
   showSpinner!: boolean
 
   form!: FormGroup
-  loading = false;
-  submitted = false;  
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
   componentType: string = 'Login';
+  username!: string;
+
+  user!: User[]
 
 
-  constructor(private fb: FormBuilder, private router: Router, private ar: ActivatedRoute,
-    private alertSvc: AlertService) {  }
+  constructor(private authService: AuthService, private storageService: StorageService, private fb: FormBuilder) { }
+
 
   ngOnInit() {
-    this.form = this.fb.group({
-        username: ['', Validators.required],
-        password: ['', Validators.required]
+    if (this.storageService.isLoggedIn()) {
+      this.isLoggedIn = true;
+    }
+    this.initForm();
+
+
+  }
+
+  initForm() {
+    return this.form = this.fb.group({
+      username: this.fb.control<string>('', [Validators.required]),
+      password: this.fb.control<string>('', [Validators.required])
+    })
+  }
+
+  submit() {
+    console.log("FORM SUBMIT")
+    // this.userForm = {username: this.form.controls.username.value , password: this.form.controls.password.value};
+    const { username, password } = this.form.value;
+    this.authService.login(username, password).subscribe({
+      next: data => {
+        this.storageService.saveUser(data);
+
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.reloadPage();
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      }
     });
-}
+  }
 
+  reloadPage(): void {
+    window.location.reload();
+  }
 
-
-  // const user: User = this.form.value as User
-  // console.info(">>>>> Login Form: ", user)
-  // console.info(">>>>", this.form.value)  
-  
-  toggleShowApp(type: string){
-    if(type == 'Login'){
+  toggleShowApp(type: string) {
+    if (type == 'Login') {
       this.componentType = 'Login';
-    }else{
+    } else {
       this.componentType = 'Register';
       // this.getAllContacts();
     }
