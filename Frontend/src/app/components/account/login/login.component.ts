@@ -40,9 +40,9 @@ export class LoginComponent implements OnInit {
   
     submit() {
       console.log("FORM SUBMIT")
-      this.userForm = {username: this.form.controls.username.value , password: this.form.controls.password.value};
-  
-      this.authService.login(this.userForm).subscribe({
+      // this.userForm = {username: this.form.controls.username.value , password: this.form.controls.password.value};
+      const { username, password } = this.form.value;
+      this.authService.login(username, password).subscribe({
         next: data => {
           this.storageService.saveUser(data);
   

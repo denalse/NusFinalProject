@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
 
   userForm!: User;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private route: Router) { }
 
   ngOnInit(): void {
     // this.form = this.createForm();
@@ -72,18 +72,22 @@ export class RegisterComponent implements OnInit {
     this.form = this.addform1(), this.addform2();
     console.info(this.form)
     // const getForm = "username: " + this.username + "\npassword: " + this.password
-    console.info(`>>>> Form: ${this.userForm}`)
-    this.authService.register(this.userForm).subscribe({ 
+    console.info(`>>>> Form: ${JSON.stringify(this.userForm)}`)
+    const { username, password } = this.userForm;
+    //prints object without stringify
+    this.authService.register(username, password).subscribe({ 
       next: data => {
         console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
+        this.route.navigate(['/'])
       },
       error: err => {
         this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
       }
     });
+    
   }
 
   reset() {
