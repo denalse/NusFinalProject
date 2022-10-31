@@ -1,5 +1,8 @@
 MY MOOD PLANNER
 
+ng serve --proxy-config proxy-config.js
+mvn clean spring-boot:run
+
 PROBLEMS:
     1. ngSubmit in register.html not working (needed to manually do (click) event)
     2. 3rd push done @ 3:06am 11 oct

@@ -32,17 +32,15 @@ import { StorageService } from './services/storage.service';
 import { UserService } from './services/user.service';
 
 const appRoute: Routes = [
-  { path: '', component: WelcomeComponent },
-  
-  // { path: 'login', component: LoginComponent },
-  { path: 'account/:username', component: AccountComponent },
+  { path: '', component: LoginComponent },
+  { path: 'welcome/:username', component: WelcomeComponent },
+  // { path: 'account/:username', component: AccountComponent },
   { path: 'register', component: RegisterComponent },
 
   { path: 'about', component: AboutComponent },
   { path: 'search', component: ImageComponent },
   // { path: 'search/:type/:width/:height/:search', component: ImageComponent },
   { path: 'mood', component: CalendarComponent },
-
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ]
 

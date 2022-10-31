@@ -21,8 +21,13 @@ export class LoginComponent implements OnInit {
 
   userForm!: User;
 
+  username: string = this.ar.snapshot.params['username']
 
-  constructor(private authService: AuthService, private storageService: StorageService, private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private ar: ActivatedRoute, private route: Router,
+    private authService: AuthService, private storageService: StorageService) { }
+
+  email: string = this.ar.snapshot.params['email'];
+
 
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
@@ -57,8 +62,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  reloadPage(): void {
-    window.location.reload();
+  reloadPage() {
+    this.route.navigate(['welcome/{username}']);
+    // username: string = this.ar.snapshot.params['username']
   }
   // const user: User = this.form.value as User
   // console.info(">>>>> Login Form: ", user)
