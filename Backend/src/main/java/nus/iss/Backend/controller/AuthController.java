@@ -25,14 +25,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import nus.iss.Backend.beans.UserDetailsDto;
-import nus.iss.Backend.model.Response;
+import nus.iss.Backend.model.ERole;
+import nus.iss.Backend.model.Role;
 import nus.iss.Backend.model.User;
+import nus.iss.Backend.payload.request.LoginRequest;
+import nus.iss.Backend.payload.request.RegisterRequest;
+import nus.iss.Backend.payload.response.MessageResponse;
+import nus.iss.Backend.payload.response.UserInfoResponse;
+import nus.iss.Backend.repository.RoleRepository;
 import nus.iss.Backend.repository.UserRepository;
 import nus.iss.Backend.security.jwt.JwtUtils;
+import nus.iss.Backend.security.service.UserDetailsImpl;
 
-
-@CrossOrigin(origins = "*", maxAge = 3600)
+// @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -40,7 +45,10 @@ public class AuthController {
   AuthenticationManager authenticationManager;
 
   @Autowired
-  UserRepository userRepository;
+  UserRepository userRepo;
+
+  @Autowired
+  RoleRepository roleRepo;
 
   @Autowired
   PasswordEncoder encoder;
@@ -48,44 +56,76 @@ public class AuthController {
   @Autowired
   JwtUtils jwtUtils;
 
-  private Logger logger = LoggerFactory.getLogger(AuthController.class.getName());
-
   @PostMapping("/signin")
-  public ResponseEntity<?> authenticateUser(@Valid @RequestBody UserDetailsDto loginRequest) {
+  public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
     Authentication authentication = authenticationManager
         .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
-    UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
     ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
-    logger.info("loginRequest:\n", loginRequest);
-    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-        .body(new User());
+    List<String> roles = userDetails.getAuthorities().stream()
+        .map(item -> item.getAuthority())
+        .collect(Collectors.toList());
 
+    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+        .body(new UserInfoResponse(userDetails.getUsername(), roles));
   }
 
   @PostMapping("/signup")
-  public ResponseEntity<?> registerUser(@Valid @RequestBody UserDetailsDto userSignUpRequest) {
-    if (userRepository.existsByUsername(userSignUpRequest.getUsername())) {
-      return ResponseEntity.badRequest().body(new Response( "Error: Username is already taken!"));
+  public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest regRequest) {
+    if (userRepo.existsByUsername(regRequest.getUsername())) {
+      return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
     }
 
     // Create new user's account
-    User user = new User(userSignUpRequest.getUsername(), encoder.encode(userSignUpRequest.getPassword()));
+    User user = new User(regRequest.getUsername(),
+        encoder.encode(regRequest.getPassword()));
 
-    userRepository.save(user);
+    Set<String> strRoles = regRequest.getRole();
+    Set<Role> roles = new HashSet<>();
 
-    return ResponseEntity.ok(new Response("User registered successfully!"));
+    if (strRoles == null) {
+      Role userRole = roleRepo.findByName(ERole.ROLE_USER)
+          .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+      roles.add(userRole);
+    } else {
+      strRoles.forEach(role -> {
+        switch (role) {
+          case "admin":
+            Role adminRole = roleRepo.findByName(ERole.ROLE_ADMIN)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(adminRole);
+
+            break;
+          case "mod":
+            Role modRole = roleRepo.findByName(ERole.ROLE_MODERATOR)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(modRole);
+
+            break;
+          default:
+            Role userRole = roleRepo.findByName(ERole.ROLE_USER)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+        }
+      });
+    }
+
+    user.setRoles(roles);
+    userRepo.save(user);
+
+    return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }
 
   @PostMapping("/signout")
   public ResponseEntity<?> logoutUser() {
     ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
-        .body(new Response("You've been signed out!"));
+        .body(new MessageResponse("You've been signed out!"));
   }
 }

@@ -1,6 +1,8 @@
 package nus.iss.Backend.model;
 
-import java.io.StringReader;
+// import java.io.StringReader;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -10,48 +12,35 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 @Entity
-@Table(name = "user")
-
+@Table(name = "users",
+       uniqueConstraints = {
+           @UniqueConstraint(columnNames = "username")
+       })
+       
 public class User {
-    
-    @Id
-    @Column(name="username")
-    private String username;
 
-    @Column(name="password")
-    private String password;
-    // private boolean terms;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    // public static User create(String json) {
-        
-    //     JsonReader reader = Json.createReader(new StringReader(json));
-    //     JsonObject data = reader.readObject();
-        
-    //     final User user = new User();
-    //     user.setUsername(data.getString("username"));
-    //     user.setPassword(data.getString("password"));
-    //     // user.setTerms(data.getBoolean("false"));
+  @Column
+  private String username;
 
-    //     return user;
-    // }
+  @Column
+  private String password;
 
-    // public JsonObject toJson() {
-    //     return Json.createObjectBuilder()
-    //     .add("username", username)
-    //     .add("password", password)
-    //     // .add("terms", terms)
-    //     .build();
-    // }
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(name = "user_roles", 
+             joinColumns = @JoinColumn(name = "user_id"),
+             inverseJoinColumns = @JoinColumn(name = "role_id"))
 
-    // public static User createSql(SqlRowSet rs) {
-    //     User user = new User();
-    //     user.setUsername(rs.getString("username"));
-    //     user.setPassword(rs.getString("password"));
-    //     // user.setTerms(rs.getBoolean("false"));
-    
-    //     return user;
-    // }
+  private Set<Role> roles = new HashSet<>();
 
-    
+  public User(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
+
 }
