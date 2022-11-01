@@ -4,20 +4,21 @@ ng serve --proxy-config proxy-config.js
 mvn clean spring-boot:run
 
 PROBLEMS:
-    1. ngSubmit in register.html not working (needed to manually do (click) event)
-    2. 3rd push done @ 3:06am 11 oct
-    3. image.ts for quotes error in console log
-    4. integration of npl into calendar?
+    1. integration of npl into calendar?
       - because to be a mood tracker, need to be more courteous with your "reflection"
       - to edit "event" with "personal diary" and emoji?
-    5. Saved events?
-    6. when toggle to other pages, the "saved" event will be removed..
+    2. Saved events in calendar?
+    3. when toggle to other pages, the "saved" event will be removed..
+    4. Upon login, the toolbar in app component not loaded with username!!!
+    5. Url did not change to /home/"username"
 
 DONE:
     1. Home page
     2. Search page
     3. @imports line 25 of angular.json 
       * add import (for calendar and flatpickr css styling)
+    4. Toobar done 80%
+
     
 
   ____________________account.svc.ts___________________________

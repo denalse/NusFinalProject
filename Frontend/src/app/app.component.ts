@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { faker } from '@faker-js/faker';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { AuthService } from './services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, AfterViewInit {
 
   title!: string;
   sideNavigation!: boolean;
@@ -18,7 +18,10 @@ export class AppComponent {
   image!: string | null;
 
   isLoggedIn = false;
-  username?: string;
+  // username?: string;
+
+  username: string = this.ar.snapshot.params['username']
+
 
   @ViewChild('sidenav') 
   sidenav!: MatSidenav;
@@ -34,7 +37,14 @@ export class AppComponent {
 
     const user = this.storageService.getUser();
     this.username = user.username;
-    }
+    this.ar.snapshot.params['username']
+  }
+  return;
+  }
+
+  ngAfterViewInit(): void {
+    this.ar.snapshot.params['username']
+
   }
 
   logout(): void {

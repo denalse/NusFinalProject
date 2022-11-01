@@ -3,30 +3,40 @@
     <mat-card-header>
       <mat-card-title>Login</mat-card-title>
     </mat-card-header>
-    <form [formGroup]="form" (ngSubmit)="login()">
-    <mat-card-content>
+    <form [formGroup]="form">
+      <mat-card-content>
         <table class="example-full-width" cellspacing="0">
           <tr>
             <td>
               <mat-form-field class="example-full-width">
-              <input matInput placeholder="Username" formControlName="username" name="username" required>
+                <input matInput placeholder="Username" formControlName="username" name="username" required>
               </mat-form-field>
             </td>
           </tr>
           <tr>
-          <td>
-            <mat-form-field class="example-full-width">
-              <mat-icon (click)="passwordEye()" matSuffix> {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            <input matInput placeholder="Password" formControlName="password" [type]="hide ? 'password' : 'text'"  name="password" required>
-          </mat-form-field></td>
-        </tr></table>
+            <td>
+              <mat-form-field class="example-full-width">
+                <mat-icon (click)="passwordEye()" matSuffix> {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <input matInput placeholder="Password" formControlName="password" [type]="hide ? 'password' : 'text'"
+                  name="password" required>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
       </mat-card-content>
-      <mat-card-actions>
-        <button type="submit" mat-raised-button color="primary">
-          Login</button>
-          <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+    </form>
+    <mat-card-actions>
+      <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid" (click)="login();reset()">
+        Login
+      </button>
+
+      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+
+      <span class="successMessage" *ngIf="isLoggedIn">Please wait..</span>
+      <span class="errorMessage" *ngIf="!isLoginFailed">
+        <span> {{ errorMessage }} </span> 
+      </span>
+
     </mat-card-actions>
-  </form>
   </mat-card>
 </div>
-

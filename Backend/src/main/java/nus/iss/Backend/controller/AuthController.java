@@ -72,6 +72,9 @@ public class AuthController {
         .map(item -> item.getAuthority())
         .collect(Collectors.toList());
 
+    // if (userRepo.wrongPassword(loginRequest.getPassword())) {
+    //   return ResponseEntity.badRequest().body(new MessageResponse("Error: Login failed!"));
+    // }
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
         .body(new UserInfoResponse(userDetails.getUsername(), roles));
   }

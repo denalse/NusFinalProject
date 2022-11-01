@@ -19,7 +19,7 @@ import { AboutComponent } from './components/about/about.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { RegisterComponent } from './components/account/register/register.component';
 import { ImageComponent } from './components/image/image.component';
-import { WelcomeComponent } from './components/welcome.component';
+import { HomeComponent } from './components/home.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
  
 import { AuthService } from './services/auth.service';
@@ -28,8 +28,8 @@ import { UserService } from './services/user.service';
 import { httpInterceptorProviders } from './components/helpers/http.interceptor';
 
 const appRoute: Routes = [
-  { path: '', component: WelcomeComponent },
-  { path: 'welcome/:username', component: WelcomeComponent },
+  { path: '', component: HomeComponent },
+  { path: 'home/:username', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   // { path: 'account/:username', component: AccountComponent },
   { path: 'register', component: RegisterComponent },
@@ -38,13 +38,12 @@ const appRoute: Routes = [
   { path: 'search', component: ImageComponent },
   // { path: 'search/:type/:width/:height/:search', component: ImageComponent },
   { path: 'mood', component: CalendarComponent },
-  { path: '**', redirectTo: '/', pathMatch: 'full' }
+  { path: '**', redirectTo: '/'}
 ]
 
 @NgModule({
   declarations: [
-    AppComponent,
-    WelcomeComponent, AboutComponent,
+    AppComponent, AboutComponent, HomeComponent,
     ImageComponent, CalendarComponent,
     LoginComponent, RegisterComponent,
   ],
@@ -55,7 +54,8 @@ const appRoute: Routes = [
     NgbModalModule, FlatpickrModule.forRoot(), 
 
     // RouterModule.forChild(appRoute),
-    RouterModule.forRoot(appRoute, {useHash: true}), //, {useHash: true}
+    // RouterModule.forRoot(appRoute, {useHash: true}),
+    RouterModule.forRoot(appRoute),
 
     CalendarModule.forRoot({
       provide: DateAdapter,

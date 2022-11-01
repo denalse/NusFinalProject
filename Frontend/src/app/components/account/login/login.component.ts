@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
+  isSubmitted = false;
+
   hide: boolean = true
 
   username: string = this.ar.snapshot.params['username']
@@ -29,6 +31,8 @@ export class LoginComponent implements OnInit {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
       this.ar.snapshot.params['username'];
+      // this.window.location(['home/{username}']);
+      this.route.navigate(['home/{username}']);
     }
     this.initForm();
   }
@@ -46,26 +50,36 @@ export class LoginComponent implements OnInit {
     this.authService.login(username, password).subscribe({
       next: data => {
         this.storageService.saveUser(data);
-
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.reloadPage();
-        this.reset();
+        setTimeout(() => {
+          this.reset
+        }, 3000);
+        // this.reset();
       },
       error: err => {
-        this.errorMessage = err.error.message;
+        this.errorMessage = "Login Failed, please try again :("
+        this.errorMessage = err.error.errorMessage;
         this.isLoginFailed = true;
+        console.info('Login Failed')
+        setTimeout(() => {
+          this.reset, this.errorMessage
+        }, 3000);
       }
     });
   }
 
   reloadPage() {
-    this.route.navigate(['welcome/{username}']);
-    // username: string = this.ar.snapshot.params['username']
+    this.ar.snapshot.params['username']
+    this.route.navigate(['home/{username}']);
   }
 
   reset() {
     this.form.reset();
+    this.isSubmitted = false;
+    this.isLoggedIn = false;
+    this.isLoginFailed = false;
     console.log("RESET FORM")
   }
 

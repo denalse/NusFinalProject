@@ -17,21 +17,6 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
     @Autowired
     private UserRepository userRepo;
-  
-    // @Override
-    // @Transactional
-    // public UserDetailsDto loadUserByUsername(String username) throws UsernameNotFoundException {
-    //   User user = userRepo.findByUsername(username)
-    //       .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-    //   UserDetailsDto userDto = convertToUserDto(user);
-  
-    //   return userDto;
-    // }
-
-    // public UserDetailsDto convertToUserDto(User user){
-    //   return new UserDetailsDto(
-    //       user.getUsername());
-    // }
 
     @Override
     @Transactional

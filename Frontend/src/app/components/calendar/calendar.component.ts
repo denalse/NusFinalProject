@@ -133,10 +133,10 @@ export class CalendarComponent implements OnInit {
         this.activeDayIsOpen = false;
       } else {
         this.activeDayIsOpen = true;
-        this.viewDate = date;
       }
+      this.viewDate = date;
     }
-    console.log(this.viewDate)
+    console.info(this.viewDate)
   }
 
   // drag events
