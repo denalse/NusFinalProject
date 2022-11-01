@@ -3,9 +3,9 @@
 .example-spacer {
     flex: 1 1 auto;
 }
+
 a {
     color: rgb(71, 89, 104);
-
 }
 
 a:hover {
@@ -17,5 +17,3 @@ a:hover {
     margin: 0%;
     padding: 0%;
 } */
-
-

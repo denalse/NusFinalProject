@@ -25,6 +25,7 @@ export class WelcomeComponent implements OnInit {
   constructor(private route: Router,  private ar: ActivatedRoute) { }
 
   ngOnInit(): void {
+    if(!this.isLoggedIn)
     this.ar.snapshot.params['username'];
   }
 

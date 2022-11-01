@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import lombok.*;
 
@@ -25,10 +26,14 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
+  // @Column
+  @NotBlank
+  @Size(max = 20)
   private String username;
 
-  @Column
+  // @Column
+  @NotBlank
+  @Size(max = 120)
   private String password;
 
   @ManyToMany(fetch = FetchType.LAZY)

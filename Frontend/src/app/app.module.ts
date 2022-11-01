@@ -20,20 +20,17 @@ import { LoginComponent } from './components/account/login/login.component';
 import { RegisterComponent } from './components/account/register/register.component';
 import { ImageComponent } from './components/image/image.component';
 import { WelcomeComponent } from './components/welcome.component';
-
-import { AlertComponent } from './components/alert/alert.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
  
-import { AccountComponent } from './components/account/account.component';
-import { fakeBackendProvider } from './components/helpers/fakeBackend';
-import { AlertService } from './services/alert.service';
 import { AuthService } from './services/auth.service';
 import { StorageService } from './services/storage.service';
 import { UserService } from './services/user.service';
+import { httpInterceptorProviders } from './components/helpers/http.interceptor';
 
 const appRoute: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', component: WelcomeComponent },
   { path: 'welcome/:username', component: WelcomeComponent },
+  { path: 'login', component: LoginComponent },
   // { path: 'account/:username', component: AccountComponent },
   { path: 'register', component: RegisterComponent },
 
@@ -49,7 +46,7 @@ const appRoute: Routes = [
     AppComponent,
     WelcomeComponent, AboutComponent,
     ImageComponent, CalendarComponent,
-    LoginComponent, RegisterComponent, AlertComponent, AccountComponent
+    LoginComponent, RegisterComponent,
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule,
@@ -58,7 +55,7 @@ const appRoute: Routes = [
     NgbModalModule, FlatpickrModule.forRoot(), 
 
     // RouterModule.forChild(appRoute),
-    RouterModule.forRoot(appRoute), //, {useHash: true}
+    RouterModule.forRoot(appRoute, {useHash: true}), //, {useHash: true}
 
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -67,11 +64,7 @@ const appRoute: Routes = [
   ],
   exports: [RouterModule],
 
-  providers: [AlertService, UserService, AuthService, StorageService,
-
-    // provider used to create fake backend
-    fakeBackendProvider
-  ],
+  providers: [UserService, AuthService, StorageService, httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 

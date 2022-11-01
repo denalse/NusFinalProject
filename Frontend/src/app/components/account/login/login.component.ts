@@ -18,20 +18,17 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
-
-  userForm!: User;
+  hide: boolean = true
 
   username: string = this.ar.snapshot.params['username']
 
   constructor(private fb: FormBuilder, private ar: ActivatedRoute, private route: Router,
     private authService: AuthService, private storageService: StorageService) { }
 
-  email: string = this.ar.snapshot.params['email'];
-
-
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
+      this.ar.snapshot.params['username'];
     }
     this.initForm();
   }
@@ -43,9 +40,8 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  submit(): void {
+  login(): void {
     console.log("FORM SUBMIT")
-    // this.userForm = {username: this.form.controls.username.value , password: this.form.controls.password.value};
     const { username, password } = this.form.value;
     this.authService.login(username, password).subscribe({
       next: data => {
@@ -54,6 +50,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.reloadPage();
+        this.reset();
       },
       error: err => {
         this.errorMessage = err.error.message;
@@ -66,16 +63,14 @@ export class LoginComponent implements OnInit {
     this.route.navigate(['welcome/{username}']);
     // username: string = this.ar.snapshot.params['username']
   }
-  // const user: User = this.form.value as User
-  // console.info(">>>>> Login Form: ", user)
-  // console.info(">>>>", this.form.value)
-}
 
-  // login(): void {
-  //   if (this.username == 'admin' && this.password == 'admin') {
-  //     this.router.navigate(["user"]);
-  //   } else {
-  //     alert("Invalid credentials");
-  //   }
-  // }
+  reset() {
+    this.form.reset();
+    console.log("RESET FORM")
+  }
+
+  passwordEye() {
+    this.hide = !this.hide;
+  }
+}
 

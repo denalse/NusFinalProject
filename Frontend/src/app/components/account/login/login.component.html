@@ -3,7 +3,7 @@
     <mat-card-header>
       <mat-card-title>Login</mat-card-title>
     </mat-card-header>
-    <form [formGroup]="form" (ngSubmit)="submit()">
+    <form [formGroup]="form" (ngSubmit)="login()">
     <mat-card-content>
         <table class="example-full-width" cellspacing="0">
           <tr>
@@ -14,15 +14,17 @@
             </td>
           </tr>
           <tr>
-          <td><mat-form-field class="example-full-width">
-            <input matInput placeholder="Password" formControlName="password"type="password" name="password" required>
+          <td>
+            <mat-form-field class="example-full-width">
+              <mat-icon (click)="passwordEye()" matSuffix> {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <input matInput placeholder="Password" formControlName="password" [type]="hide ? 'password' : 'text'"  name="password" required>
           </mat-form-field></td>
         </tr></table>
-      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
-    </mat-card-content>
-    <mat-card-actions>
-      <button type="submit" mat-raised-button color="primary" (click)="submit()">
-        Login</button>
+      </mat-card-content>
+      <mat-card-actions>
+        <button type="submit" mat-raised-button color="primary">
+          Login</button>
+          <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
     </mat-card-actions>
   </form>
   </mat-card>

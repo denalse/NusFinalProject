@@ -5,8 +5,22 @@ create schema moodboard;
 
 use moodboard;
 
-create table user (
-    id mediumint not null auto_increment primary key,
-    username varchar(64) not null,
-    password varchar(120) not null
+create table users (
+    id bigint(20) auto_increment primary key,
+    username varchar(50),
+    password varchar(120)
 );
+
+create table roles (
+    id int(11) auto_increment primary key,
+    name varchar(20)
+);
+
+-- create table user_roles (
+--     user_id bigint(20) primary key,
+--     role_id int(20) primary key
+-- );
+
+INSERT INTO roles(name) VALUES('ROLE_USER');
+INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
+INSERT INTO roles(name) VALUES('ROLE_ADMIN');

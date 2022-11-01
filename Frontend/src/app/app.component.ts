@@ -17,15 +17,13 @@ export class AppComponent {
 
   image!: string | null;
 
-  randomName = faker.name.fullName();
-
-  isLoggedIn = true;
+  isLoggedIn = false;
   username?: string;
 
   @ViewChild('sidenav') 
   sidenav!: MatSidenav;
 
-  constructor(private router: Router, private ar: ActivatedRoute,
+  constructor(private route: Router, private ar: ActivatedRoute,
     private storageService: StorageService, private authService: AuthService,) {
     // this.title = 'Spring Boot - Angular Application';
   }
@@ -46,11 +44,13 @@ export class AppComponent {
         this.storageService.clean();
 
         window.location.reload();
+        alert("You have been logged out, see you tomorrow!");
       },
       error: err => {
         console.log(err);
       }
     });
+    this.route.navigate(["/"])
   }
 
 

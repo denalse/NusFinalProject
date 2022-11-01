@@ -81,7 +81,7 @@ export class RegisterComponent implements OnInit {
         this.isSuccessful = true;
         this.isSignUpFailed = false;
         setTimeout(() => {
-          this.route.navigate(['/']);
+          this.route.navigate(['/login']);
         }, 3000);
         
       },
