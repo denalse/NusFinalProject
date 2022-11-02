@@ -5,12 +5,12 @@
   </button>
   
   <mat-menu #menu="matMenu">
-    <button mat-menu-item><h6 [routerLink]="['/']">Home</h6></button>
+    <button mat-menu-item><h6 [routerLink]="['moodBoard/home']">Home</h6></button>
     <button mat-menu-item><h6 [routerLink]="['/about']">About</h6></button>
-    <button mat-menu-item *ngIf="isLoggedIn"><h6 [routerLink]="['/search']">Inspiration</h6></button>
-    <button mat-menu-item *ngIf="isLoggedIn"><h6 [routerLink]="['/mood']">Planner</h6></button>
+    <button mat-menu-item *ngIf="isLoggedIn()"><h6 [routerLink]="['moodBoard/search']">Inspiration</h6></button>
+    <button mat-menu-item *ngIf="isLoggedIn()"><h6 [routerLink]="['moodBoard/mood']">Planner</h6></button>
   </mat-menu>
-  <span>Hello {{ username }}, Welcome to MoodBoard!</span>
+  <span>Welcome to MoodBoard!</span>
   <span class="example-spacer"></span>
   <!-- <span>{{ randomName }}</span> -->
   <!-- <mat-form-field>
@@ -22,14 +22,14 @@
   
   <span class="example-spacer"></span>
 
-  <div *ngIf="!isLoggedIn">
+  <div *ngIf="!isLoggedIn()">
     <button mat-button class ><h6 [routerLink]="['/register']">Register</h6></button>
     <span class="example-spacer"></span>
     <button mat-button class ><h6 [routerLink]="['/login']">Login</h6></button>
   </div>
   
-  <div *ngIf="isLoggedIn">
-    <button mat-button class (click)="logout()" ><h6 [routerLink]="['/logout']">Logout</h6></button>
+  <div *ngIf="isLoggedIn()">
+    <button mat-button (click)="logout()" ><h6>Logout</h6></button>
   </div>
 
   <span class="example-spacer"></span>

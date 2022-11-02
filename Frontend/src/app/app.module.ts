@@ -18,7 +18,7 @@ import { AppComponent } from './app.component';
 import { AboutComponent } from './components/about/about.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { RegisterComponent } from './components/account/register/register.component';
-import { ImageComponent } from './components/image/image.component';
+import { SearchComponent } from './components/search/search.component';
 import { HomeComponent } from './components/home.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
  
@@ -29,22 +29,22 @@ import { httpInterceptorProviders } from './components/helpers/http.interceptor'
 
 const appRoute: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'home/:username', component: HomeComponent },
+  { path: 'moodBoard/home/:username', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   // { path: 'account/:username', component: AccountComponent },
   { path: 'register', component: RegisterComponent },
 
   { path: 'about', component: AboutComponent },
-  { path: 'search', component: ImageComponent },
+  { path: 'moodBoard/search', component: SearchComponent },
   // { path: 'search/:type/:width/:height/:search', component: ImageComponent },
-  { path: 'mood', component: CalendarComponent },
+  { path: 'moodBoard/mood', component: CalendarComponent },
   { path: '**', redirectTo: '/'}
 ]
 
 @NgModule({
   declarations: [
     AppComponent, AboutComponent, HomeComponent,
-    ImageComponent, CalendarComponent,
+    SearchComponent, CalendarComponent,
     LoginComponent, RegisterComponent,
   ],
   imports: [
@@ -54,8 +54,8 @@ const appRoute: Routes = [
     NgbModalModule, FlatpickrModule.forRoot(), 
 
     // RouterModule.forChild(appRoute),
-    // RouterModule.forRoot(appRoute, {useHash: true}),
-    RouterModule.forRoot(appRoute),
+    RouterModule.forRoot(appRoute, {useHash: true}),
+    // RouterModule.forRoot(appRoute),
 
     CalendarModule.forRoot({
       provide: DateAdapter,

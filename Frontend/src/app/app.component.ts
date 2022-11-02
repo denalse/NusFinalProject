@@ -17,10 +17,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   image!: string | null;
 
-  isLoggedIn = false;
+  // isLoggedIn = false;
   // username?: string;
 
-  username: string = this.ar.snapshot.params['username']
+  username: string = '';
 
 
   @ViewChild('sidenav') 
@@ -32,27 +32,38 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.storageService.isLoggedIn();
-    if (this.isLoggedIn) {
+  //   this.isLoggedIn = this.storageService.isLoggedIn();
+  //   if (this.isLoggedIn) {
 
-    const user = this.storageService.getUser();
-    this.username = user.username;
-    this.ar.snapshot.params['username']
-  }
-  return;
+  //   const user = this.storageService.getUser();
+  //   console.info(">>>>>>>>>",user);
+  //   this.username = user.username;
+  //   this.ar.snapshot.params['username']
+  // }
+  // return;
   }
 
   ngAfterViewInit(): void {
-    this.ar.snapshot.params['username']
+    this.username = this.ar.snapshot.params['username']
 
   }
 
+  isLoggedIn(): boolean {
+    // this.username = this.storageService.getUser()
+    let url = window.location.href;
+    if (!url.includes("moodBoard")) {
+      return false;
+    }
+    return true;
+  }
+
   logout(): void {
+    console.info("CLICKED")
     this.authService.logout().subscribe({
       next: res => {
         console.log(res);
         this.storageService.clean();
-
+        this.route.navigate(['/logout']) //change too fast so cannot call
         window.location.reload();
         alert("You have been logged out, see you tomorrow!");
       },

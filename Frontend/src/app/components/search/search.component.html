@@ -92,9 +92,10 @@
 					<tr>
 						<td></td>
 						<td>
-							<div *ngFor="let quote of randomData" style="text-align:center">
-								<h6>Author: {{ quote.author }}</h6>
-								<p>{{ quote.text }}</p>
+							<div *ngIf="show" style="text-align:center">
+								<h6>Author: {{ random.author }}</h6>
+								<p>{{ random.text }}</p>
+								<!-- <p>{{ quote.text }}</p> -->
 							</div>
 						</td>
 

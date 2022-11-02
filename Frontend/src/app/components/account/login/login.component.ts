@@ -30,9 +30,9 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
-      this.ar.snapshot.params['username'];
+      this.username = this.ar.snapshot.params['username'];
       // this.window.location(['home/{username}']);
-      this.route.navigate(['home/{username}']);
+      // this.route.navigate(['home', this.username]);
     }
     this.initForm();
   }
@@ -46,13 +46,16 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     console.log("FORM SUBMIT")
-    const { username, password } = this.form.value;
-    this.authService.login(username, password).subscribe({
+    // const { username, password } = this.form.value;
+    const user: User = this.form.value
+    console.info(this.form.get('username')?.value)
+    this.authService.login(user.username, user.password).subscribe({
       next: data => {
         this.storageService.saveUser(data);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.reloadPage();
+        // this.reloadPage();
+        this.route.navigate(['moodBoard/home', user.username]);
         setTimeout(() => {
           this.reset
         }, 3000);
@@ -70,10 +73,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  reloadPage() {
-    this.ar.snapshot.params['username']
-    this.route.navigate(['home/{username}']);
-  }
+  // reloadPage() {
+  //   // this.ar.snapshot.params['username']
+  //   this.route.navigate(['home/{username}']);
+  // }
 
   reset() {
     this.form.reset();
