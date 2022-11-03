@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, private ar: ActivatedRoute, private route: Router,
     private authService: AuthService, private storageService: StorageService) { }
 
+
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
@@ -46,7 +47,6 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     console.log("FORM SUBMIT")
-    // const { username, password } = this.form.value;
     const user: User = this.form.value
     console.info(this.form.get('username')?.value)
     this.authService.login(user.username, user.password).subscribe({
@@ -55,11 +55,11 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         // this.reloadPage();
-        this.route.navigate(['moodBoard/home', user.username]);
+        this.route.navigate(['home', user.username]);
+        console.info(">>>>",user.username)
         setTimeout(() => {
           this.reset
         }, 3000);
-        // this.reset();
       },
       error: err => {
         this.errorMessage = "Login Failed, please try again :("

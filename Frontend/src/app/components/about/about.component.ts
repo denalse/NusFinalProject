@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { StorageService } from 'src/app/services/storage.service';
 
 
 @Component({
@@ -7,10 +9,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./about.component.css']
 })
 export class AboutComponent implements OnInit {
-  
-  constructor() { }
 
-  ngOnInit(): void { }
+  isLoggedIn = false;
+  username: string = this.ar.snapshot.params['username']
+
+  constructor(private route: Router,  private ar: ActivatedRoute,
+    private storageSvc: StorageService) { }
+
+  ngOnInit(): void {
+    this.isLoggedIn = this.storageSvc.isLoggedIn();
+    if (this.isLoggedIn) {
+
+    let user = this.storageSvc.getUser();
+    this.username = user.username;
+    this.ar.snapshot.params['username']
+    }
+   }
 
 
 

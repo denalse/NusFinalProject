@@ -4,6 +4,7 @@ import { faker } from '@faker-js/faker';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from './services/storage.service';
 import { AuthService } from './services/auth.service';
+import { HomeComponent } from './components/home.component';
 
 @Component({
   selector: 'app-root',
@@ -15,13 +16,16 @@ export class AppComponent implements OnInit, AfterViewInit {
   title!: string;
   sideNavigation!: boolean;
 
-  image!: string | null;
+  // image!: string | null;
 
-  // isLoggedIn = false;
+  isLoggedIn = false;
   // username?: string;
+  username = this.ar.snapshot.params['username']
 
-  username: string = '';
+  // @ViewChild(HomeComponent, { static: false })
+  // user!: HomeComponent
 
+  // username: string = '';
 
   @ViewChild('sidenav') 
   sidenav!: MatSidenav;
@@ -32,30 +36,31 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-  //   this.isLoggedIn = this.storageService.isLoggedIn();
-  //   if (this.isLoggedIn) {
+    this.isLoggedIn = this.storageService.isLoggedIn();
+    if (this.isLoggedIn) {
 
-  //   const user = this.storageService.getUser();
-  //   console.info(">>>>>>>>>",user);
-  //   this.username = user.username;
-  //   this.ar.snapshot.params['username']
+    const user = this.storageService.getUser();
+    console.info(">>>>>>>>>",user);
+    this.username = user.username;
+    this.ar.snapshot.params['username']
+  }
+  return;
+  }
+
+  ngAfterViewInit() {
+    console.info(">>",this.storageService.getUser()?.username);
+    // console.log("Hello", this.user.username);
+    // this.user = this.ar.snapshot.params['username']
+  }
+
+  // isLoggedIn(): boolean {
+  //   // this.username = this.storageService.getUser()
+  //   let url = window.location.href;
+  //   if (!url.includes("moodBoard")) {
+  //     return false;
+  //   }
+  //   return true;
   // }
-  // return;
-  }
-
-  ngAfterViewInit(): void {
-    this.username = this.ar.snapshot.params['username']
-
-  }
-
-  isLoggedIn(): boolean {
-    // this.username = this.storageService.getUser()
-    let url = window.location.href;
-    if (!url.includes("moodBoard")) {
-      return false;
-    }
-    return true;
-  }
 
   logout(): void {
     console.info("CLICKED")

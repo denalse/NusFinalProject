@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../models';
@@ -21,22 +21,25 @@ export class HomeComponent implements OnInit {
 
   user!: User[]
 
-  username: string = this.ar.snapshot.params['username']
+  @Input()
+  username!: string // = this.ar.snapshot.params['username']
 
   constructor(private route: Router,  private ar: ActivatedRoute,
     private storageSvc: StorageService) { }
+
+  getUser() {
+    return this.username;
+  }
 
   ngOnInit(): void {
     this.isLoggedIn = this.storageSvc.isLoggedIn();
     if (this.isLoggedIn) {
 
-    const user = this.storageSvc.getUser();
-    this.username = user.username;
-    this.ar.snapshot.params['username']
+      let user = this.storageSvc.getUser();
+      this.username = user.username;
+      this.ar.snapshot.params['username']
     }
   }
-
-
 
   // toggleShowApp(type: string) {
   //   if (type == 'Login') {

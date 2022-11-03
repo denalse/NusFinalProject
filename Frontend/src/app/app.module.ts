@@ -29,15 +29,15 @@ import { httpInterceptorProviders } from './components/helpers/http.interceptor'
 
 const appRoute: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'moodBoard/home/:username', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   // { path: 'account/:username', component: AccountComponent },
   { path: 'register', component: RegisterComponent },
 
   { path: 'about', component: AboutComponent },
-  { path: 'moodBoard/search', component: SearchComponent },
+  { path: 'search', component: SearchComponent },
   // { path: 'search/:type/:width/:height/:search', component: ImageComponent },
-  { path: 'moodBoard/mood', component: CalendarComponent },
+  { path: 'mood', component: CalendarComponent },
   { path: '**', redirectTo: '/'}
 ]
 
