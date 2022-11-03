@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
+      // window.location.reload()
       this.username = this.ar.snapshot.params['username'];
       // this.window.location(['home/{username}']);
       // this.route.navigate(['home', this.username]);
@@ -54,12 +55,12 @@ export class LoginComponent implements OnInit {
         this.storageService.saveUser(data);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        // this.reloadPage();
-        this.route.navigate(['home', user.username]);
+        // window.location.reload()
+        this.route.navigate(['/home']);
         console.info(">>>>",user.username)
         setTimeout(() => {
-          this.reset
-        }, 3000);
+          window.location.reload(), this.reset //abit of lag here due to refresh
+        }, 1000);
       },
       error: err => {
         this.errorMessage = "Login Failed, please try again :("
@@ -72,11 +73,6 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-
-  // reloadPage() {
-  //   // this.ar.snapshot.params['username']
-  //   this.route.navigate(['home/{username}']);
-  // }
 
   reset() {
     this.form.reset();

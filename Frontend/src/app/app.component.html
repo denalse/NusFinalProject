@@ -12,13 +12,13 @@
   </mat-menu> -->
 
   <mat-menu #menu="matMenu">
-    <button mat-menu-item><h6 [routerLink]="['/']">Home</h6></button>
+    <button mat-menu-item><h6 [routerLink]="['home']">Home</h6></button>
     <button mat-menu-item><h6 [routerLink]="['about']">About</h6></button>
     <button mat-menu-item *ngIf="isLoggedIn"><h6 [routerLink]="['search']">Inspiration</h6></button>
     <button mat-menu-item *ngIf="isLoggedIn"><h6 [routerLink]="['mood']">Planner</h6></button>
   </mat-menu>
   
-  <span>Welcome to MoodBoard, {{ username }}!</span>
+  <div>Welcome to MoodBoard <span *ngIf="isLoggedIn">{{ comma + username + mark }}</span></div>
   <span class="example-spacer"></span>
   <!-- <span>{{ randomName }}</span> -->
   <!-- <mat-form-field>

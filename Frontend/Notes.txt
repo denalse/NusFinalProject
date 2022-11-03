@@ -9,8 +9,8 @@ PROBLEMS:
       - to edit "event" with "personal diary" and emoji?
     2. Saved events in calendar?
     3. when toggle to other pages, the "saved" event will be removed..
-    4. Upon login, the toolbar in app component not loaded with username!!!
-    5. Url did not change to /home/"username"
+    
+    *4. Url did not change to /home/"username" forget about it LOL*
 
 DONE:
     1. Home page

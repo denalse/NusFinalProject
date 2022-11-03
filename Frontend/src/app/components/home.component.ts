@@ -21,15 +21,10 @@ export class HomeComponent implements OnInit {
 
   user!: User[]
 
-  @Input()
   username!: string // = this.ar.snapshot.params['username']
 
   constructor(private route: Router,  private ar: ActivatedRoute,
     private storageSvc: StorageService) { }
-
-  getUser() {
-    return this.username;
-  }
 
   ngOnInit(): void {
     this.isLoggedIn = this.storageSvc.isLoggedIn();

@@ -20,12 +20,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   isLoggedIn = false;
   // username?: string;
-  username = this.ar.snapshot.params['username']
+  // username = this.ar.snapshot.params['username']
 
-  // @ViewChild(HomeComponent, { static: false })
-  // user!: HomeComponent
-
-  // username: string = '';
+  username: string = '';
+  comma: string = ', ';
+  mark: string = "!"
 
   @ViewChild('sidenav') 
   sidenav!: MatSidenav;
@@ -37,14 +36,14 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.isLoggedIn = this.storageService.isLoggedIn();
+    // window.location.reload();
     if (this.isLoggedIn) {
 
-    const user = this.storageService.getUser();
-    console.info(">>>>>>>>>",user);
-    this.username = user.username;
+    this.username = this.storageService.getUser()?.username;
+    console.info(">>>>>>>>>",this.username);
+    // this.username = user.username;
     this.ar.snapshot.params['username']
   }
-  return;
   }
 
   ngAfterViewInit() {
