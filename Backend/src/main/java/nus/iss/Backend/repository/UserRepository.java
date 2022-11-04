@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import nus.iss.Backend.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,6 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Boolean existsByUsername(String username);
 
-    // Boolean wrongPassword(String password);
+    List<User> findByEmail(String email);
   
 }

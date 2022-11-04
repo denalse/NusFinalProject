@@ -56,20 +56,20 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         // window.location.reload()
-        this.route.navigate(['/home']);
+        this.route.navigate(['/home', user.username]);
         console.info(">>>>",user.username)
         setTimeout(() => {
           window.location.reload(), this.reset //abit of lag here due to refresh
         }, 1000);
       },
       error: err => {
-        this.errorMessage = "Login Failed, please try again :("
+        this.errorMessage = "Login failed, please try again :("
         this.errorMessage = err.error.errorMessage;
         this.isLoginFailed = true;
-        console.info('Login Failed')
+        console.info(err,'Login Failed')
         setTimeout(() => {
-          this.reset, this.errorMessage
-        }, 3000);
+          this.reset //, this.errorMessage
+        }, 5000);
       }
     });
   }

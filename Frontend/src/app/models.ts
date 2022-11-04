@@ -4,10 +4,10 @@ export interface SearchCriteria {
     height: number;
     search: string;
 }
-
-export interface SearchQuotes {
-    text: string;
-    author: string;
+export interface Feedback {
+    name: string;
+    email: string;
+    feedback: string;
 }
 
 export const colors: any = {

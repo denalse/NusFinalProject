@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, format } from 'date-fns';
 import { CalendarView, CalendarEvent, CalendarEventTimesChangedEvent, CalendarEventAction } from 'angular-calendar';
 
 import { Subject } from 'rxjs';
@@ -92,36 +92,36 @@ export class CalendarComponent implements OnInit {
       title: '',
       actions: this.actions,
       
-      // resizable: {
-      //   beforeStart: true,
-      //   afterEnd: true
-      // },
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
+      },
       draggable: true
     },
-    // {
-    //   start: startOfDay(new Date()),
-    //   title: 'An event with no end date',
-    //   color: colors.yellow,
-    //   actions: this.actions
-    // },
-    // {
-    //   start: subDays(endOfMonth(new Date()), 3),
-    //   end: addDays(endOfMonth(new Date()), 3),
-    //   title: 'A long event that spans 2 months',
-    //   color: colors.blue
-    // },
-    // {
-    //   start: addHours(startOfDay(new Date()), 2),
-    //   end: new Date(),
-    //   title: 'A draggable and resizable event',
-    //   color: colors.yellow,
-    //   actions: this.actions,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true
-    //   },
-    //   draggable: true
-    // }
+    {
+      start: startOfDay(new Date()),
+      title: 'An event with no end date',
+      color: colors.yellow,
+      actions: this.actions
+    },
+    {
+      start: subDays(endOfMonth(new Date()), 3),
+      end: addDays(endOfMonth(new Date()), 3),
+      title: 'A long event that spans 2 months',
+      color: colors.blue
+    },
+    {
+      start: addHours(startOfDay(new Date()), 2),
+      end: new Date(),
+      title: 'A draggable and resizable event',
+      color: colors.yellow,
+      actions: this.actions,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
+      },
+      draggable: true
+    }
   ];
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -137,6 +137,9 @@ export class CalendarComponent implements OnInit {
       this.viewDate = date;
     }
     console.info(this.viewDate)
+    const time = format(new Date(), "'Date: 'yyyy-MM-dd\t'Time: 'HH:mm:ss");
+    console.log(">>",time)
+
   }
 
   // drag events
@@ -158,7 +161,7 @@ export class CalendarComponent implements OnInit {
   addEvent(): void {
     this.events.push({
       title: '',
-      start: endOfDay(new Date()),
+      start: startOfDay(new Date()),
       end: endOfDay(new Date()),
       color: colors.red,
       draggable: true,
@@ -170,8 +173,20 @@ export class CalendarComponent implements OnInit {
     // this.refresh.next();
   }
   saveEvent(): void {
-    title: ''
-
+    console.log("save event")
+    // this.events.values({})
+    this.addEvent()
+    // this.events.push({
+    //   title: '',
+    //   start: startOfDay(new Date()),
+    //   end: endOfDay(new Date()),
+    //   color: colors.blue,
+    //   draggable: true,
+    //   resizable: {
+    //     beforeStart: true,
+    //     afterEnd: true
+    //   }
+    // });
   }
 
   displayStyle = "none";
@@ -183,8 +198,8 @@ export class CalendarComponent implements OnInit {
     this.displayStyle = "none";
   }
 
-  onBlur() {
-    console.log('onblur')
-  }
+  // onBlur() {
+  //   console.log('onblur')
+  // }
 
 }

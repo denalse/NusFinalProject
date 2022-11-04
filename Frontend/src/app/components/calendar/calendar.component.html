@@ -1,143 +1,118 @@
 <body>
 
-    <div class="row text-center">
+  <div class="row text-center">
 
-        <div class="col-md-4">
-            <div class="btn-group">
-                <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
-                    Previous
-                </div>
-                <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
-                    Today
-                </div>
-                <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
-                    Next
-                </div>
-            </div>
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
+          Previous
         </div>
-
-        <div class="col-md-4">
-            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+        <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+          Today
         </div>
-
-        <div class="col-md-4">
-            <div class="btn-group">
-                <div class="btn btn-primary" (click)="setView(CalendarView.Month)"
-                    [class.active]="view === CalendarView.Month">
-                    Month
-                </div>
-                <div class="btn btn-primary" (click)="setView(CalendarView.Week)"
-                    [class.active]="view === CalendarView.Week">
-                    Week
-                </div>
-                <div class="btn btn-primary" (click)="setView(CalendarView.Day)"
-                    [class.active]="view === CalendarView.Day">
-                    Day
-                </div>
-            </div>
+        <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
+          Next
         </div>
-
-        <!-- <span class="example-spacer"></span> -->
-        <br><br><br>
-        <h3>
-            My thoughts
-            <button class="btn btn-success pull-right" (click)="addEvent()">
-                Add new
-            </button>
-            <div class="clearfix"></div>
-        </h3>
-
-        <table class="table table-bordered">
-
-            <thead>
-              <tr>
-                <th>Description</th>
-                <th>Starts at</th>
-                <th>Ends at</th>
-                <th>Save</th>
-                <th>Remove</th>
-              </tr>
-            </thead>
-          
-            <tbody>
-              <tr *ngFor="let event of events; let index = index">
-                <td>
-                  <input
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="event.title"
-                    (keyup)="refresh.next()"
-                    placeholder="How are you feeling?">
-                </td>
-                <td>
-                  <input
-                    class="form-control"
-                    type="text"
-                    mwlFlatpickr
-                    [(ngModel)]="event.end"
-                    (ngModelChange)="refresh.next()"
-                    [altInput]="true"
-                    [convertModelValue]="true"
-                    [enableTime]="true"
-                    dateFormat="Y-m-dTH:i"
-                    altFormat="F j, Y H:i"
-                    placeholder="Not set">
-                </td>
-                <td>
-                  <input
-                    class="form-control"
-                    type="text"
-                    mwlFlatpickr
-                    [(ngModel)]="event.end"
-                    (ngModelChange)="refresh.next()"
-                    [altInput]="true"
-                    [convertModelValue]="true"
-                    [enableTime]="true"
-                    dateFormat="Y-m-dTH:i"
-                    altFormat="F j, Y H:i"
-                    placeholder="Not set">
-                </td>
-                <td>
-                    <button
-                      class="btn btn-secondary"
-                      (click)="events.splice(index, 0); refresh.next()">
-                      Save
-                    </button>
-                  </td>
-                <td>
-                  <button
-                    class="btn btn-danger"
-                    (click)="events.splice(index, 1); refresh.next()">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          
-          </table>
+      </div>
     </div>
-    
+
+    <div class="col-md-4">
+      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    </div>
+
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div class="btn btn-primary" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
+          Month
+        </div>
+        <div class="btn btn-primary" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
+          Week
+        </div>
+        <div class="btn btn-primary" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
+          Day
+        </div>
+      </div>
+    </div>
+
     <!-- <span class="example-spacer"></span> -->
-    <div class="example-spacer">
-        <div [ngSwitch]="view">
+    <br><br><br>
+  </div>
 
-            <mwl-calendar-month-view (dayClicked)="dayClicked($event.day)" *ngSwitchCase="CalendarView.Month"
-                [viewDate]="viewDate" [events]="events" [refresh]="refresh"
-                (eventTimesChanged)="eventTimesChanged($event)" aria-placeholder="😀">
+  <!-- <span class="example-spacer"></span> -->
+  <div class="example-spacer">
+    <div [ngSwitch]="view">
 
-            </mwl-calendar-month-view>
+      <mwl-calendar-month-view (dayClicked)="dayClicked($event.day)" *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)"
+        aria-placeholder="😀">
 
-            <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
-                [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">😀
-            </mwl-calendar-week-view>
+      </mwl-calendar-month-view>
 
-            <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
-                [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
-            </mwl-calendar-day-view>
+      <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
+        [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">😀
+      </mwl-calendar-week-view>
 
-        </div>
+      <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
+        [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-day-view>
+
     </div>
+  </div>
+
+  <br>
+
+  <div class="row text-center">
+
+    <h3>
+      My thoughts
+      <button class="btn btn-success pull-right" (click)="addEvent()">
+        Add new
+      </button>
+      <div class="clearfix"></div>
+    </h3>
+
+    <table class="table table-bordered">
+
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Starts at</th>
+          <!-- <th>Ends at</th> -->
+          <th>Save</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let event of events; let index = index">
+          <td>
+            <input type="text" class="form-control" [(ngModel)]="event.title" (keyup)="refresh.next()"
+              placeholder="How are you feeling?">
+          </td>
+          <td>
+            <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="event.end"
+              (ngModelChange)="refresh.next()" [altInput]="true" [convertModelValue]="true" [enableTime]="true"
+              dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set">
+          </td>
+          <!-- <td>
+            <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="event.end"
+              (ngModelChange)="refresh.next()" [altInput]="true" [convertModelValue]="true" [enableTime]="true"
+              dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set">
+          </td> -->
+          <td>
+            <button class="btn btn-secondary" (click)="saveEvent()">
+              Save
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="events.splice(index, 1); refresh.next()">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
 
 </body>
-
-
