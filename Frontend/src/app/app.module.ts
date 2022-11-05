@@ -26,6 +26,7 @@ import { AuthService } from './services/auth.service';
 import { StorageService } from './services/storage.service';
 import { UserService } from './services/user.service';
 import { httpInterceptorProviders } from './components/helpers/http.interceptor';
+import { EmailService } from './services/email.service';
 
 const appRoute: Routes = [
   { path: '', component: HomeComponent },
@@ -64,7 +65,7 @@ const appRoute: Routes = [
   ],
   exports: [RouterModule],
 
-  providers: [UserService, AuthService, StorageService, httpInterceptorProviders],
+  providers: [UserService, AuthService, StorageService, EmailService ,httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Feedback } from '../models';
 
 const AUTH_API = '/api/auth/';
 
@@ -43,8 +43,27 @@ export class AuthService {
     return this.http.post(AUTH_API + 'signout', {}, httpOptions);
   }
 
+  dataset: Feedback = {
+    name: '',
+    email: '',
+    feedback: ''
+  };
+
   sendEmail() {
-    
+    console.log("CLICKED")
+    this.http.post<Feedback>(AUTH_API + 'send', this.dataset.email).subscribe(
+      res => {
+        this.dataset = res;
+        console.log(this.dataset.email);
+        alert('Email Sent successfully');
+        this.dataset.email = '';
+      }), 
+      httpOptions
   }
+  // sendEmail(): Observable<any> {
+  //   console.log("CLICKED")
+  //    return this.http.post<Feedback>(AUTH_API + 'send', {}, httpOptions)
+
+  // }
 
 }

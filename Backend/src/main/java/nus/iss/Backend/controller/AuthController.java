@@ -11,15 +11,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,19 @@ import nus.iss.Backend.repository.RoleRepository;
 import nus.iss.Backend.repository.UserRepository;
 import nus.iss.Backend.security.jwt.JwtUtils;
 import nus.iss.Backend.security.service.UserDetailsImpl;
+
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+import nus.iss.Backend.model.EmailDetails;
+
 
 // @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -56,6 +70,12 @@ public class AuthController {
   @Autowired
   JwtUtils jwtUtils;
 
+  @Autowired
+  SpringTemplateEngine templateEngine;
+
+  @Autowired
+  private JavaMailSender sender;
+
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -73,7 +93,8 @@ public class AuthController {
         .collect(Collectors.toList());
 
     // if (userRepo.wrongPassword(loginRequest.getPassword())) {
-    //   return ResponseEntity.badRequest().body(new MessageResponse("Error: Login failed!"));
+    // return ResponseEntity.badRequest().body(new MessageResponse("Error: Login
+    // failed!"));
     // }
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
         .body(new UserInfoResponse(userDetails.getUsername(), roles));
@@ -130,5 +151,34 @@ public class AuthController {
     ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
         .body(new MessageResponse("You've been signed out!"));
+  }
+
+  @PostMapping(path="/send")
+  public @ResponseBody EmailDetails sendMail(@RequestBody EmailDetails details) throws MessagingException {
+
+    MimeMessage message = sender.createMimeMessage();
+    MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        // MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+        // StandardCharsets.UTF_8.name());
+
+    Map<String, Object> model = new HashMap<String, Object>();
+    model.put("name", details.getName());
+
+    Context context = new Context();
+    context.setVariables(model);
+    String html = templateEngine.process("email-template", context);
+
+    try {
+      helper.setFrom("no-reply@moodboard.com");
+      helper.setTo(details.getEmail());
+      helper.setText(html, true);
+      helper.setSubject("Thank You Email!");
+
+    } catch (javax.mail.MessagingException e) {
+      e.printStackTrace();
+    }
+    sender.send(message);
+
+    return details;
   }
 }
