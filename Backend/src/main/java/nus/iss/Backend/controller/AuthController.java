@@ -170,7 +170,6 @@ public class AuthController {
     String html = templateEngine.process("email-template", context);
 
     try {
-      helper.setFrom("no-reply@moodboard.com");
       helper.setTo(details.getEmail());
       helper.setText(html, true);
       helper.setSubject("Thank You Email!");
@@ -188,4 +187,7 @@ public class AuthController {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("\"Feedback is invalid\"");
 
   }
+
+  // @PostMapping
+  // public ResponseEntity <String> 
 }

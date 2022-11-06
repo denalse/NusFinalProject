@@ -9,7 +9,6 @@ import { MaterialModule } from './material.module';
 
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FlatpickrModule } from 'angularx-flatpickr';
-// import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -19,7 +18,8 @@ import { AboutComponent } from './components/about/about.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { RegisterComponent } from './components/account/register/register.component';
 import { SearchComponent } from './components/search/search.component';
-import { HomeComponent } from './components/home.component';
+import { FavouritesComponent } from './components/favourites/favourites.component';
+import { HomeComponent } from './components/home/home.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
  
 import { AuthService } from './services/auth.service';
@@ -37,7 +37,7 @@ const appRoute: Routes = [
 
   { path: 'about', component: AboutComponent },
   { path: 'search', component: SearchComponent },
-  // { path: 'search/:type/:width/:height/:search', component: ImageComponent },
+  { path: 'favourites', component: FavouritesComponent },
   { path: 'mood', component: CalendarComponent },
   { path: '**', redirectTo: '/'}
 ]
@@ -46,7 +46,7 @@ const appRoute: Routes = [
   declarations: [
     AppComponent, AboutComponent, HomeComponent,
     SearchComponent, CalendarComponent,
-    LoginComponent, RegisterComponent,
+    LoginComponent, RegisterComponent, FavouritesComponent,
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule,

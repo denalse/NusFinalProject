@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faker } from '@faker-js/faker';
-import { Subscription } from 'rxjs';
-import { SearchCriteria } from 'src/app/models';
+import { Subject, Subscription } from 'rxjs';
+import { SearchCriteria, SearchQuote } from 'src/app/models';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -28,13 +28,24 @@ export class SearchComponent implements OnInit { //, OnDestroy  {
 
   images = faker.image.sports()
 
+  @Output()
+  onSavedQuote = new Subject<SearchQuote>()
+
+  @Output()
+  saveToFavorite = new EventEmitter<any>()
+
+
+  isSaved: boolean = false
+
 
   constructor(private fb: FormBuilder, private http: HttpClient, private svc: AuthService,
     private ar: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.form = this.createSearch();
-
+    if (this.show) {
+      this.data = this.getQuote();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -55,7 +66,6 @@ export class SearchComponent implements OnInit { //, OnDestroy  {
     console.info('search criteria: ', criteria)
 
     this._url = this.url + criteria.type + "/" + criteria.width + "/" + criteria.height + "/" + criteria.search
-
   }
 
   reset() {
@@ -70,19 +80,6 @@ export class SearchComponent implements OnInit { //, OnDestroy  {
     return this.images
   }
 
-  // getQuote() {
-  //   console.info("click")
-     // const url ='https://type.fit/api/quotes'
-  //   this.svc.quoteSvc()
-  //     .subscribe((response) => {
-  //       console.log(response);
-  //       this.data = response
-  //       // console.log(this.data)
-  //     })
-  //   let random = Math.floor(Math.random() * this.data.length)
-  //   this.randomData = [this.data[random]];
-  // }
-
   getQuote() {
     return fetch('https://type.fit/api/quotes').then(res => {
       return res.json()
@@ -92,16 +89,26 @@ export class SearchComponent implements OnInit { //, OnDestroy  {
         return []
       }
       this.random = jsonResponse[Math.floor(Math.random() * jsonResponse.length)]
-      console.log("Quote: ", this.random)
+      // console.log("Author: ", this.random.author, "\nQuote: ", this.random.text)
+      // this.data = this.random
+      this.data = this.random
+      console.log("RESULT", this.data)
       this.show = true
       return this.random;
     })
-    .then(quote => {
-      const author = quote.author;
-      const text = quote.text;
-      // console.log(author, "-", text)
-    });
-    
+      .then(quote => {
+        const author = quote.author;
+        const text = quote.text;
+        // console.log(author, "-", text)
+      })
+  }
+
+  saveQuote() {
+    console.log("save quote")
+    this.isSaved = true
+    const quote: SearchQuote = this.data.value as SearchQuote
+    this.onSavedQuote.next(quote)
+    this.saveToFavorite.emit(true);
   }
 
   // ngOnDestroy(): void {

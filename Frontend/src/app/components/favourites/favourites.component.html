@@ -1,0 +1,41 @@
+<h4 [routerLink]="['/search']"><i>Love the quotes? Wanna add more? Click me!</i></h4>
+
+
+<div class="box-it">
+
+    <form>
+
+        <div class="row" style="margin-left: 1px;">
+            List of My Favourite Quotes
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Author
+                    </th>
+                    <th>
+                        Text
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let x of updatedQuotes; let i = index">
+                    <td>
+                        {{ x.author }}
+                    </td>
+                    <td>
+                        {{ x.text }}
+                    </td>
+                    <td>
+                        <button class="xBtn" type="button" (click)="removeItem(i)">
+                            X
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </form>
+
+</div>

@@ -77,6 +77,11 @@
 					<tr>
 						<td></td>
 						<td>
+							<span class="example-spacer icon1">
+								<mat-icon class="icon" matPrefix>sentiment_very_satisfied</mat-icon>
+								<mat-icon class="icon" matPrefix>sentiment_very_satisfied</mat-icon>
+							</span>
+							<span class="example-spacer"></span>
 							<button type="button" (click)="getQuote()">
 								Click me
 							</button>
@@ -84,6 +89,15 @@
 							<span class="example-spacer"></span>
 							<span class="example-spacer icon1">
 								<mat-icon class="icon" matSuffix>sentiment_very_satisfied</mat-icon>
+								<mat-icon class="icon" matSuffix>sentiment_very_satisfied</mat-icon>
+							</span>
+							<span class="example-spacer"></span>
+							<button type="button" (click)="saveQuote()">
+								Save me
+							</button>
+							<span class="example-spacer"></span>
+							<span class="example-spacer"></span>
+							<span class="example-spacer icon1">
 								<mat-icon class="icon" matSuffix>sentiment_very_satisfied</mat-icon>
 								<mat-icon class="icon" matSuffix>sentiment_very_satisfied</mat-icon>
 							</span>
@@ -95,11 +109,13 @@
 							<div *ngIf="show" style="text-align:center">
 								<h6>Author: {{ random.author }}</h6>
 								<p>{{ random.text }}</p>
-								<!-- <p>{{ quote.text }}</p> -->
+							</div>
+							<div *ngIf="isSaved" style="text-align:center">
+								<span><b>Quote saved to favourites!</b></span>
 							</div>
 						</td>
-
 					</tr>
+
 				</table>
 			</div>
 		</div>

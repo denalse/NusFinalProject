@@ -23,8 +23,13 @@
   <!-- <span>{{ randomName }}</span> -->
   <!-- <mat-form-field>
     <input type="text" matInput placeholder="Search">
-    <mat-icon >search</mat-icon>
+    <button type="button" (click)="onSearch()" mat-icon-button class="example-icon">
+      <mat-icon>search</mat-icon>
+    </button>
   </mat-form-field> -->
+
+  <span class="example-spacer"></span>
+
   <img src="../assets/hello.gif" height="80px" width="100px" data-mode="video" />
 
   
@@ -49,11 +54,14 @@
   <div *ngIf="isLoggedIn">
     <button mat-button (click)="logout()" ><h6>Logout</h6></button>
   </div>
-
+  
+  <div *ngIf="isLoggedIn">
   <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+  <button [routerLink]="['favourites']" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
     <mat-icon>favorite</mat-icon>
   </button>
+</div>
+
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
     <mat-icon>share</mat-icon>
   </button>

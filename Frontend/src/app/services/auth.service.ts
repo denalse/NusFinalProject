@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Feedback } from '../models';
+import { firstValueFrom, Observable } from 'rxjs';
 
 const AUTH_API = '/api/auth/';
 
@@ -58,10 +57,37 @@ export class AuthService {
       httpOptions
     )
   }
-  // sendEmail(): Observable<any> {
-  //   console.log("CLICKED")
-  //    return this.http.post<Feedback>(AUTH_API + 'send', {}, httpOptions)
 
-  // }
+  myFav(author: string, text: string) {
+    console.log("upload")
+    const formData = new FormData()
+    formData.set('author', author)
+    formData.set('text', text)
+
+    return firstValueFrom(
+      this.http.post<any>(AUTH_API + 'favourites',
+      {
+        author,
+        text
+      },
+      httpOptions
+    )
+  )}
+
+  myFavToDigitalOcean(author: string, text: string) {
+    console.log("upload to digitalOcean")
+    const formData = new FormData()
+    formData.set('author', author)
+    formData.set('text', text)
+
+    return firstValueFrom(
+      this.http.post<any>(AUTH_API + 'favourites/spaces',
+      {
+        author,
+        text
+      },
+      httpOptions
+    )
+  )}
 
 }

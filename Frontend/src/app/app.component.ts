@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from './services/storage.service';
 import { AuthService } from './services/auth.service';
-import { HomeComponent } from './components/home.component';
+import { HomeComponent } from './components/home/home.component';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   comma: string = ', ';
   mark: string = "!"
 
-  @ViewChild('sidenav') 
+  @ViewChild('sidenav')
   sidenav!: MatSidenav;
 
   constructor(private route: Router, private ar: ActivatedRoute,
@@ -39,15 +39,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     // window.location.reload();
     if (this.isLoggedIn) {
 
-    this.username = this.storageService.getUser()?.username;
-    console.info(">>>>>>>>>",this.username);
-    // this.username = user.username;
-    this.ar.snapshot.params['username']
-  }
+      this.username = this.storageService.getUser()?.username;
+      console.info(">>>>>>>>>", this.username);
+      // this.username = user.username;
+      this.ar.snapshot.params['username']
+    }
   }
 
   ngAfterViewInit() {
-    console.info(">>",this.storageService.getUser()?.username);
+    console.info(">>", this.storageService.getUser()?.username);
     // console.log("Hello", this.user.username);
     // this.user = this.ar.snapshot.params['username']
   }
@@ -60,6 +60,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   //   }
   //   return true;
   // }
+
+  onSearch() {
+    console.log("search click")
+  }
 
   logout(): void {
     console.info("CLICKED")

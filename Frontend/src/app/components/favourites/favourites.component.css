@@ -1,0 +1,17 @@
+h4 {
+    text-align: center;
+    color: lightslategray;
+}
+
+.box-it {
+    border: 1px solid gray;
+    padding: 5px;
+    margin: 5px;
+    /* border-radius: 10px; */
+    /* text-align: center; */
+  }
+
+  .xBtn {
+    display: block;
+    margin: auto;
+  }

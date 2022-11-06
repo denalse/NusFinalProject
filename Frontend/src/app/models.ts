@@ -1,8 +1,18 @@
+export interface User {
+    id?: string;
+    username: string;
+    password: string;
+}
 export interface SearchCriteria {
     type: string;
     width: number;
     height: number;
     search: string;
+}
+
+export interface SearchQuote {
+  author: string;
+  text: string;
 }
 export interface Feedback {
     name: string;
@@ -25,11 +35,6 @@ export const colors: any = {
     }
 };
 
-export interface User {
-    id?: string;
-    username: string;
-    password: string;
-}
 
 export interface Response {
     message?: string;

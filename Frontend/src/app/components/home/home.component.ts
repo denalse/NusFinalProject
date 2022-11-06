@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../models';
-import { StorageService } from '../services/storage.service';
+import { User } from '../../models';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-home',
