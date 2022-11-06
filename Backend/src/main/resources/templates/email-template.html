@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -11,14 +11,15 @@
 
 <body>
 
-    <h1>This is just a sample html page</h1>
+    <h1>We appreciate your valuable feedback</h1>
 
-    <h2>Below are the details that were passed to the html page</h2>
+    <!-- <h2>Below are the details that were passed to the html page</h2> -->
 
-    <p th:text="${'Name: ' + name}">Hello</p>
+    <p><b th:text="${'Hello ' + name + '!'}"></b></p>
 
     <p><b>Thank you for your feedback! :)</b></p>
-    <p><b>Cheers, The MoodBoard Team</b></p>
+    <p><b>Cheers,</b></p>
+    <p><b>The MoodBoard Team</b></p>
 
 </body>
 

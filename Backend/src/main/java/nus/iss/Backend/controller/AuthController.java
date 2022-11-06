@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -153,8 +154,8 @@ public class AuthController {
         .body(new MessageResponse("You've been signed out!"));
   }
 
-  @PostMapping(path="/send")
-  public @ResponseBody EmailDetails sendMail(@RequestBody EmailDetails details) throws MessagingException {
+  @PostMapping(path="/send",consumes=MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity <String> sendMail(@RequestBody EmailDetails details) throws Exception {
 
     MimeMessage message = sender.createMimeMessage();
     MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -174,11 +175,17 @@ public class AuthController {
       helper.setText(html, true);
       helper.setSubject("Thank You Email!");
 
-    } catch (javax.mail.MessagingException e) {
-      e.printStackTrace();
-    }
-    sender.send(message);
+      sender.send(message);
+     
+      return ResponseEntity.ok("\"Email sent successfully\"");
 
-    return details;
+    } catch (Exception e) {
+      e.printStackTrace();
+
+      // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Feedback is invalid");
+
+    }
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("\"Feedback is invalid\"");
+
   }
 }

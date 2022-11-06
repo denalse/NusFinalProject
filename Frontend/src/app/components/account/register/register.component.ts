@@ -71,7 +71,6 @@ export class RegisterComponent implements OnInit {
     this.userForm = {username: this.username, password: this.password}
     this.form = this.addform1(), this.addform2();
     console.info(this.form)
-    // const getForm = "username: " + this.username + "\npassword: " + this.password
     console.info(`>>>> Form: ${JSON.stringify(this.userForm)}`)
     const { username, password } = this.userForm;
     //prints object without stringify

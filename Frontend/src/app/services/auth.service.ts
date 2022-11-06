@@ -10,6 +10,10 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+const httpOptions1 = {
+  headers: new HttpHeaders({ 'Content-Type': 'text/html' })
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -43,22 +47,16 @@ export class AuthService {
     return this.http.post(AUTH_API + 'signout', {}, httpOptions);
   }
 
-  dataset: Feedback = {
-    name: '',
-    email: '',
-    feedback: ''
-  };
-
-  sendEmail() {
+  sendEmail(name: string, email: string): Observable<any> {
     console.log("CLICKED")
-    this.http.post<Feedback>(AUTH_API + 'send', this.dataset.email).subscribe(
-      res => {
-        this.dataset = res;
-        console.log(this.dataset.email);
-        alert('Email Sent successfully');
-        this.dataset.email = '';
-      }), 
+    return this.http.post(
+      AUTH_API + 'send',
+      {
+        name,
+        email
+      },
       httpOptions
+    )
   }
   // sendEmail(): Observable<any> {
   //   console.log("CLICKED")
