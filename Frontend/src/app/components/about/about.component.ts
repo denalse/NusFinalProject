@@ -5,7 +5,6 @@ import { getMatIconFailedToSanitizeLiteralError } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Feedback } from 'src/app/models';
 import { AuthService } from 'src/app/services/auth.service';
-import { EmailService } from 'src/app/services/email.service';
 
 const AUTH_API = '/test/';
 
@@ -29,7 +28,7 @@ export class AboutComponent implements OnInit {
   f!: Feedback
 
   constructor(private fb: FormBuilder, private route: Router, private ar: ActivatedRoute,
-    private emailSvc: EmailService, private authSvc: AuthService, private http: HttpClient) { }
+    private authSvc: AuthService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.form = this.createForm();

@@ -6,6 +6,7 @@ import { faker } from '@faker-js/faker';
 import { Subject, Subscription } from 'rxjs';
 import { SearchCriteria, SearchQuote } from 'src/app/models';
 import { AuthService } from 'src/app/services/auth.service';
+import { DoService } from 'src/app/services/do.service';
 
 @Component({
   selector: 'app-search',
@@ -20,7 +21,10 @@ export class SearchComponent implements OnInit { //, OnDestroy  {
   url: string = 'https://loremflickr.com/';
   _url!: string
 
-  data: any = []
+  author!: string
+  text!: string
+  quote!: SearchQuote
+
   random: any = []
   show: boolean = false
 
@@ -38,14 +42,15 @@ export class SearchComponent implements OnInit { //, OnDestroy  {
   isSaved: boolean = false
 
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private svc: AuthService,
+  constructor(private fb: FormBuilder, private http: HttpClient, 
+    private svc: AuthService, private doSvc: DoService,
     private ar: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.form = this.createSearch();
-    if (this.show) {
-      this.data = this.getQuote();
-    }
+    // if (this.show) {
+    //   this.data = JSON.parse(this.getQuote())
+    // }
   }
 
   ngAfterViewInit(): void {
@@ -91,23 +96,37 @@ export class SearchComponent implements OnInit { //, OnDestroy  {
       this.random = jsonResponse[Math.floor(Math.random() * jsonResponse.length)]
       // console.log("Author: ", this.random.author, "\nQuote: ", this.random.text)
       // this.data = this.random
-      this.data = this.random
-      console.log("RESULT", this.data)
+      this.quote = this.random
+      console.log("RESULT", this.quote)
+      // this.author = this.quote.author
+      // console.log("Author:", this.author)
       this.show = true
       return this.random;
     })
-      .then(quote => {
-        const author = quote.author;
-        const text = quote.text;
-        // console.log(author, "-", text)
-      })
-  }
+      // .then(quote => {
+      //   const author = quote.author;
+      //   const text = quote.text;
+      //   // console.log(author, "-", text)
+      // })
+  }    
+
+  // getQuote() {  
+  //   this.doSvc.findQuote(this.author, this.text)
+  //     .then(result => {
+  //       console.info('Quote found:', result)
+  //     })
+  //     .catch(error => {
+  //       console.error('>>>> error: ', error)
+  //     })
+  // }
 
   saveQuote() {
     console.log("save quote")
+    this.show = false;
     this.isSaved = true
-    const quote: SearchQuote = this.data.value as SearchQuote
-    this.onSavedQuote.next(quote)
+    const data: SearchQuote = this.quote as SearchQuote
+    console.log("SAVING", data)
+    this.onSavedQuote.next(data)
     this.saveToFavorite.emit(true);
   }
 

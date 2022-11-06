@@ -10,12 +10,12 @@ import { SearchQuote } from 'src/app/models';
 export class FavouritesComponent implements OnInit {
 
   @Input()
-  updatedQuotes: SearchQuote[] =[]
+  updatedQuotes: SearchQuote[] = []
+
+  quoteList: SearchQuote[] = []
 
   form!: FormGroup
   lineItems!: FormArray
-
-  quoteList: SearchQuote[] = []
 
   constructor() { }
 
@@ -28,5 +28,4 @@ export class FavouritesComponent implements OnInit {
   removeItem(i: number) {
     this.lineItems.removeAt(i)
   }
-
 }

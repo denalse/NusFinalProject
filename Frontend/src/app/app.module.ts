@@ -25,8 +25,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { AuthService } from './services/auth.service';
 import { StorageService } from './services/storage.service';
 import { UserService } from './services/user.service';
+import { DoService } from './services/do.service';
 import { httpInterceptorProviders } from './components/helpers/http.interceptor';
-import { EmailService } from './services/email.service';
 
 const appRoute: Routes = [
   { path: '', component: HomeComponent },
@@ -65,7 +65,7 @@ const appRoute: Routes = [
   ],
   exports: [RouterModule],
 
-  providers: [UserService, AuthService, StorageService, EmailService ,httpInterceptorProviders],
+  providers: [UserService, AuthService, StorageService, DoService ,httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 

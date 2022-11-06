@@ -4,18 +4,6 @@
     padding-right: 0.5em;
 }
 
-.example-spacer1 {
-    flex: 1 1 auto;
-    margin-top: 1em;
-    padding-right: 20em;
-}
-
-.example-spacer2 {
-    flex: 1 1 auto;
-    margin-top: 1em;
-    padding-right: 15em;
-}
-
 .inlineTable {
     display: inline-block;
 }
@@ -76,4 +64,8 @@ th, td {
     vertical-align: top;
     font-size: 1.675em;
     padding: 0 !important;
+}
+
+.successMessage {
+    color: rgb(105, 50, 235)
 }

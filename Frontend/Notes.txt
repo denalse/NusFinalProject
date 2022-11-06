@@ -23,8 +23,9 @@ PROBLEMS:
       - to edit "event" with "personal diary" and emoji?
     2. Saved events in calendar?
     3. when toggle to other pages, the "saved" event will be removed..
+    4. Make span text (search.html) gone!!
     
-    *4. Url did not change to /home/"username" forget about it LOL*
+    ** Url did not change to /home/"username" forget about it LOL*
 
 DONE:
     1. Home page

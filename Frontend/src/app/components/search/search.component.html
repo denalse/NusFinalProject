@@ -92,7 +92,7 @@
 								<mat-icon class="icon" matSuffix>sentiment_very_satisfied</mat-icon>
 							</span>
 							<span class="example-spacer"></span>
-							<button type="button" (click)="saveQuote()">
+							<button *ngIf="show" type="button" (click)="saveQuote()">
 								Save me
 							</button>
 							<span class="example-spacer"></span>
@@ -107,11 +107,11 @@
 						<td></td>
 						<td>
 							<div *ngIf="show" style="text-align:center">
-								<h6>Author: {{ random.author }}</h6>
-								<p>{{ random.text }}</p>
+								<h6>Author: {{ quote.author }}</h6>
+								<p>{{ quote.text }}</p>
 							</div>
 							<div *ngIf="isSaved" style="text-align:center">
-								<span><b>Quote saved to favourites!</b></span>
+								<span class="successMessage"><b>Quote saved to favourites!</b></span>
 							</div>
 						</td>
 					</tr>
