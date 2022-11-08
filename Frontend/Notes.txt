@@ -36,23 +36,31 @@ DONE:
 
     
 
-  ____________________account.svc.ts___________________________
+  ____________________search.ts___________________________
 
-      test!: string;
-
-    newRegister = new Subject<Register[]>();
-
-    onNewRegister(register: Register): Promise<any> {
-        console.log("Service Hit");
-
-        const headers = new HttpHeaders()
-            .set('Content-Type', 'application/json')
-            .set('Accept', 'application/json')
-
-        return firstValueFrom(
-            this.http.post<any>('/register', register, { headers })
-        )
-    }
+   async getQuote() {
+     // this.route.navigate(['/quotes'])
+     const res = await fetch('https://type.fit/api/quotes');
+     const jsonResponse = await res.json();
+     if (!jsonResponse.length) {
+       console.log(jsonResponse);
+       return [];
+     }
+     this.random = jsonResponse[Math.floor(Math.random() * jsonResponse.length)];
+     // console.log("Author: ", this.random.author, "\nQuote: ", this.random.text)
+     // this.data = this.random
+     this.quote = this.random;
+     console.log("RESULT", this.quote);
+     // this.author = this.quote.author
+     // console.log("Author:", this.author)
+     this.show = true;
+     return this.random;
+       // .then(quote => {
+       //   const author = quote.author;
+       //   const text = quote.text;
+       //   // console.log(author, "-", text)
+       // })
+   }  
 
   ____________________IN REG HTML_________________________________
 

@@ -3,13 +3,6 @@
   <button type="button" (click)="sideNav()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" [matMenuTriggerFor]="menu">
     <mat-icon fontIcon="menu"></mat-icon>
   </button>
-  
-  <!-- <mat-menu #menu="matMenu">
-    <button mat-menu-item><h6 [routerLink]="['moodBoard/home/{username}']">Home</h6></button>
-    <button mat-menu-item><h6 [routerLink]="['about']">About</h6></button>
-    <button mat-menu-item *ngIf="isLoggedIn()"><h6 [routerLink]="['moodBoard/search']">Inspiration</h6></button>
-    <button mat-menu-item *ngIf="isLoggedIn()"><h6 [routerLink]="['moodBoard/mood']">Planner</h6></button>
-  </mat-menu> -->
 
   <mat-menu #menu="matMenu">
     <button mat-menu-item><h6 [routerLink]="['home']">Home</h6></button>
@@ -34,16 +27,6 @@
 
   
   <span class="example-spacer"></span>
-
-  <!-- <div *ngIf="!isLoggedIn()">
-    <button mat-button class ><h6 [routerLink]="['/register']">Register</h6></button>
-    <span class="example-spacer"></span>
-    <button mat-button class ><h6 [routerLink]="['/login']">Login</h6></button>
-  </div>
-  
-  <div *ngIf="isLoggedIn()">
-    <button mat-button (click)="logout()" ><h6>Logout</h6></button>
-  </div> -->
 
   <div *ngIf="!isLoggedIn">
     <button mat-button class ><h6 [routerLink]="['/register']">Register</h6></button>

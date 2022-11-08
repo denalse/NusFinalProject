@@ -1,5 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { firstValueFrom, Subject, tap } from 'rxjs';
 import { Feedback, SearchQuote } from '../models';
 
 const httpOptions = {
@@ -11,34 +12,40 @@ const httpOptions = {
 })
 export class DoService {
 
-  data: SearchQuote[] = []
+  quote!: SearchQuote
   random: any = []
   show: boolean = false
-  author = '';
-  text = '';
+
+
+  newQuote = new Subject<SearchQuote[]>();
 
   constructor(private http: HttpClient) { }
 
-  findQuote(author: string, text: string) {
-    return fetch('https://type.fit/api/quotes').then(res => {
-      return res.json()
-    }).then(jsonResponse => {
-      if (!jsonResponse.length) {
-        console.log(jsonResponse)
-        return []
-      }
-      this.random = jsonResponse[Math.floor(Math.random() * jsonResponse.length)]
-      // console.log("Author: ", this.random.author, "\nQuote: ", this.random.text)
-      // this.data = this.random
-      this.data = this.random
-      console.log("RESULT", this.data)
-      this.show = true
-      return this.random;
-    })
-      .then(quote => {
-        this.author = quote.author;
-        this.text = quote.text;
-      })
+  async getQuote() {
+    // this.route.navigate(['/quotes'])
+    const res = await fetch('https://type.fit/api/quotes');
+    const jsonResponse = await res.json();
+    if (!jsonResponse.length) {
+      console.log(jsonResponse);
+      return [];
+    }
+    this.random = jsonResponse[Math.floor(Math.random() * jsonResponse.length)];
+    this.quote = this.random;
+    return this.random;
+  }
+  
+  
+
+  getAllQuotes(): Promise<any> {
+    return firstValueFrom(
+      this.http.get<any>('favourites')
+        .pipe(
+          tap(data => {
+            console.info("SVC HIT",data)
+            this.newQuote.next(data)
+          })
+        )
+    )
   }
 
 }

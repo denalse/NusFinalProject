@@ -1,41 +1,43 @@
-<h4 [routerLink]="['/search']"><i>Love the quotes? Wanna add more? Click me!</i></h4>
+<h4 [routerLink]="['/home']"><i>We love your feedback</i></h4>
 
 
 <div class="box-it">
+    <div class="container">
+        <!-- <form [formGroup]="form" (ngSubmit)="submitForm()"> -->
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-    <form>
+            <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" formControlName="name" placeholder="Your name.."
+                    [ngClass]="{'red-border': hasError('name')}" required>
+            </div>
 
-        <div class="row" style="margin-left: 1px;">
-            List of My Favourite Quotes
-        </div>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>
-                        Author
-                    </th>
-                    <th>
-                        Text
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let x of updatedQuotes; let i = index">
-                    <td>
-                        {{ x.author }}
-                    </td>
-                    <td>
-                        {{ x.text }}
-                    </td>
-                    <td>
-                        <button class="xBtn" type="button" (click)="removeItem(i)">
-                            X
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <div>
 
-    </form>
+                <label for="email">Email</label>
+                <input type="text" required name="email" formControlName="email" placeholder="Your email.."
+                    [ngClass]="{'red-border': hasError('email')}">
+
+            </div>
+
+            <div>
+
+                <label for="feedback">What's up today, mate?</label>
+                <textarea name="feedback" formControlName="feedback" placeholder="Write something.."
+                    style="height:100px" required></textarea>
+            </div>
+
+            <button type="submit">
+                Submit
+            </button>
+
+            <span class="successMessage" *ngIf="isSubmitted">{{ successMessage }}</span>
+            <span class="errorMessage" *ngIf="!isSubmitted">{{ errorMessage }}</span>
+            <!-- <span class="errorMessage">
+					Name has error: {{ form.get('name')!.hasError('required')}},
+					Email has error: {{ form.get('email')!.hasError('email')}}
+				</span> -->
+        </form>
+    </div>
 
 </div>

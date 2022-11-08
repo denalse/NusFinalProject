@@ -24,9 +24,9 @@ export class SearchComponent implements OnInit { //, OnDestroy  {
   author!: string
   text!: string
   quote!: SearchQuote
+  quotes: SearchQuote[] = [];
 
   random: any = []
-  show: boolean = false
 
   sub$!: Subscription
 
@@ -38,19 +38,23 @@ export class SearchComponent implements OnInit { //, OnDestroy  {
   @Output()
   saveToFavorite = new EventEmitter<any>()
 
-
+  show: boolean = false
+  isClick: boolean = false
   isSaved: boolean = false
 
-
-  constructor(private fb: FormBuilder, private http: HttpClient, 
+  constructor(private fb: FormBuilder, private http: HttpClient,
     private svc: AuthService, private doSvc: DoService,
-    private ar: ActivatedRoute, private router: Router) { }
+    private ar: ActivatedRoute, private route: Router) { }
 
   ngOnInit(): void {
     this.form = this.createSearch();
     // if (this.show) {
-    //   this.data = JSON.parse(this.getQuote())
+    //   this.quote
     // }
+    this.sub$ = this.doSvc.newQuote.subscribe(data => {
+      console.info('>>> in sub: ', data)
+      this.quotes = data;
+    })
   }
 
   ngAfterViewInit(): void {
@@ -80,58 +84,32 @@ export class SearchComponent implements OnInit { //, OnDestroy  {
     // this.router.navigate(['/search']);
   }
 
-  randomImage() {
-    console.log("Random image")
-    return this.images
-  }
-
   getQuote() {
-    return fetch('https://type.fit/api/quotes').then(res => {
-      return res.json()
-    }).then(jsonResponse => {
-      if (!jsonResponse.length) {
-        console.log(jsonResponse)
-        return []
-      }
-      this.random = jsonResponse[Math.floor(Math.random() * jsonResponse.length)]
-      // console.log("Author: ", this.random.author, "\nQuote: ", this.random.text)
-      // this.data = this.random
-      this.quote = this.random
-      console.log("RESULT", this.quote)
-      // this.author = this.quote.author
-      // console.log("Author:", this.author)
-      this.show = true
-      return this.random;
-    })
-      // .then(quote => {
-      //   const author = quote.author;
-      //   const text = quote.text;
-      //   // console.log(author, "-", text)
-      // })
-  }    
-
-  // getQuote() {  
-  //   this.doSvc.findQuote(this.author, this.text)
-  //     .then(result => {
-  //       console.info('Quote found:', result)
-  //     })
-  //     .catch(error => {
-  //       console.error('>>>> error: ', error)
-  //     })
-  // }
-
-  saveQuote() {
-    console.log("save quote")
-    this.show = false;
-    this.isSaved = true
-    const data: SearchQuote = this.quote as SearchQuote
-    console.log("SAVING", data)
-    this.onSavedQuote.next(data)
-    this.saveToFavorite.emit(true);
+    this.show = true;
+    this.doSvc.getQuote()
+      .then(result => {
+        console.info('Quote found:', result)
+        this.quote = result
+        this.author = result.author
+        this.text = result.text
+      })
+      .catch(error => {
+        console.error('>>>> error: ', error)
+      })
   }
 
-  // ngOnDestroy(): void {
-  //   this.sub$.unsubscribe()
+  // saveQuote() {
+  //   console.log("Save HIT")
+  //   this.isClick = true;
+  //   this.show = false
+  //   this.isSaved = false
+  //   // const data: SearchQuote = this.quote as SearchQuote
+  //   console.log("SAVING", this.quote)
+  //   return this.quote
+  //   // console.log("SAVING", data)
+  //   // this.onSavedQuote.next(data)
+  //   // console.log('TEST',this.onSavedQuote.next(data))
+  //   // this.saveToFavorite.emit(true);
   // }
 
 }

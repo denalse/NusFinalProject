@@ -22,7 +22,7 @@ export class AuthService {
 
   login(username: string, password: string): Observable<any> {
     return this.http.post(
-      AUTH_API + 'signin',
+      AUTH_API + 'mood/signin',
       {
         username,
         password
@@ -33,7 +33,7 @@ export class AuthService {
 
   register(username: string, password: string): Observable<any> {
     return this.http.post(
-      AUTH_API + 'signup',
+      AUTH_API + 'mood/signup',
       {
         username,
         password
@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    return this.http.post(AUTH_API + 'signout', {}, httpOptions);
+    return this.http.post(AUTH_API + 'mood/signout', {}, httpOptions);
   }
 
   sendEmail(name: string, email: string): Observable<any> {
@@ -58,7 +58,7 @@ export class AuthService {
     )
   }
 
-  myFav(author: string, text: string) {
+  myFav(author: string, text: string): Promise<any> {
     console.log("upload")
     const formData = new FormData()
     formData.set('author', author)

@@ -1,14 +1,15 @@
 package nus.iss.Backend.controller;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring4.SpringTemplateEngine;
 
 import nus.iss.Backend.model.ERole;
+import nus.iss.Backend.model.EmailDetails;
 import nus.iss.Backend.model.Role;
 import nus.iss.Backend.model.User;
 import nus.iss.Backend.payload.request.LoginRequest;
@@ -38,18 +42,6 @@ import nus.iss.Backend.repository.RoleRepository;
 import nus.iss.Backend.repository.UserRepository;
 import nus.iss.Backend.security.jwt.JwtUtils;
 import nus.iss.Backend.security.service.UserDetailsImpl;
-
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import nus.iss.Backend.model.EmailDetails;
 
 
 // @CrossOrigin(origins = "*", maxAge = 3600)
@@ -77,7 +69,7 @@ public class AuthController {
   @Autowired
   private JavaMailSender sender;
 
-  @PostMapping("/signin")
+  @PostMapping("mood/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
     Authentication authentication = authenticationManager
@@ -101,7 +93,7 @@ public class AuthController {
         .body(new UserInfoResponse(userDetails.getUsername(), roles));
   }
 
-  @PostMapping("/signup")
+  @PostMapping("mood/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest regRequest) {
     if (userRepo.existsByUsername(regRequest.getUsername())) {
       return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
@@ -147,7 +139,7 @@ public class AuthController {
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }
 
-  @PostMapping("/signout")
+  @PostMapping("mood/signout")
   public ResponseEntity<?> logoutUser() {
     ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
@@ -187,7 +179,4 @@ public class AuthController {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("\"Feedback is invalid\"");
 
   }
-
-  // @PostMapping
-  // public ResponseEntity <String> 
 }
