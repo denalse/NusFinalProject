@@ -3,6 +3,9 @@ MY MOOD PLANNER
 ng serve --proxy-config proxy-config.js
 mvn clean spring-boot:run
 
+git subtree push --prefix Backend heroku master
+*push only the server side (Backend)
+
 <MANIFEST>
 
 https://www.simicart.com/manifest-generator.html/
