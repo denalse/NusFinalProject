@@ -6,6 +6,16 @@ mvn clean spring-boot:run
 git subtree push --prefix Backend heroku master
 *push only the server side (Backend)
 
+Push to Heroku (commands)
+heroku login
+heroku create
+git init
+git remote add heroku <url>
+git add .
+git commit -m "anything"
+git push heroku master -u
+Wait until completed and 100%, will give url of heroku
+
 <MANIFEST>
 
 https://www.simicart.com/manifest-generator.html/

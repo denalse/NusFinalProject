@@ -22,7 +22,6 @@ export class DoService {
   constructor(private http: HttpClient) { }
 
   async getQuote() {
-    // this.route.navigate(['/quotes'])
     const res = await fetch('https://type.fit/api/quotes');
     const jsonResponse = await res.json();
     if (!jsonResponse.length) {

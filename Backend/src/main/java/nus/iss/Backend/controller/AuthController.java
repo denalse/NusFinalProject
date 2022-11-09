@@ -37,7 +37,7 @@ import nus.iss.Backend.model.User;
 import nus.iss.Backend.payload.request.LoginRequest;
 import nus.iss.Backend.payload.request.RegisterRequest;
 import nus.iss.Backend.payload.response.MessageResponse;
-import nus.iss.Backend.payload.response.UserInfoResponse;
+import nus.iss.Backend.payload.response.JwtResponse;
 import nus.iss.Backend.repository.RoleRepository;
 import nus.iss.Backend.repository.UserRepository;
 import nus.iss.Backend.security.jwt.JwtUtils;
@@ -69,13 +69,15 @@ public class AuthController {
   @Autowired
   private JavaMailSender sender;
 
-  @PostMapping("mood/signin")
+  @PostMapping(path="mood/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
     Authentication authentication = authenticationManager
         .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
+    String jwt = jwtUtils.generateJwtToken(authentication);
+
 
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
@@ -90,7 +92,7 @@ public class AuthController {
     // failed!"));
     // }
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-        .body(new UserInfoResponse(userDetails.getUsername(), roles));
+        .body(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), roles));
   }
 
   @PostMapping("mood/signup")

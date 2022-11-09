@@ -29,7 +29,7 @@ import { DoService } from './services/do.service';
 import { httpInterceptorProviders } from './components/helpers/http.interceptor';
 
 const appRoute: Routes = [
-  { path: '', component: HomeComponent },
+  // { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   // { path: 'account/:username', component: AccountComponent },
@@ -39,7 +39,7 @@ const appRoute: Routes = [
   { path: 'search', component: SearchComponent },
   { path: 'favourites', component: FavouritesComponent },
   { path: 'mood', component: CalendarComponent },
-  { path: '**', redirectTo: '/'}
+  { path: '**', redirectTo: '/home', pathMatch: 'full'}
 ]
 
 @NgModule({
