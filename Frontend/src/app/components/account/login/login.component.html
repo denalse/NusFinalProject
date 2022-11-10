@@ -33,7 +33,7 @@
       <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
 
       <span class="successMessage" *ngIf="isLoggedIn">Please wait..</span>
-      <span class="errorMessage" *ngIf="!isLoginFailed">
+      <span class="errorMessage" *ngIf="isLoginFailed">
         <span> {{ errorMessage }} </span> 
       </span>
 

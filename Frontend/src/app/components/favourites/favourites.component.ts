@@ -65,7 +65,7 @@ export class FavouritesComponent implements OnInit {
     setTimeout(() => {
       this.form.reset,
         this.route.navigate(['/home']);
-    }, 5000);
+    }, 3000);
   }
 
 }

@@ -50,22 +50,24 @@ export class LoginComponent implements OnInit {
     this.authService.login(user.username, user.password).subscribe({
       next: data => {
         this.storageService.saveUser(data);
-        this.isLoginFailed = false;
+        // this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.route.navigate(['/home', user.username]);
         console.info(">>>>",user.username)
+        alert("Welcome "+ user.username + "!");
         setTimeout(() => {
           window.location.reload(), this.reset //abit of lag here due to refresh
         }, 1000);
       },
       error: err => {
-        this.errorMessage = "Login failed, please try again :("
-        this.errorMessage = err.error.errorMessage;
         this.isLoginFailed = true;
+        alert("Login Failed, please try again :(");
+        this.errorMessage = err.error.errorMessage;
+        console.log(this.errorMessage);
         console.info(err,'Login Failed')
         setTimeout(() => {
           this.reset //, this.errorMessage
-        }, 5000);
+        }, 2000);
       }
     });
   }

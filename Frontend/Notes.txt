@@ -30,6 +30,16 @@ https://www.simicart.com/manifest-generator.html/
     in, index.html -> include this in head:   
     <link rel="manifest" href="/assets/manifest.webmanifest">
 
+Edits: angular.json -> "optimization": false, line 58
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
+
 PROBLEMS:
     1. integration of npl into calendar?
       - because to be a mood tracker, need to be more courteous with your "reflection"

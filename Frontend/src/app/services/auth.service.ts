@@ -9,10 +9,6 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-const httpOptions1 = {
-  headers: new HttpHeaders({ 'Content-Type': 'text/html' })
-};
-
 @Injectable({
   providedIn: 'root',
 })

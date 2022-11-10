@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, format } from 'date-fns';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, format, startOfMonth } from 'date-fns';
 import { CalendarView, CalendarEvent, CalendarEventTimesChangedEvent, CalendarEventAction } from 'angular-calendar';
 
 import { Subject } from 'rxjs';
@@ -21,7 +21,7 @@ export class CalendarComponent implements OnInit {
   activeDayIsOpen: boolean = true;
   saveDisabled = true;
 
-  @ViewChild('modalContent')
+  @ViewChild('modalContent', { static: true })
   modalContent!: TemplateRef<any>;
 
   refresh = new Subject<void>();
@@ -61,29 +61,15 @@ export class CalendarComponent implements OnInit {
         this.handleEvent('Edited', event);
       }
     },
-    // {
-    //   label: '<i class="fa fa-fw fa-pencil"></i>',
-    //   onClick: ({ event }: { event: CalendarEvent }): void => {
-    //     this.events = this.events.entries(push);
-    //     this.handleEvent('Saved', event);
-    //   }
-    // },
     {
-      label: '<i class="fa fa-fw fa-times"></i>',
+      label: '<i class="fas fa-fw fa-trash-alt"></i>',
+      a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter(iEvent => iEvent !== event);
+        this.events = this.events.filter((iEvent) => iEvent !== event);
         this.handleEvent('Deleted', event);
-      }
-    }
+      },
+    },
   ];
-
-  constructor(private modal: NgbModal) { }
-
-  setView(view: CalendarView) {
-    this.view = view;
-  }
-
-  ngOnInit(): void { }
 
   events: CalendarEvent[] = [
     {
@@ -91,7 +77,7 @@ export class CalendarComponent implements OnInit {
       end: new Date(),
       title: '',
       actions: this.actions,
-      
+
       resizable: {
         beforeStart: true,
         afterEnd: true
@@ -99,30 +85,24 @@ export class CalendarComponent implements OnInit {
       draggable: true
     },
     {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: new Date(),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
+      start: subDays(startOfDay(new Date()), 3),
+      end: addDays(new Date(), -3),
+      title: 'I was sad',
+      color: colors.red,
       actions: this.actions,
+      allDay: true,
       resizable: {
         beforeStart: true,
-        afterEnd: true
+        afterEnd: true,
       },
-      draggable: true
-    }
+      draggable: true,
+    },
   ];
+
+  constructor(private modal: NgbModal) { }
+
+  ngOnInit(): void { }
+
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -138,24 +118,28 @@ export class CalendarComponent implements OnInit {
     }
     console.info(this.viewDate)
     const time = format(new Date(), "'Date: 'yyyy-MM-dd\t'Time: 'HH:mm:ss");
-    console.log(">>",time)
+    console.log(">>", time)
 
   }
 
   // drag events
 
   eventTimesChanged({ event, newStart, newEnd }: CalendarEventTimesChangedEvent): void {
-    event.start = newStart;
-    event.end = newEnd;
-    this.handleEvent('Dropped or resized', event);
-    this.refresh.next();
-    this.openPopup()
+    this.events = this.events.map((iEvent) => {
+      if (iEvent === event) {
+        return {
+          ...event,
+          start: newStart,
+          end: newEnd,
+        };
+      }
+      return iEvent;
+    });
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
-    this.openPopup()
+    // this.modal.open(this.modalContent, { size: 'lg' });
   }
   // edit events
   addEvent(): void {
@@ -172,34 +156,13 @@ export class CalendarComponent implements OnInit {
     });
     // this.refresh.next();
   }
-  saveEvent(): void {
-    console.log("save event")
-    // this.events.values({})
-    this.addEvent()
-    // this.events.push({
-    //   title: '',
-    //   start: startOfDay(new Date()),
-    //   end: endOfDay(new Date()),
-    //   color: colors.blue,
-    //   draggable: true,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true
-    //   }
-    // });
+
+  setView(view: CalendarView) {
+    this.view = view;
   }
 
-  displayStyle = "none";
-
-  openPopup() {
-    this.displayStyle = "block";
+  closeOpenMonthViewDay() {
+    this.activeDayIsOpen = false;
   }
-  closePopup() {
-    this.displayStyle = "none";
-  }
-
-  // onBlur() {
-  //   console.log('onblur')
-  // }
 
 }

@@ -72,27 +72,31 @@ public class AuthController {
   @PostMapping(path="mood/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-    Authentication authentication = authenticationManager
-        .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+    // try{
+      Authentication authentication = authenticationManager
+          .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+  
+      SecurityContextHolder.getContext().setAuthentication(authentication);
+      String jwt = jwtUtils.generateJwtToken(authentication);
+  
+  
+      UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+  
+      ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+  
+      List<String> roles = userDetails.getAuthorities().stream()
+          .map(item -> item.getAuthority())
+          .collect(Collectors.toList());
 
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-    String jwt = jwtUtils.generateJwtToken(authentication);
+          return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+              .body(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), roles));
+    // }catch(Exception ex){
 
-
-    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-    ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
-
-    List<String> roles = userDetails.getAuthorities().stream()
-        .map(item -> item.getAuthority())
-        .collect(Collectors.toList());
-
-    // if (userRepo.wrongPassword(loginRequest.getPassword())) {
-    // return ResponseEntity.badRequest().body(new MessageResponse("Error: Login
-    // failed!"));
+    //   userRepo.wrongPassword(loginRequest.getPassword()); 
+    //   return ResponseEntity.badRequest().body(new MessageResponse("Error: Login failed!"));
+      
     // }
-    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-        .body(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), roles));
+
   }
 
   @PostMapping("mood/signup")

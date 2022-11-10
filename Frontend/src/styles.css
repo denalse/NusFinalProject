@@ -11,17 +11,3 @@ body {
     background-repeat: no-repeat;
     
 }
-
-/* @import '../node_modules/flatpickr/dist/flatpickr.min.css'; */
-/* .text {
-    height: 500px;
-    width: 850px;
-    
-    background-size: 850px, 500px;
-    text-align: center;
-    font-size: 170px;
-    font-family: 'Raleway', sans-serif;
-    -webkit-text-fill-color:transparent;
-    -webkit-background-clip: text;
-    background-repeat: no-repeat;
-} */

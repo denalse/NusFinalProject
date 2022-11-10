@@ -42,10 +42,9 @@
   <div class="example-spacer">
     <div [ngSwitch]="view">
 
-      <mwl-calendar-month-view (dayClicked)="dayClicked($event.day)" *ngSwitchCase="CalendarView.Month"
-        [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)"
+      <mwl-calendar-month-view  *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events" 
+        [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)" (eventTimesChanged)="eventTimesChanged($event)"
         aria-placeholder="😀">
-
       </mwl-calendar-month-view>
 
       <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
@@ -77,8 +76,6 @@
         <tr>
           <th>Description</th>
           <th>Starts at</th>
-          <!-- <th>Ends at</th> -->
-          <th>Save</th>
           <th>Remove</th>
         </tr>
       </thead>
@@ -99,11 +96,6 @@
               (ngModelChange)="refresh.next()" [altInput]="true" [convertModelValue]="true" [enableTime]="true"
               dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set">
           </td> -->
-          <td>
-            <button class="btn btn-secondary" (click)="saveEvent()">
-              Save
-            </button>
-          </td>
           <td>
             <button class="btn btn-danger" (click)="events.splice(index, 1); refresh.next()">
               Delete

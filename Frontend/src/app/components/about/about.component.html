@@ -1,62 +1,22 @@
 <div class="box-it">
-	<mdb-carousel>
+	<mdb-carousel [interval]="4000" [animation]="'fade'">
 		<mdb-carousel-item>
-			<h1>Step 1:</h1>
-			<img src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp" class="img" alt="..." />
+			<h2>Step 1: Login or Register if you have not</h2>
+			<br>
+			<img src="../assets/s1.jpg" class="img" alt="..." />
 		</mdb-carousel-item>
 		<mdb-carousel-item>
-			<h1>Step 2:</h1>
-			<img src="https://mdbcdn.b-cdn.net/img/new/slides/042.webp" class="img" alt="..." />
+			<h2>Step 2: Without login, you will not be able to access other features </h2>
+			<br>
+			<img src="../assets/s2.jpg" class="img" alt="..." />
 		</mdb-carousel-item>
 		<mdb-carousel-item>
-			<h1>Step 3:</h1>
-			<img src="https://mdbcdn.b-cdn.net/img/new/slides/043.webp" class="img" alt="..." />
+			<h1>Step 3: With Login</h1>
+			<br>
+			<img src="../assets/s3.jpg" class="img" alt="..." />
 		</mdb-carousel-item>
 	</mdb-carousel>
 
 	<br><br>
-
-	<!-- <div class="row text-center">
-		<h5>Any questions? Feel free to drop us a feedback!</h5>
-	</div>
-
-	<div class="box-this">
-		<div class="container">
-			<form [formGroup]="form" (ngSubmit)="onSubmit()">
-
-				<div>
-					<label for="name">Name</label>
-					<input type="text" id="name"  formControlName="name" placeholder="Your name.."
-						[ngClass]="{'red-border': hasError('name')}" required>
-				</div>
-
-				<div>
-
-					<label for="email">Email</label>
-					<input type="text" required name="email" formControlName="email" placeholder="Your email.."
-						[ngClass]="{'red-border': hasError('email')}">
-				
-					</div>
-
-				<div>
-
-					<label for="feedback">What's up today, mate?</label>
-					<textarea name="feedback" formControlName="feedback" placeholder="Write something.."
-						style="height:100px" required></textarea>
-				</div>
-
-				<button type="submit">
-					Submit
-				</button>
-
-				<span class="successMessage" *ngIf="isSubmitted">{{ successMessage }}</span>
-				<span class="errorMessage" *ngIf="!isSubmitted">{{ errorMessage }}</span> -->
-				<!-- <span class="errorMessage">
-					Name has error: {{ form.get('name')!.hasError('required')}},
-					Email has error: {{ form.get('email')!.hasError('email')}}
-				</span> -->
-			<!-- </form>
-		</div>
-	</div> -->
 
 </div>
