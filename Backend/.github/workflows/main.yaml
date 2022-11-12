@@ -2,10 +2,7 @@
 # name: Compile, test, deploy
 # on: [ "push" ]
 # env:
-#   SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
 #   SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
-#   SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
-#   SPRING_DATASOURCE_DRIVER_CLASS_NAME: ${{ secrets.SPRING_DATASOURCE_DRIVER_CLASS_NAME }}
 
 # jobs:
 #   step1:
@@ -34,7 +31,7 @@
 #       with:
 #         access_key: ${{ secrets.access_key }}
 #         secret_key: ${{ secrets.secret_key }}
-#         space_name: beermarket
+#         space_name: mood
 #         space_region: sgp1
 #         source: .github/badges/jacoco.svg
 #         out_dir: coverage/${{ github.event.repository.name }}
@@ -44,7 +41,7 @@
 #       with:
 #         access_key: ${{ secrets.access_key }}
 #         secret_key: ${{ secrets.secret_key }}
-#         space_name: beermarket
+#         space_name: mood
 #         space_region: sgp1
 #         source: target/site/jacoco
 #         out_dir: coverage/${{ github.event.repository.name }}/report

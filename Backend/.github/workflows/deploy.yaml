@@ -1,8 +1,8 @@
 # name: Deploy to Heroku
 # on:
 #   push:
-#     tags:
-#       - 'v*'
+#     branches:
+#     - master
   
 # jobs:
 #   deploy_to_heroku:
@@ -16,6 +16,7 @@
 #         uses: akhileshns/heroku-deploy@v3.12.12
 #         with:
 #           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-#           heroku_app_name: beermarket
+#           heroku_app_name: "mood"
 #           heroku_email: ${{ secrets.MY_EMAIL }}
 #           branch: ${{ github.ref_name }}
+#           appdir: 'Backend'
