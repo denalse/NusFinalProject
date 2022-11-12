@@ -1,11 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { faker } from '@faker-js/faker';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { SearchCriteria, SearchQuote } from 'src/app/models';
-import { AuthService } from 'src/app/services/auth.service';
 import { DoService } from 'src/app/services/do.service';
 
 @Component({
@@ -13,7 +9,7 @@ import { DoService } from 'src/app/services/do.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit { //, OnDestroy  {
+export class SearchComponent implements OnInit {
 
   form!: FormGroup
   image!: string
@@ -30,21 +26,9 @@ export class SearchComponent implements OnInit { //, OnDestroy  {
 
   sub$!: Subscription
 
-  images = faker.image.sports()
-
-  @Output()
-  onSavedQuote = new Subject<SearchQuote>()
-
-  @Output()
-  saveToFavorite = new EventEmitter<any>()
-
   show: boolean = false
-  isClick: boolean = false
-  isSaved: boolean = false
 
-  constructor(private fb: FormBuilder, private http: HttpClient,
-    private svc: AuthService, private doSvc: DoService,
-    private ar: ActivatedRoute, private route: Router) { }
+  constructor(private fb: FormBuilder, private doSvc: DoService) { }
 
   ngOnInit(): void {
     this.form = this.createSearch();
@@ -96,20 +80,6 @@ export class SearchComponent implements OnInit { //, OnDestroy  {
         console.error('>>>> error: ', error)
       })
   }
-
-  // saveQuote() {
-  //   console.log("Save HIT")
-  //   this.isClick = true;
-  //   this.show = false
-  //   this.isSaved = false
-  //   // const data: SearchQuote = this.quote as SearchQuote
-  //   console.log("SAVING", this.quote)
-  //   return this.quote
-  //   // console.log("SAVING", data)
-  //   // this.onSavedQuote.next(data)
-  //   // console.log('TEST',this.onSavedQuote.next(data))
-  //   // this.saveToFavorite.emit(true);
-  // }
 
 }
 

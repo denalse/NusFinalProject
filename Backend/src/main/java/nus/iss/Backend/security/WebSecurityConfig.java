@@ -68,7 +68,7 @@ public class WebSecurityConfig {
         // .authorizeRequests().antMatchers("/api/auth/mood/**").permitAll()
         .authorizeRequests().antMatchers("/api/test/**", "/").permitAll()
         //which means allow all requests, see network(inspect) to add what is required to match the url pattern
-        .antMatchers("assets/**", "static/**", "/main.8d886f1d41b560be.js", "/polyfills.ec8e0ab232edfb59.js", "/runtime.29b7a6b499445dfe.js", "/sakura.9b38791f4f980c22.gif", "/styles.ece84d036a3ffee6.css", "/wallpaper.797a61ab532ef45b.jpg", "/favicon.ico", "/index.html","/api/test/**","/api/auth/mood/**", "/api/auth/send", "/**", "/home", "/about", "/login", "/register" ).permitAll()
+        .antMatchers("assets/**", "static/**", "/main.d3f571be9e46d93d.js", "/polyfills.ec8e0ab232edfb59.js", "/runtime.29b7a6b499445dfe.js", "/sakura.9b38791f4f980c22.gif", "/styles.ece84d036a3ffee6.css", "/wallpaper.797a61ab532ef45b.jpg", "/favicon.ico", "/index.html","/api/test/**","/api/auth/mood/**", "/api/auth/send", "/**", "/home", "/about", "/login", "/register" ).permitAll()
         .anyRequest().authenticated();
     
     http.authenticationProvider(authenticationProvider());
