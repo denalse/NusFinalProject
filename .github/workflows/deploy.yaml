@@ -1,0 +1,22 @@
+name: Deploy to Heroku
+on:
+  push:
+    branches:
+    - master
+  
+jobs:
+  deploy_to_heroku:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout src
+        uses: actions/checkout@v2
+      - name: echo ref_name
+        run: echo ${{ github.ref_name }}
+      - name: Deploy
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "mood"
+          heroku_email: ${{ secrets.MY_EMAIL }}
+          branch: ${{ github.ref_name }}
+          appdir: 'Backend'
